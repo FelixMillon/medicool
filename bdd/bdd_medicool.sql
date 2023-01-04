@@ -303,7 +303,7 @@ create table prendre_rendez_vous
 
 create table archifacture  
 as 
-    select * , NOW() datearchiv
+    select * , curdate() datearchiv
     from facture 
 where 2=0;
 
