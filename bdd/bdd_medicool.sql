@@ -136,7 +136,7 @@ create table pathologie
     date_guerison date,
     id_medecin int(5) not null,
     id_patient int(5) not null,
-    primary key (id_patient,id_medecin,id_path),
+    primary key (id_path),
     foreign key(id_medecin) references medecin(id_medecin)
     on update cascade
     on delete cascade,
@@ -300,8 +300,114 @@ create table prendre_rendez_vous
     on delete cascade
 )engine=innodb;
 
+
+create table archifacture  
+as 
+    select * , curdate() datearchiv
+    from facture 
+where 2=0;
+
+create or replace table archiprendre_rendez_vous  
+as 
+    select * , curdate() datearchiv
+    from prendre_rendez_vous  
+where 2=0;
+
+create table archipatient  
+as 
+    select * , curdate() datearchiv
+    from patient  
+where 2=0;
+
+create table archihospitalisation  
+as 
+    select * , curdate() datearchiv
+    from hospitalisation  
+where 2=0;
+
+create table archiexamen   
+as 
+    select * , curdate() datearchiv
+    from examen  
+where 2=0;
+
+create table archioperation 
+as 
+    select * , curdate() datearchiv
+    from operation 
+where 2=0;
+
+create table architraitement  
+as 
+    select * , curdate() datearchiv
+    from traitement  
+where 2=0;
+
+create table archiplanning 
+as 
+    select * , curdate() datearchiv
+    from planning  
+where 2=0;
+
+
+drop trigger if exists prendre_rendez_vous_after_delete;
+delimiter // 
+create trigger prendre_rendez_vous_after_delete 
+after delete on prendre_rendez_vous
+for each row
+begin
+insert into archiprendre_rendez_vous values(
+    old.id_patient,
+    old.id_planning,
+    old.date_heure_debut,
+    old.duree,
+    curdate());
+end //
+delimiter ;
+
+
+drop trigger if exists facture_after_delete;
+delimiter // 
+create trigger facture_after_delete 
+after delete on facture
+for each row
+begin
+insert into archifacture values(
+    old.id_facture,
+    old.libelle,
+    old.date_facturation,
+    old.montant_total,
+    old.montant_secu,
+    old.montant_mutuelle,
+    old.prix_a_payer,
+    old.montant_paye,
+    old.etat,
+    old.id_medecin,
+    old.id_patient,
+    curdate());
+end //
+delimiter ;
+
+
+
+
+
+create table avertissmentABS as select 
+    numsecu,
+    nome,
+    prenome,
+    datenaiss,
+    numq,
+    numa,
+    total_abs,
+    user histouser,
+    sysdate datearchi
+from employe 
+where 2=0;
+
+
 DELIMITER //
-create or replace procedure facturation(
+create procedure facturation(
     in le_prix decimal(7,2),
     in le_id_patient int,
     in le_id_medecin int,
@@ -330,7 +436,7 @@ LOOP
 IF done THEN LEAVE la_loop;
 END IF;
 SET pourcent_rembourse_tot = pourcent_rembourse_tot + le_pourcent_rembourse;
-END
+END 
 LOOP
     la_loop;
 
@@ -352,6 +458,12 @@ CLOSE mutuelle_curseur;
     insert into facture values(null,le_libelle,curdate(),le_prix,le_montant_secu,le_montant_mutuelle,prix_cal,0,'non reglee',le_id_medecin,le_id_patient);
 END //
 DELIMITER ;
+
+
+
+
+
+
 
 drop trigger if exists patient_before_insert;
 delimiter // 
@@ -485,7 +597,7 @@ delimiter ;
 
 drop trigger if exists patient_after_delete;
 delimiter // 
-create trigger patient_after_delete 
+create trigger patient_after_delete
 after delete on patient
 for each row
 begin
@@ -493,6 +605,42 @@ begin
     then
         delete from utilisateur where id = old.id_patient;
     end if;
+end //
+delimiter ;
+
+ drop trigger if exists facture_before_insert;
+delimiter // 
+create trigger facture_before_insert
+before insert on facture
+for each row
+begin
+    if new.montant_paye = new.prix_a_payer 
+    then 
+    set new.etat ='reglee'; 
+
+    elseif new.montant_paye > new.prix_a_payer 
+    then 
+    signal sqlstate '45000' SET MESSAGE_TEXT = "paiement refuse : le montant est superieur a la somme due";
+    end if; 
+   
+end //
+delimiter ;
+
+drop trigger if exists facture_before_update;
+delimiter // 
+create trigger facture_before_update
+before update on facture
+for each row
+begin
+    if new.montant_paye = new.prix_a_payer 
+    then 
+    set new.etat ='reglee'; 
+
+    elseif new.montant_paye > new.prix_a_payer 
+    then 
+    signal sqlstate '45000' SET MESSAGE_TEXT = "paiement refuse : le montant est superieur a la somme due";
+    end if; 
+   
 end //
 delimiter ;
 
@@ -505,11 +653,14 @@ insert into categorie_secu values(null,'cmu de base',30);
 insert into categorie_secu values(null,'handicap',60);
 insert into categorie_secu values(null,'retraite',15);
 
+
 insert into medecin values(null,'emailmedecin@gmail.com','123','nommedecin','prenom_medecin','01234567879','1980-01-01',sysdate(),'12','rue_medecin','750medeci','medecinville','speci_med',null);
 insert into patient values(null,'emailpat@gmail.com','123','balloch','patoch','01857467879','2000-01-01','2012-12-12','666','rue_patoch','66666','enfer','6666666666',2,null);
 insert into patient values(null,'email_minouche@gmail.com','123','Nouchnouch','minouch','0987654321','1895-01-01','2000-12-24','5','rue patouch','7minouch','hess','0000000001',3,1);
 insert into medecin values(null,'totaltout@gmail.com','123','total','tout','01234562879','1985-01-01',sysdate(),'15','rue du tout','750tout','toutville','touticien',null);
-insert into patient values(null,'totaltout@gmail.com','m','n','p','t','d','d','n','r','c','v','0123495874',1,1);
+
+insert into patient values(null,'totaltout@gmail.com','m','n','p','t','2000-10-10','2000-10-10','n','r','c','v','0123495874',1,1);
+
 insert into posseder_mutuelle values(2,2);
 insert into posseder_mutuelle values(3,3);
 insert into posseder_mutuelle values(4,2);
