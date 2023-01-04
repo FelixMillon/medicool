@@ -83,7 +83,8 @@ create table patient
 create table posseder_mutuelle
 (
     id_patient int(5) not null,
-    id_mutuelle int(5) not null
+    id_mutuelle int(5) not null,
+    primary key(id_patient,id_mutuelle)
 )engine=innodb;
 
 create table facture
@@ -149,7 +150,7 @@ create table operation
 (
     id_operation int(5) not null auto_increment,
     libelle varchar(100) not null,
-    date_heure datetime not null,
+    date_heure_time datetime not null,
     duree time not null,
     prix decimal(7,2) not null,
     resultat varchar(255) not null,
@@ -289,9 +290,9 @@ create table prendre_rendez_vous
 (
     id_patient int(5) not null,
     id_planning int(5) not null,
-    date_heure_debut date not null,
+    date_heure_debut datetime not null,
     duree time not null,
-    primary key (id_planning),
+    primary key (id_patient,id_planning),
     foreign key(id_planning) references planning(id_planning)
     on update cascade
     on delete cascade,
@@ -300,6 +301,7 @@ create table prendre_rendez_vous
     on delete cascade
 )engine=innodb;
 
+/****************************TABLES ARCHIVE*********************************/
 
 create table archifacture  
 as 
@@ -349,64 +351,23 @@ as
     from planning  
 where 2=0;
 
+/****************************TABLES SECURITE*********************************/
 
-drop trigger if exists prendre_rendez_vous_after_delete;
-delimiter // 
-create trigger prendre_rendez_vous_after_delete 
-after delete on prendre_rendez_vous
-for each row
-begin
-insert into archiprendre_rendez_vous values(
-    old.id_patient,
-    old.id_planning,
-    old.date_heure_debut,
-    old.duree,
-    curdate());
-end //
-delimiter ;
+create table action_surveillance
+(
+    id_action int(5) not null auto_increment,
+    type_action enum("insert","update","delete","update_old","update_new") not null,
+    date_heure_action datetime not null,
+    id_objet varchar(20) not null,
+    utilisateur varchar(100) not null,
+    primary key (id_action)
+)engine=innodb;
 
 
-drop trigger if exists facture_after_delete;
-delimiter // 
-create trigger facture_after_delete 
-after delete on facture
-for each row
-begin
-insert into archifacture values(
-    old.id_facture,
-    old.libelle,
-    old.date_facturation,
-    old.montant_total,
-    old.montant_secu,
-    old.montant_mutuelle,
-    old.prix_a_payer,
-    old.montant_paye,
-    old.etat,
-    old.id_medecin,
-    old.id_patient,
-    curdate());
-end //
-delimiter ;
+/****************************PROCEDURE*********************************/
 
 
-
-
-
-create table avertissmentABS as select 
-    numsecu,
-    nome,
-    prenome,
-    datenaiss,
-    numq,
-    numa,
-    total_abs,
-    user histouser,
-    sysdate datearchi
-from employe 
-where 2=0;
-
-
-DELIMITER //
+DELIMITER // 
 create procedure facturation(
     in le_prix decimal(7,2),
     in le_id_patient int,
@@ -461,9 +422,46 @@ DELIMITER ;
 
 
 
+/****************************TRIGGERS*********************************/
 
 
+drop trigger if exists prendre_rendez_vous_after_delete;
+delimiter // 
+create trigger prendre_rendez_vous_after_delete 
+after delete on prendre_rendez_vous
+for each row
+begin
+insert into archiprendre_rendez_vous values(
+    old.id_patient,
+    old.id_planning,
+    old.date_heure_debut,
+    old.duree,
+    curdate());
+end //
+delimiter ;
 
+
+drop trigger if exists facture_after_delete;
+delimiter // 
+create trigger facture_after_delete 
+after delete on facture
+for each row
+begin
+insert into archifacture values(
+    old.id_facture,
+    old.libelle,
+    old.date_facturation,
+    old.montant_total,
+    old.montant_secu,
+    old.montant_mutuelle,
+    old.prix_a_payer,
+    old.montant_paye,
+    old.etat,
+    old.id_medecin,
+    old.id_patient,
+    curdate());
+end //
+delimiter ;
 
 drop trigger if exists patient_before_insert;
 delimiter // 
@@ -582,6 +580,42 @@ begin
 end //
 delimiter ;
 
+drop trigger if exists utilisateur_after_insert;
+delimiter // 
+create trigger utilisateur_after_insert 
+after insert on utilisateur
+for each row
+begin
+   insert into action_surveillance values(null,"insert",sysdate(),new.id,current_user());
+end //
+delimiter ;
+
+drop trigger if exists utilisateur_after_update;
+delimiter // 
+create trigger utilisateur_after_update 
+after update on utilisateur
+for each row
+begin
+    if new.id = old.id
+    then
+        insert into action_surveillance values(null,"update",sysdate(),new.id,current_user());
+    else
+        insert into action_surveillance values(null,"update_old",sysdate(),old.id,current_user());
+        insert into action_surveillance values(null,"update_new",sysdate(),new.id,current_user());
+    end if;
+end //
+delimiter ;
+
+drop trigger if exists utilisateur_after_delete;
+delimiter // 
+create trigger utilisateur_after_delete 
+after delete on utilisateur
+for each row
+begin
+   insert into action_surveillance values(null,"delete",sysdate(),old.id,current_user());
+end //
+delimiter ;
+
 drop trigger if exists medecin_after_delete;
 delimiter // 
 create trigger medecin_after_delete 
@@ -643,7 +677,6 @@ begin
    
 end //
 delimiter ;
-
 
 
 insert into mutuelle values(null,'lmde',55);
