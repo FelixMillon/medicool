@@ -136,7 +136,7 @@ create table pathologie
     date_guerison date,
     id_medecin int(5) not null,
     id_patient int(5) not null,
-    primary key (id_patient,id_medecin,id_path),
+    primary key (id_path),
     foreign key(id_medecin) references medecin(id_medecin)
     on update cascade
     on delete cascade,
@@ -301,7 +301,7 @@ create table prendre_rendez_vous
 )engine=innodb;
 
 DELIMITER //
-create or replace procedure facturation(
+create procedure facturation(
     in le_prix decimal(7,2),
     in le_id_patient int,
     in le_id_medecin int,
@@ -485,7 +485,7 @@ delimiter ;
 
 drop trigger if exists patient_after_delete;
 delimiter // 
-create trigger patient_after_delete 
+create trigger patient_after_delete
 after delete on patient
 for each row
 begin
