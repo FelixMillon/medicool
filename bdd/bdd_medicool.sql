@@ -307,6 +307,64 @@ as
     from facture 
 where 2=0;
 
+create or replace table archiprendre_rendez_vous  
+as 
+    select * , curdate() datearchiv
+    from prendre_rendez_vous  
+where 2=0;
+
+create table archipatient  
+as 
+    select * , curdate() datearchiv
+    from patient  
+where 2=0;
+
+create table archihospitalisation  
+as 
+    select * , curdate() datearchiv
+    from hospitalisation  
+where 2=0;
+
+create table archiexamen   
+as 
+    select * , curdate() datearchiv
+    from examen  
+where 2=0;
+
+create table archioperation 
+as 
+    select * , curdate() datearchiv
+    from operation 
+where 2=0;
+
+create table architraitement  
+as 
+    select * , curdate() datearchiv
+    from traitement  
+where 2=0;
+
+create table archiplanning 
+as 
+    select * , curdate() datearchiv
+    from planning  
+where 2=0;
+
+
+drop trigger if exists prendre_rendez_vous_after_delete;
+delimiter // 
+create trigger prendre_rendez_vous_after_delete 
+after delete on prendre_rendez_vous
+for each row
+begin
+insert into archiprendre_rendez_vous values(
+    old.id_patient,
+    old.id_planning,
+    old.date_heure_debut,
+    old.duree,
+    curdate());
+end //
+delimiter ;
+
 
 drop trigger if exists facture_after_delete;
 delimiter // 
@@ -316,7 +374,7 @@ for each row
 begin
 insert into archifacture values(
     old.id_facture,
-        old.libelle,
+    old.libelle,
     old.date_facturation,
     old.montant_total,
     old.montant_secu,
@@ -329,6 +387,9 @@ insert into archifacture values(
     curdate());
 end //
 delimiter ;
+
+
+
 
 
 create table avertissmentABS as select 
