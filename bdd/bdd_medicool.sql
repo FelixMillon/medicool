@@ -303,9 +303,67 @@ create table prendre_rendez_vous
 
 create table archifacture  
 as 
-    select * , NOW() datearchiv
+    select * , curdate() datearchiv
     from facture 
 where 2=0;
+
+create or replace table archiprendre_rendez_vous  
+as 
+    select * , curdate() datearchiv
+    from prendre_rendez_vous  
+where 2=0;
+
+create table archipatient  
+as 
+    select * , curdate() datearchiv
+    from patient  
+where 2=0;
+
+create table archihospitalisation  
+as 
+    select * , curdate() datearchiv
+    from hospitalisation  
+where 2=0;
+
+create table archiexamen   
+as 
+    select * , curdate() datearchiv
+    from examen  
+where 2=0;
+
+create table archioperation 
+as 
+    select * , curdate() datearchiv
+    from operation 
+where 2=0;
+
+create table architraitement  
+as 
+    select * , curdate() datearchiv
+    from traitement  
+where 2=0;
+
+create table archiplanning 
+as 
+    select * , curdate() datearchiv
+    from planning  
+where 2=0;
+
+
+drop trigger if exists prendre_rendez_vous_after_delete;
+delimiter // 
+create trigger prendre_rendez_vous_after_delete 
+after delete on prendre_rendez_vous
+for each row
+begin
+insert into archiprendre_rendez_vous values(
+    old.id_patient,
+    old.id_planning,
+    old.date_heure_debut,
+    old.duree,
+    curdate());
+end //
+delimiter ;
 
 
 drop trigger if exists facture_after_delete;
@@ -316,7 +374,7 @@ for each row
 begin
 insert into archifacture values(
     old.id_facture,
-        old.libelle,
+    old.libelle,
     old.date_facturation,
     old.montant_total,
     old.montant_secu,
@@ -329,6 +387,9 @@ insert into archifacture values(
     curdate());
 end //
 delimiter ;
+
+
+
 
 
 create table avertissmentABS as select 
@@ -536,7 +597,7 @@ delimiter ;
 
 drop trigger if exists patient_after_delete;
 delimiter // 
-create trigger patient_after_delete 
+create trigger patient_after_delete
 after delete on patient
 for each row
 begin
@@ -597,7 +658,9 @@ insert into medecin values(null,'emailmedecin@gmail.com','123','nommedecin','pre
 insert into patient values(null,'emailpat@gmail.com','123','balloch','patoch','01857467879','2000-01-01','2012-12-12','666','rue_patoch','66666','enfer','6666666666',2,null);
 insert into patient values(null,'email_minouche@gmail.com','123','Nouchnouch','minouch','0987654321','1895-01-01','2000-12-24','5','rue patouch','7minouch','hess','0000000001',3,1);
 insert into medecin values(null,'totaltout@gmail.com','123','total','tout','01234562879','1985-01-01',sysdate(),'15','rue du tout','750tout','toutville','touticien',null);
+
 insert into patient values(null,'totaltout@gmail.com','m','n','p','t','2000-10-10','2000-10-10','n','r','c','v','0123495874',1,1);
+
 insert into posseder_mutuelle values(2,2);
 insert into posseder_mutuelle values(3,3);
 insert into posseder_mutuelle values(4,2);
