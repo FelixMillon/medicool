@@ -301,9 +301,48 @@ create table prendre_rendez_vous
 )engine=innodb;
 
 
+create table archifacture  
+as 
+    select * , NOW() datearchiv
+    from facture 
+where 2=0;
 
 
+drop trigger if exists facture_after_delete;
+delimiter // 
+create trigger facture_after_delete 
+after delete on facture
+for each row
+begin
+insert into archifacture values(
+    old.id_facture,
+        old.libelle,
+    old.date_facturation,
+    old.montant_total,
+    old.montant_secu,
+    old.montant_mutuelle,
+    old.prix_a_payer,
+    old.montant_paye,
+    old.etat,
+    old.id_medecin,
+    old.id_patient,
+    curdate());
+end //
+delimiter ;
 
+
+create table avertissmentABS as select 
+    numsecu,
+    nome,
+    prenome,
+    datenaiss,
+    numq,
+    numa,
+    total_abs,
+    user histouser,
+    sysdate datearchi
+from employe 
+where 2=0;
 
 
 DELIMITER //
@@ -552,6 +591,7 @@ insert into mutuelle values(null,'lmdespauvres',2);
 insert into categorie_secu values(null,'cmu de base',30);
 insert into categorie_secu values(null,'handicap',60);
 insert into categorie_secu values(null,'retraite',15);
+
 
 insert into medecin values(null,'emailmedecin@gmail.com','123','nommedecin','prenom_medecin','01234567879','1980-01-01',sysdate(),'12','rue_medecin','750medeci','medecinville','speci_med',null);
 insert into patient values(null,'emailpat@gmail.com','123','balloch','patoch','01857467879','2000-01-01','2012-12-12','666','rue_patoch','66666','enfer','6666666666',2,null);
