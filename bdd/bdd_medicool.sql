@@ -1311,7 +1311,7 @@ insert into posseder_mutuelle values(2,1);
 
 
 /**************************************INSERTS TEST SURVEY ACTIONS NE PAS SUPPRIMER (TESTS UNITAIRES)**************************************/
-
+/*
 insert into mutuelle values(5,'testmutuelle',10);
 insert into categorie_secu values(5,'testcatsecu',10);
 insert into medecin values(5,'test@test.com','testmdp','testnom','testprenom','testtel',curdate(),curdate(),'testnumrue','testrue','testcp','testville','testspecialisation',null);
@@ -1375,3 +1375,4 @@ update patient set id_patient=6 where id_patient=5;
 update medecin set id_medecin=6 where id_medecin=5;
 delete from patient where id_patient=6;
 delete from medecin where id_medecin=6;
+*/
