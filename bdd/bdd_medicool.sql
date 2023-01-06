@@ -16,6 +16,16 @@ create table utilisateur
     rue varchar(100) not null,
     cp varchar(10) not null,
     ville varchar(100) not null,
+    question enum(
+        'Nom de votre ecole primaire',
+        'Nom de jeune fille de votre mère',
+        'Nom de votre premier amour',
+        'Nom de votre professeur prefere',
+        'Ville de rencontre de vos parents',
+        'Nom de votre roman prefere'
+    ) not null,
+    reponse_secrete varchar(255) not null,
+    blocage enum('unlock','lock') default('unlock'),
     primary key (id)
 )engine=innodb;
 
@@ -49,6 +59,16 @@ create table medecin
     rue varchar(100) not null,
     cp varchar(10) not null,
     ville varchar(100) not null,
+    question enum(
+        'Nom de votre ecole primaire',
+        'Nom de jeune fille de votre mère',
+        'Nom de votre premier amour',
+        'Nom de votre professeur prefere',
+        'Ville de rencontre de vos parents',
+        'Nom de votre roman prefere'
+    ) not null,
+    reponse_secrete varchar(255) not null,
+    blocage enum('unlock','lock') default('unlock'),
     specialisation varchar(150) not null,
     date_depart_cabinet date,
     primary key (id_medecin)
@@ -68,6 +88,16 @@ create table patient
     rue varchar(100) not null,
     cp varchar(10) not null,
     ville varchar(100) not null,
+    question enum(
+        'Nom de votre ecole primaire',
+        'Nom de jeune fille de votre mère',
+        'Nom de votre premier amour',
+        'Nom de votre professeur prefere',
+        'Ville de rencontre de vos parents',
+        'Nom de votre roman prefere'
+    ) not null,
+    reponse_secrete varchar(255) not null,
+    blocage enum('unlock','lock') default('unlock'),
     numero_dossier varchar(30) not null,
     id_cat_secu int(5) not null,
     id_medecin int(5),
@@ -189,7 +219,6 @@ create table hopital
     primary key (id_hopital)
 )engine=innodb;
 
-
 create table hospitalisation 
 (
     id_hospitalisation int(5) not null auto_increment,
@@ -267,7 +296,6 @@ create table examen
     on delete cascade
 )engine=innodb;
 
-/*voir pourquoi on a mis attribut date dans planning. Il ne semble pas utile*/
 create table planning
 (
     id_planning int(5) not null auto_increment,
@@ -275,14 +303,12 @@ create table planning
     mois varchar(2),
     semaine varchar(1),
     url varchar(255),
-    date date not null,
     id_medecin int(5) not null,
     primary key (id_planning),
     foreign key(id_medecin) references medecin(id_medecin)
     on update cascade
     on delete cascade
 )engine=innodb;
-
 
 create table prendre_rendez_vous
 (
@@ -362,9 +388,38 @@ create table action_surveillance
     primary key (id_action)
 )engine=innodb;
 
+create table nb_echec_co
+(
+    id_echec int auto_increment not null,
+    etat_blocage enum('lock','unlock') not null,
+    nb_essai_restant int(1) not null,
+    date_heure_echec datetime not null,
+    id_utilisateur int(50) not null,
+    primary key (id_echec),
+    foreign key(id_utilisateur) references utilisateur(id)
+    on update cascade
+    on delete cascade
+)engine=innodb;
 
 /****************************PROCEDURE*********************************/
 
+drop procedure if exists unlockuser;
+DELIMITER // 
+create procedure unlockuser(
+    in le_id_user int(5)
+)
+BEGIN
+    DECLARE le_id_echec int;
+    if (select count(id_echec) from nb_echec_co where id_utilisateur = le_id_user) != 0
+    then
+        insert into nb_echec_co values(null,'unlock',3,sysdate(),le_id_user);
+        update nb_echec_co set etat_blocage='unlock', nb_essai_restant=3
+            where id_utilisateur = le_id_user 
+            and id_echec >=all (select id_echec from nb_echec_co where id_utilisateur = le_id_user);
+    end if;
+    
+END //
+DELIMITER ;
 
 DELIMITER // 
 create procedure facturation(
@@ -420,7 +475,6 @@ END //
 DELIMITER ;
 
 
-
 /****************************TRIGGERS*********************************/
 
 /*********************************TRIGGERS SUR PATIENT***********************************************/
@@ -433,6 +487,9 @@ for each row
 begin
     if new.email not in (select email from utilisateur)
     then
+        set new.mdp = sha2(concat('aZx@2',new.mdp),256);
+        set new.reponse_secrete = sha2(concat('aZx@2',new.reponse_secrete),256);
+        set new.blocage = 'unlock';
         insert into utilisateur values(
             null,
             new.email,
@@ -445,7 +502,10 @@ begin
             new.numrue,
             new.rue,
             new.cp,
-            new.ville
+            new.ville,
+            new.question,
+            new.reponse_secrete,
+            new.blocage
         );
     else
         set new.mdp = (select mdp from utilisateur where email = new.email);
@@ -458,6 +518,9 @@ begin
         set new.rue = (select rue from utilisateur where email = new.email);
         set new.cp = (select cp from utilisateur where email = new.email);
         set new.ville = (select ville from utilisateur where email = new.email);
+        set new.question = (select question from utilisateur where email = new.email);
+        set new.reponse_secrete = (select reponse_secrete from utilisateur where email = new.email);
+        set new.blocage = (select blocage from utilisateur where email = new.email);
     end if;
     set new.id_patient = (select id from utilisateur where email = new.email);
 end //
@@ -507,12 +570,16 @@ delimiter ;
 
 drop trigger if exists medecin_before_insert;
 delimiter // 
-create trigger medecin_before_insert 
+create trigger medecin_before_insert
 before insert on medecin
 for each row
 begin
+
     if new.email not in (select email from utilisateur)
     then
+        set new.mdp = sha2(concat('aZx@2',new.mdp),256);
+        set new.reponse_secrete = sha2(concat('aZx@2',new.reponse_secrete),256);
+        set new.blocage = 'unlock';
         insert into utilisateur values(
             null,
             new.email,
@@ -525,7 +592,10 @@ begin
             new.numrue,
             new.rue,
             new.cp,
-            new.ville
+            new.ville,
+            new.question,
+            new.reponse_secrete,
+            new.blocage
         );
     else
         set new.mdp = (select mdp from utilisateur where email = new.email);
@@ -538,6 +608,9 @@ begin
         set new.rue = (select rue from utilisateur where email = new.email);
         set new.cp = (select cp from utilisateur where email = new.email);
         set new.ville = (select ville from utilisateur where email = new.email);
+        set new.question = (select question from utilisateur where email = new.email);
+        set new.reponse_secrete = (select reponse_secrete from utilisateur where email = new.email);
+        set new.blocage = (select blocage from utilisateur where email = new.email);
     end if;
     set new.id_medecin = (select id from utilisateur where email = new.email);
 end //
@@ -591,6 +664,14 @@ create trigger utilisateur_before_update
 before update on utilisateur
 for each row
 begin
+    if new.mdp not like old.mdp
+    then
+        set new.mdp = sha2(concat('aZx@2',new.mdp),256);
+    end if;
+    if new.reponse_secrete not like old.reponse_secrete
+    then
+        set new.reponse_secrete = sha2(concat('aZx@2',new.reponse_secrete),256);
+    end if;
     if new.id in (select id_patient from patient)
     then 
         update patient set
@@ -604,7 +685,10 @@ begin
             numrue = new.numrue,
             rue = new.rue,
             cp = new.cp,
-            ville = new.ville 
+            ville = new.ville,
+            question = new.question,
+            reponse_secrete = new.reponse_secrete,
+            blocage = new.blocage
             where id_patient = new.id;
     end if;
     if new.id in (select id_medecin from medecin)
@@ -620,7 +704,10 @@ begin
             numrue = new.numrue,
             rue = new.rue,
             cp = new.cp,
-            ville = new.ville 
+            ville = new.ville,
+            question = new.question,
+            reponse_secrete = new.reponse_secrete,
+            blocage = new.blocage
             where id_medecin = new.id;
     end if;
 end //
@@ -1287,6 +1374,63 @@ begin
 end //
 delimiter ;
 
+/*********************************TRIGGERS SUR NB_ECHEC_CO***********************************************/
+
+drop trigger if exists nb_echec_co_before_insert;
+delimiter // 
+create trigger nb_echec_co_before_insert 
+before insert on nb_echec_co
+for each row
+begin
+    set new.date_heure_echec = sysdate();
+    if (select count(id_echec) from nb_echec_co where id_utilisateur = new.id_utilisateur) = 0
+    then
+        set new.nb_essai_restant = 2;
+        set new.etat_blocage = 'unlock';
+    else
+        set new.nb_essai_restant = (select nb_essai_restant-1
+            from nb_echec_co
+            where id_utilisateur = new.id_utilisateur 
+            and id_echec >=all (select id_echec from nb_echec_co where id_utilisateur = new.id_utilisateur));
+    end if;
+
+    if new.nb_essai_restant <= 0
+        then
+            set new.etat_blocage = 'lock';
+        else
+            set new.etat_blocage = 'unlock';
+    end if;
+
+end //
+delimiter ;
+
+drop trigger if exists nb_echec_co_after_insert;
+delimiter // 
+create trigger nb_echec_co_after_insert 
+after insert on nb_echec_co
+for each row
+begin
+    if new.etat_blocage not like (select blocage from utilisateur where id= new.id_utilisateur)
+    then
+        update utilisateur set blocage = new.etat_blocage where id = new.id_utilisateur;
+    end if;
+
+end //
+delimiter ;
+
+drop trigger if exists nb_echec_co_after_update;
+delimiter // 
+create trigger nb_echec_co_after_update 
+after update on nb_echec_co
+for each row
+begin
+    if new.etat_blocage not like old.etat_blocage
+    then
+        update utilisateur set blocage = new.etat_blocage where id = new.id_utilisateur;
+    end if;
+end //
+delimiter ;
+
 /*******************************************INSERTS*******************************************/
 insert into mutuelle values(null,'lmde',55);
 insert into mutuelle values(null,'lmdesriches',95);
@@ -1295,20 +1439,17 @@ insert into categorie_secu values(null,'cmu de base',30);
 insert into categorie_secu values(null,'handicap',60);
 insert into categorie_secu values(null,'retraite',15);
 
-
-insert into medecin values(null,'emailmedecin@gmail.com','123','nommedecin','prenom_medecin','01234567879','1980-01-01',sysdate(),'12','rue_medecin','750medeci','medecinville','speci_med',null);
-insert into patient values(null,'emailpat@gmail.com','123','balloch','patoch','01857467879','2000-01-01','2012-12-12','666','rue_patoch','66666','enfer','6666666666',2,null);
-insert into patient values(null,'email_minouche@gmail.com','123','Nouchnouch','minouch','0987654321','1895-01-01','2000-12-24','5','rue patouch','7minouch','hess','0000000001',3,1);
-insert into medecin values(null,'totaltout@gmail.com','123','total','tout','01234562879','1985-01-01',sysdate(),'15','rue du tout','750tout','toutville','touticien',null);
-
-insert into patient values(null,'totaltout@gmail.com','m','n','p','t','2000-10-10','2000-10-10','n','r','c','v','0123495874',1,1);
+insert into medecin values(null,'emailmedecin@gmail.com','123','nommedecin','prenom_medecin','01234567879','1980-01-01',sysdate(),'12','rue_medecin','750medeci','medecinville',4,"Chouaki",null,'speci_med',null);
+insert into patient values(null,'emailpat@gmail.com','123','balloch','patoch','01857467879','2000-01-01','2012-12-12','666','rue_patoch','66666','enfer',4,"Chouaki",null,'6666666666',2,null);
+insert into patient values(null,'email_minouche@gmail.com','123','Nouchnouch','minouch','0987654321','1895-01-01','2000-12-24','5','rue patouch','7minouch','hess',4,"Chouaki",null,'0000000001',3,1);
+insert into medecin values(null,'totaltout@gmail.com','123','total','tout','01234562879','1985-01-01',sysdate(),'15','rue du tout','750tout','toutville',4,"Chouaki",null,'touticien',null);
+insert into patient values(null,'totaltout@gmail.com','m','n','p','t','2000-10-10','2000-10-10','n','r','c','v',4,"Chouaki",null,'0123495874',1,1);
 
 insert into posseder_mutuelle values(2,2);
 insert into posseder_mutuelle values(3,3);
 insert into posseder_mutuelle values(4,2);
 insert into posseder_mutuelle values(2,3);
 insert into posseder_mutuelle values(2,1);
-
 
 /**************************************INSERTS TEST SURVEY ACTIONS NE PAS SUPPRIMER (TESTS UNITAIRES)**************************************/
 /*
@@ -1361,7 +1502,7 @@ insert into examen values(5,'testinsertexamen',curdate(),100,'attente resultat',
 update examen set libelle='testupdateexamen' where id_examen=5;
 update examen set id_examen=6 where id_examen=5;
 delete from examen where id_examen=6;
-insert into planning values(5,'2000','12','2','testinsertplanning',curdate(),5);
+insert into planning values(5,'2000','12','2','testinsertplanning',5);
 insert into prendre_rendez_vous values(2,5,sysdate(),'01:00:00');
 update prendre_rendez_vous set duree='02:00:00' where id_patient=2 and id_planning=5;
 update prendre_rendez_vous set id_patient=5 where id_patient=2 and id_planning=5;
