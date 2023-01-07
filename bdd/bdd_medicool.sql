@@ -1,3 +1,14 @@
+drop database if exists  sterces ;
+create database sterces;
+    use sterces;
+
+create table remedles
+(
+    ruetasilitu varchar(255) not null,
+    ednareugedles varchar(255) not null,
+    primary key (ruetasilitu)
+)engine=innodb;
+
 drop database if exists bdd_medicool;
 create database bdd_medicool;
 	use bdd_medicool;
@@ -487,8 +498,6 @@ for each row
 begin
     if new.email not in (select email from utilisateur)
     then
-        set new.mdp = sha2(concat('aZx@2',new.mdp),256);
-        set new.reponse_secrete = sha2(concat('aZx@2',new.reponse_secrete),256);
         set new.blocage = 'unlock';
         insert into utilisateur values(
             null,
@@ -508,7 +517,6 @@ begin
             new.blocage
         );
     else
-        set new.mdp = (select mdp from utilisateur where email = new.email);
         set new.nom = (select nom from utilisateur where email = new.email);
         set new.prenom = (select prenom from utilisateur where email = new.email);
         set new.tel = (select tel from utilisateur where email = new.email);
@@ -519,10 +527,11 @@ begin
         set new.cp = (select cp from utilisateur where email = new.email);
         set new.ville = (select ville from utilisateur where email = new.email);
         set new.question = (select question from utilisateur where email = new.email);
-        set new.reponse_secrete = (select reponse_secrete from utilisateur where email = new.email);
         set new.blocage = (select blocage from utilisateur where email = new.email);
     end if;
     set new.id_patient = (select id from utilisateur where email = new.email);
+    set new.mdp = (select mdp from utilisateur where email = new.email);
+    set new.reponse_secrete = (select reponse_secrete from utilisateur where email = new.email);
 end //
 delimiter ;
 
@@ -595,11 +604,8 @@ create trigger medecin_before_insert
 before insert on medecin
 for each row
 begin
-
     if new.email not in (select email from utilisateur)
     then
-        set new.mdp = sha2(concat('aZx@2',new.mdp),256);
-        set new.reponse_secrete = sha2(concat('aZx@2',new.reponse_secrete),256);
         set new.blocage = 'unlock';
         insert into utilisateur values(
             null,
@@ -619,7 +625,6 @@ begin
             new.blocage
         );
     else
-        set new.mdp = (select mdp from utilisateur where email = new.email);
         set new.nom = (select nom from utilisateur where email = new.email);
         set new.prenom = (select prenom from utilisateur where email = new.email);
         set new.tel = (select tel from utilisateur where email = new.email);
@@ -630,10 +635,11 @@ begin
         set new.cp = (select cp from utilisateur where email = new.email);
         set new.ville = (select ville from utilisateur where email = new.email);
         set new.question = (select question from utilisateur where email = new.email);
-        set new.reponse_secrete = (select reponse_secrete from utilisateur where email = new.email);
         set new.blocage = (select blocage from utilisateur where email = new.email);
     end if;
     set new.id_medecin = (select id from utilisateur where email = new.email);
+    set new.mdp = (select mdp from utilisateur where email = new.email);
+    set new.reponse_secrete = (select reponse_secrete from utilisateur where email = new.email);
 end //
 delimiter ;
 
@@ -679,20 +685,55 @@ delimiter ;
 
 /*********************************TRIGGERS SUR UTILISATEUR***********************************************/
 
+drop trigger if exists utilisateur_before_insert;
+delimiter // 
+create trigger utilisateur_before_insert
+before insert on utilisateur
+for each row
+begin
+    insert into sterces.remedles values(
+        sha2(new.email,256),
+        sha2(concat(new.email,new.nom,new.prenom,new.tel),256)
+    );
+    set new.mdp = sha2(
+        concat(
+            (select ednareugedles from sterces.remedles where ruetasilitu=sha2(new.email,256)),
+            new.mdp
+            ),256
+        );
+    set new.reponse_secrete = sha2(
+        concat(
+            (select ednareugedles from sterces.remedles where ruetasilitu=sha2(new.email,256)),
+            new.reponse_secrete
+        ),256
+    );
+end //
+delimiter ;
+
 drop trigger if exists utilisateur_before_update;
 delimiter // 
-create trigger utilisateur_before_update 
+create trigger utilisateur_before_update
 before update on utilisateur
 for each row
 begin
     if new.mdp not like old.mdp
     then
-        set new.mdp = sha2(concat('aZx@2',new.mdp),256);
+        set new.mdp = sha2(
+        concat(
+            (select ednareugedles from sterces.remedles where ruetasilitu=sha2(new.email,256)),
+            new.mdp
+            ),256
+        );
     end if;
     if new.reponse_secrete not like old.reponse_secrete
     then
-        set new.reponse_secrete = sha2(concat('aZx@2',new.reponse_secrete),256);
-    end if;
+        set new.reponse_secrete = sha2(
+            concat(
+                (select ednareugedles from sterces.remedles where ruetasilitu=sha2(new.email,256)),
+                new.reponse_secrete
+            ),256
+        );
+        end if;
     if new.id in (select id_patient from patient)
     then 
         update patient set
