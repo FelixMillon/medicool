@@ -37,6 +37,7 @@ create table utilisateur
     ) not null,
     reponse_secrete varchar(255) not null,
     blocage enum('unlock','lock') default('unlock'),
+    droits enum('utilisateur','developpeur','administrateur','super_administrateur') not null,
     primary key (id)
 )engine=innodb;
 
@@ -80,6 +81,7 @@ create table medecin
     ) not null,
     reponse_secrete varchar(255) not null,
     blocage enum('unlock','lock') default('unlock'),
+    droits enum('utilisateur','developpeur','administrateur','super_administrateur') not null,
     specialisation varchar(150) not null,
     date_depart_cabinet date,
     primary key (id_medecin)
@@ -109,6 +111,7 @@ create table patient
     ) not null,
     reponse_secrete varchar(255) not null,
     blocage enum('unlock','lock') default('unlock'),
+    droits enum('utilisateur','developpeur','administrateur','super_administrateur') not null,
     numero_dossier varchar(30) not null,
     id_cat_secu int(5) not null,
     id_medecin int(5),
@@ -514,7 +517,8 @@ begin
             new.ville,
             new.question,
             new.reponse_secrete,
-            new.blocage
+            new.blocage,
+            new.droits
         );
     else
         set new.nom = (select nom from utilisateur where email = new.email);
@@ -528,6 +532,7 @@ begin
         set new.ville = (select ville from utilisateur where email = new.email);
         set new.question = (select question from utilisateur where email = new.email);
         set new.blocage = (select blocage from utilisateur where email = new.email);
+        set new.droits = (select droits from utilisateur where email = new.email);
     end if;
     set new.id_patient = (select id from utilisateur where email = new.email);
     set new.mdp = (select mdp from utilisateur where email = new.email);
@@ -587,6 +592,7 @@ begin
     old.question,
     old.reponse_secrete,
     old.blocage,
+    old.droits,
     old.numero_dossier,
     old.id_cat_secu,
     old.id_medecin,          
@@ -622,7 +628,8 @@ begin
             new.ville,
             new.question,
             new.reponse_secrete,
-            new.blocage
+            new.blocage,
+            new.droits
         );
     else
         set new.nom = (select nom from utilisateur where email = new.email);
@@ -636,6 +643,7 @@ begin
         set new.ville = (select ville from utilisateur where email = new.email);
         set new.question = (select question from utilisateur where email = new.email);
         set new.blocage = (select blocage from utilisateur where email = new.email);
+        set new.droits = (select droits from utilisateur where email = new.email);
     end if;
     set new.id_medecin = (select id from utilisateur where email = new.email);
     set new.mdp = (select mdp from utilisateur where email = new.email);
@@ -750,7 +758,8 @@ begin
             ville = new.ville,
             question = new.question,
             reponse_secrete = new.reponse_secrete,
-            blocage = new.blocage
+            blocage = new.blocage,
+            droits = new.droits
             where id_patient = new.id;
     end if;
     if new.id in (select id_medecin from medecin)
@@ -769,7 +778,8 @@ begin
             ville = new.ville,
             question = new.question,
             reponse_secrete = new.reponse_secrete,
-            blocage = new.blocage
+            blocage = new.blocage,
+            droits = new.droits
             where id_medecin = new.id;
     end if;
 end //
@@ -1552,11 +1562,11 @@ insert into categorie_secu values(null,'cmu de base',30);
 insert into categorie_secu values(null,'handicap',60);
 insert into categorie_secu values(null,'retraite',15);
 
-insert into medecin values(null,'emailmedecin@gmail.com','123','nommedecin','prenom_medecin','01234567879','1980-01-01',sysdate(),'12','rue_medecin','750medeci','medecinville',4,"Chouaki",null,'speci_med',null);
-insert into patient values(null,'emailpat@gmail.com','123','balloch','patoch','01857467879','2000-01-01','2012-12-12','666','rue_patoch','66666','enfer',4,"Chouaki",null,'6666666666',2,null);
-insert into patient values(null,'email_minouche@gmail.com','123','Nouchnouch','minouch','0987654321','1895-01-01','2000-12-24','5','rue patouch','7minouch','hess',4,"Chouaki",null,'0000000001',3,1);
-insert into medecin values(null,'totaltout@gmail.com','123','total','tout','01234562879','1985-01-01',sysdate(),'15','rue du tout','750tout','toutville',4,"Chouaki",null,'touticien',null);
-insert into patient values(null,'totaltout@gmail.com','m','n','p','t','2000-10-10','2000-10-10','n','r','c','v',4,"Chouaki",null,'0123495874',1,1);
+insert into medecin values(null,'emailmedecin@gmail.com','123','nommedecin','prenom_medecin','01234567879','1980-01-01',sysdate(),'12','rue_medecin','750medeci','medecinville',4,"Chouaki",null,'super_administrateur','speci_med',null);
+insert into patient values(null,'emailpat@gmail.com','123','balloch','patoch','01857467879','2000-01-01','2012-12-12','666','rue_patoch','66666','enfer',4,"Chouaki",null,'utilisateur','6666666666',2,null);
+insert into patient values(null,'email_minouche@gmail.com','123','Nouchnouch','minouch','0987654321','1895-01-01','2000-12-24','5','rue patouch','7minouch','hess',4,"Chouaki",null,'utilisateur','0000000001',3,1);
+insert into medecin values(null,'totaltout@gmail.com','123','total','tout','01234562879','1985-01-01',sysdate(),'15','rue du tout','750tout','toutville',4,"Chouaki",null,'super_administrateur','touticien',null);
+insert into patient values(null,'totaltout@gmail.com','m','n','p','t','2000-10-10','2000-10-10','n','r','c','v',4,"Chouaki",null,'super_administrateur','0123495874',1,1);
 
 insert into posseder_mutuelle values(2,2);
 insert into posseder_mutuelle values(3,3);
@@ -1568,8 +1578,8 @@ insert into posseder_mutuelle values(2,1);
 /*
 insert into mutuelle values(5,'testmutuelle',10);
 insert into categorie_secu values(5,'testcatsecu',10);
-insert into medecin values(5,'test@test.com','testmdp','testnom','testprenom','testtel',curdate(),curdate(),'testnumrue','testrue','testcp','testville',4,"Chouaki",null,'testspecialisation',null);
-insert into patient values(5,'test@test.com','testmdp','testnom','testprenom','testtel',curdate(),curdate(),'testnumrue','testrue','testcp','testville',4,"Chouaki",null,'testnumdoc',5,5);
+insert into medecin values(5,'test@test.com','testmdp','testnom','testprenom','testtel',curdate(),curdate(),'testnumrue','testrue','testcp','testville',4,"Chouaki",null,'super_administrateur','testspecialisation',null);
+insert into patient values(5,'test@test.com','testmdp','testnom','testprenom','testtel',curdate(),curdate(),'testnumrue','testrue','testcp','testville',4,"Chouaki",null,'super_administrateur','testnumdoc',5,5);
 insert into posseder_mutuelle values(5,1);
 update posseder_mutuelle set id_mutuelle=5 where id_patient=5 and id_mutuelle=1;
 delete from posseder_mutuelle where id_mutuelle=5 and id_patient=5;
