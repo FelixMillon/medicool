@@ -562,7 +562,28 @@ begin
     then
         delete from utilisateur where id = old.id_patient;
     end if;
+    insert into archipatient values(
+    old.id_patient,
+    old.email,
+    old.mdp,
+    old.nom,
+    old.prenom,
+    old.tel,
+    old.date_naissance,
+    old.date_enregistrement,
+    old.numrue,
+    old.rue,
+    old.cp,
+    old.ville,
+    old.question,
+    old.reponse_secrete,
+    old.blocage,
+    old.numero_dossier,
+    old.id_cat_secu,
+    old.id_medecin,          
+    curdate());
     insert into action_surveillance values(null,"delete",sysdate(),'patient',old.id_patient,current_user());
+
 end //
 delimiter ;
 
@@ -1104,6 +1125,17 @@ create trigger operation_after_delete
 after delete on operation
 for each row
 begin
+    insert into archioperation values(
+    old.id_operation,
+    old.libelle,
+    old.date_heure_time,
+    old.duree,
+    old.prix,
+    old.resultat,
+    old.commentaire,
+    old.id_medecin,
+    old.id_patient,
+    curdate());
    insert into action_surveillance values(null,"delete",sysdate(),"operation",old.id_operation,current_user());
 end //
 delimiter ;
@@ -1218,6 +1250,17 @@ create trigger hospitalisation_after_delete
 after delete on hospitalisation
 for each row
 begin
+    insert into archihospitalisation values(
+        old.id_hospitalisation,
+        old.raison,
+        old.date_debut,
+        old.date_fin_estimee,
+        old.date_fin,
+        old.prix_par_jour,
+        old.id_hopital,
+        old.id_patient,
+        old.id_medecin,
+        curdate());
    insert into action_surveillance values(null,"delete",sysdate(),"hospitalisation",old.id_hospitalisation,current_user());
 end //
 delimiter ;
@@ -1256,6 +1299,16 @@ create trigger traitement_after_delete
 after delete on traitement
 for each row
 begin
+    insert into architraitement values(
+    old.id_traitement,
+    old.libelle,
+    old.posologie,
+    old.date_debut,
+    old.date_fin,
+    old.prix_par_unite,
+    old.id_medecin,
+    old.id_patient,
+    curdate());
    insert into action_surveillance values(null,"delete",sysdate(),"traitement",old.id_traitement,current_user());
 end //
 delimiter ;
@@ -1332,6 +1385,17 @@ create trigger examen_after_delete
 after delete on examen
 for each row
 begin
+    insert into archiexamen values(
+    old.id_examen,
+    old.libelle,
+    old.date,
+    old.prix_examen,
+    old.resultat,
+    old.commentaire,
+    old.id_medecin,
+    old.id_patient,
+    curdate());
+
    insert into action_surveillance values(null,"delete",sysdate(),"examen",old.id_examen,current_user());
 end //
 delimiter ;
@@ -1370,6 +1434,14 @@ create trigger planning_after_delete
 after delete on planning
 for each row
 begin
+    insert into archiplanning values(
+    old.id_planning,
+    old.annee,
+    old.mois,
+    old.semaine,
+    old.url,
+    old.id_medecin,
+    curdate()); 
    insert into action_surveillance values(null,"delete",sysdate(),"planning",old.id_planning,current_user());
 end //
 delimiter ;
@@ -1452,11 +1524,11 @@ insert into posseder_mutuelle values(2,3);
 insert into posseder_mutuelle values(2,1);
 
 /**************************************INSERTS TEST SURVEY ACTIONS NE PAS SUPPRIMER (TESTS UNITAIRES)**************************************/
-/*
+
 insert into mutuelle values(5,'testmutuelle',10);
 insert into categorie_secu values(5,'testcatsecu',10);
-insert into medecin values(5,'test@test.com','testmdp','testnom','testprenom','testtel',curdate(),curdate(),'testnumrue','testrue','testcp','testville','testspecialisation',null);
-insert into patient values(5,'test@test.com','testmdp','testnom','testprenom','testtel',curdate(),curdate(),'testnumrue','testrue','testcp','testville','testnumdoc',5,5);
+insert into medecin values(5,'test@test.com','testmdp','testnom','testprenom','testtel',curdate(),curdate(),'testnumrue','testrue','testcp','testville',4,"Chouaki",null,'testspecialisation',null);
+insert into patient values(5,'test@test.com','testmdp','testnom','testprenom','testtel',curdate(),curdate(),'testnumrue','testrue','testcp','testville',4,"Chouaki",null,'testnumdoc',5,5);
 insert into posseder_mutuelle values(5,1);
 update posseder_mutuelle set id_mutuelle=5 where id_patient=5 and id_mutuelle=1;
 delete from posseder_mutuelle where id_mutuelle=5 and id_patient=5;
@@ -1516,4 +1588,3 @@ update patient set id_patient=6 where id_patient=5;
 update medecin set id_medecin=6 where id_medecin=5;
 delete from patient where id_patient=6;
 delete from medecin where id_medecin=6;
-*/
