@@ -1,7 +1,10 @@
+/*Base pour stocker les secrets (les salts)*/
+
 drop database if exists  sterces ;
 create database sterces;
     use sterces;
 
+/*Table stock utilisateur associé à leurs salt*/
 create table remedles
 (
     ruetasilitu varchar(255) not null,
@@ -36,7 +39,7 @@ create table utilisateur
         'Nom de votre roman prefere'
     ) not null,
     reponse_secrete varchar(255) not null,
-    blocage enum('unlock','lock') default('unlock'),
+    blocage enum('unlock','lock') default 'unlock',
     droits enum('utilisateur','developpeur','administrateur','super_administrateur') not null,
     primary key (id)
 )engine=innodb;
@@ -80,7 +83,7 @@ create table medecin
         'Nom de votre roman prefere'
     ) not null,
     reponse_secrete varchar(255) not null,
-    blocage enum('unlock','lock') default('unlock'),
+    blocage enum('unlock','lock') default 'unlock',
     droits enum('utilisateur','developpeur','administrateur','super_administrateur') not null,
     specialisation varchar(150) not null,
     date_depart_cabinet date,
@@ -110,7 +113,7 @@ create table patient
         'Nom de votre roman prefere'
     ) not null,
     reponse_secrete varchar(255) not null,
-    blocage enum('unlock','lock') default('unlock'),
+    blocage enum('unlock','lock') default 'unlock',
     droits enum('utilisateur','developpeur','administrateur','super_administrateur') not null,
     numero_dossier varchar(30) not null,
     id_cat_secu int(5) not null,
@@ -347,7 +350,7 @@ as
     from facture 
 where 2=0;
 
-create or replace table archiprendre_rendez_vous  
+create table archiprendre_rendez_vous  
 as 
     select * , curdate() datearchiv
     from prendre_rendez_vous  
@@ -391,6 +394,7 @@ where 2=0;
 
 /****************************TABLES SECURITE*********************************/
 
+/*Table conservant l'ensemble des insert update et deletes sur la base de donnée*/
 create table action_surveillance
 (
     id_action int(5) not null auto_increment,
@@ -402,6 +406,7 @@ create table action_surveillance
     primary key (id_action)
 )engine=innodb;
 
+/*Table stockant les echecs de connexion par utilisateur*/
 create table nb_echec_co
 (
     id_echec int auto_increment not null,
@@ -417,6 +422,7 @@ create table nb_echec_co
 
 /****************************PROCEDURE*********************************/
 
+/*procédure pour débloquer un utilisateur quand après qu'il ai eu 3 echecs de connexion*/
 drop procedure if exists unlockuser;
 DELIMITER // 
 create procedure unlockuser(
@@ -430,12 +436,15 @@ BEGIN
         update nb_echec_co set etat_blocage='unlock', nb_essai_restant=3
             where id_utilisateur = le_id_user 
             and id_echec >=all (select id_echec from nb_echec_co where id_utilisateur = le_id_user);
+    else update utilisateur set blocage='unlock' where id = le_id_user;
     end if;
     
 END //
 DELIMITER ;
 
-DELIMITER // 
+/*procédure pour créer un facture en comptant les remboursements de la secu et des eventuelles mutuelles*/
+drop procedure if exists facturation;
+DELIMITER //
 create procedure facturation(
     in le_prix decimal(7,2),
     in le_id_patient int,
@@ -446,7 +455,7 @@ BEGIN
     DECLARE prix_cal decimal(7,2);
     DECLARE le_montant_mutuelle decimal(7,2);
     DECLARE le_montant_secu decimal(7,2);
-    DECLARE pourcent_rembourse_tot decimal(6,2) default(0);
+    DECLARE pourcent_rembourse_tot decimal(6,2) default 0;
     DECLARE le_pourcent_rembourse decimal(5,2);
     DECLARE done INT DEFAULT FALSE;
 
@@ -515,7 +524,7 @@ begin
             new.rue,
             new.cp,
             new.ville,
-            new.question,
+            new.question, 
             new.reponse_secrete,
             new.blocage,
             new.droits
