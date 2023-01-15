@@ -44,6 +44,34 @@ create table utilisateur
     primary key (id)
 )engine=innodb;
 
+create table secretaire
+(
+    id_secretaire int(5) not null auto_increment,
+	email varchar(60) not null UNIQUE,
+	mdp varchar(100) not null,
+    nom varchar(50) not null,
+    prenom varchar(50) not null,
+    tel varchar(20) not null,
+    date_naissance date not null,
+    date_enregistrement date not null,
+    numrue varchar(50) not null,
+    rue varchar(100) not null,
+    cp varchar(10) not null,
+    ville varchar(100) not null,
+    question enum(
+        'Nom de votre ecole primaire',
+        'Nom de jeune fille de votre mère',
+        'Nom de votre premier amour',
+        'Nom de votre professeur prefere',
+        'Ville de rencontre de vos parents',
+        'Nom de votre roman prefere'
+    ) not null,
+    reponse_secrete varchar(255) not null,
+    blocage enum('unlock','lock') default 'unlock',
+    droits enum('utilisateur','developpeur','administrateur','super_administrateur') not null,
+    primary key (id_secretaire)
+)engine=innodb;
+
 create table mutuelle
 (
     id_mutuelle int(5) not null auto_increment,
@@ -416,6 +444,19 @@ create table nb_echec_co
     on delete cascade
 )engine=innodb;
 
+/*******************************FONCTION*******************************/
+
+drop function if exists remedless;
+DELIMITER // 
+create function remedless(leemailuser varchar(100))
+returns varchar(255)
+begin
+    declare mavar varchar(255);
+    select ednareugedles into mavar from sterces.remedles where ruetasilitu = sha2(leemailuser,256);
+    return (mavar);
+end //
+DELIMITER ;
+
 /****************************PROCEDURE*********************************/
 
 /*procédure pour débloquer un utilisateur quand après qu'il ai eu 3 echecs de connexion*/
@@ -577,7 +618,7 @@ create trigger patient_after_delete
 after delete on patient
 for each row
 begin
-    if old.id_patient not in (select id_medecin from medecin)
+    if old.id_patient not in (select id_medecin from medecin) and  old.id_patient not in (select id_secretaire from secretaire)
     then
         delete from utilisateur where id = old.id_patient;
     end if;
@@ -696,6 +737,95 @@ begin
 end //
 delimiter ;
 
+/*********************************TRIGGERS SUR SECRETAIRE***********************************************/
+
+drop trigger if exists secretaire_before_insert;
+delimiter // 
+create trigger secretaire_before_insert
+before insert on secretaire
+for each row
+begin
+    if new.email not in (select email from utilisateur)
+    then
+        set new.blocage = 'unlock';
+        insert into utilisateur values(
+            null,
+            new.email,
+            new.mdp,
+            new.nom,
+            new.prenom,
+            new.tel,
+            new.date_naissance,
+            new.date_enregistrement,
+            new.numrue,
+            new.rue,
+            new.cp,
+            new.ville,
+            new.question,
+            new.reponse_secrete,
+            new.blocage,
+            new.droits
+        );
+    else
+        set new.nom = (select nom from utilisateur where email = new.email);
+        set new.prenom = (select prenom from utilisateur where email = new.email);
+        set new.tel = (select tel from utilisateur where email = new.email);
+        set new.date_naissance = (select date_naissance from utilisateur where email = new.email);
+        set new.date_enregistrement = (select date_enregistrement from utilisateur where email = new.email);
+        set new.numrue = (select numrue from utilisateur where email = new.email);
+        set new.rue = (select rue from utilisateur where email = new.email);
+        set new.cp = (select cp from utilisateur where email = new.email);
+        set new.ville = (select ville from utilisateur where email = new.email);
+        set new.question = (select question from utilisateur where email = new.email);
+        set new.blocage = (select blocage from utilisateur where email = new.email);
+        set new.droits = (select droits from utilisateur where email = new.email);
+    end if;
+    set new.id_secretaire = (select id from utilisateur where email = new.email);
+    set new.mdp = (select mdp from utilisateur where email = new.email);
+    set new.reponse_secrete = (select reponse_secrete from utilisateur where email = new.email);
+end //
+delimiter ;
+
+drop trigger if exists secretaire_after_insert;
+delimiter // 
+create trigger secretaire_after_insert 
+after insert on secretaire
+for each row
+begin
+   insert into action_surveillance values(null,"insert",sysdate(),'secretaire',new.id_secretaire,current_user());
+end //
+delimiter ;
+
+drop trigger if exists secretaire_after_update;
+delimiter // 
+create trigger secretaire_after_update 
+after update on secretaire
+for each row
+begin
+    if new.id_secretaire = old.id_secretaire
+    then
+        insert into action_surveillance values(null,"update",sysdate(),'secretaire',new.id_secretaire,current_user());
+    else
+        insert into action_surveillance values(null,"update_old",sysdate(),'secretaire',old.id_secretaire,current_user());
+        insert into action_surveillance values(null,"update_new",sysdate(),'secretaire',new.id_secretaire,current_user());
+    end if;
+end //
+delimiter ;
+
+drop trigger if exists secretaire_after_delete;
+delimiter // 
+create trigger secretaire_after_delete 
+after delete on secretaire
+for each row
+begin
+    if old.id_secretaire not in (select id_patient from patient)
+    then
+        delete from utilisateur where id = old.id_secretaire;
+    end if;
+    insert into action_surveillance values(null,"delete",sysdate(),'secretaire',old.id_secretaire,current_user());
+end //
+delimiter ;
+
 /*********************************TRIGGERS SUR UTILISATEUR***********************************************/
 
 drop trigger if exists utilisateur_before_insert;
@@ -746,7 +876,7 @@ begin
                 new.reponse_secrete
             ),256
         );
-        end if;
+    end if;
     if new.id in (select id_patient from patient)
     then 
         update patient set
@@ -768,6 +898,26 @@ begin
             where id_patient = new.id;
     end if;
     if new.id in (select id_medecin from medecin)
+    then 
+        update medecin set
+            email = new.email,
+            mdp = new.mdp,
+            nom = new.nom,
+            prenom = new.prenom,
+            tel = new.tel,
+            date_naissance = new.date_naissance,
+            date_enregistrement = new.date_enregistrement,
+            numrue = new.numrue,
+            rue = new.rue,
+            cp = new.cp,
+            ville = new.ville,
+            question = new.question,
+            reponse_secrete = new.reponse_secrete,
+            blocage = new.blocage,
+            droits = new.droits
+            where id_medecin = new.id;
+    end if;
+    if new.id in (select id_secretaire from secretaire)
     then 
         update medecin set
             email = new.email,
@@ -1189,7 +1339,6 @@ begin
     old.prix,
     old.resultat,
     old.commentaire,
-    old.id_medecin,
     old.id_patient,
     curdate());
    insert into action_surveillance values(null,"delete",sysdate(),"operation",old.id_operation,current_user());
@@ -1204,7 +1353,7 @@ create trigger operer_after_insert
 after insert on operer
 for each row
 begin
-   insert into action_surveillance values(null,"insert",sysdate(),"operer",concat(new.id_medecin,',',new.id_patient),current_user());
+   insert into action_surveillance values(null,"insert",sysdate(),"operer",concat(new.id_medecin,',',new.id_operation),current_user());
 end //
 delimiter ;
 
@@ -1214,12 +1363,12 @@ create trigger operer_after_update
 after update on operer
 for each row
 begin
-    if new.id_medecin = old.id_medecin and new.id_patient = old.id_patient
+    if new.id_medecin = old.id_medecin and new.id_operation = old.id_operation
     then
-        insert into action_surveillance values(null,"update",sysdate(),"operer",concat(new.id_medecin,',',new.id_patient),current_user());
+        insert into action_surveillance values(null,"update",sysdate(),"operer",concat(new.id_medecin,',',new.id_operation),current_user());
     else
-        insert into action_surveillance values(null,"update_old",sysdate(),"operer",concat(old.id_medecin,',',old.id_patient),current_user());
-        insert into action_surveillance values(null,"update_new",sysdate(),"operer",concat(new.id_medecin,',',new.id_patient),current_user());
+        insert into action_surveillance values(null,"update_old",sysdate(),"operer",concat(old.id_medecin,',',old.id_operation),current_user());
+        insert into action_surveillance values(null,"update_new",sysdate(),"operer",concat(new.id_medecin,',',new.id_operation),current_user());
     end if;
 end //
 delimiter ;
@@ -1230,7 +1379,7 @@ create trigger operer_after_delete
 after delete on operer
 for each row
 begin
-    insert into action_surveillance values(null,"delete",sysdate(),"operer",concat(old.id_medecin,',',old.id_patient),current_user());
+    insert into action_surveillance values(null,"delete",sysdate(),"operer",concat(old.id_medecin,',',old.id_operation),current_user());
 end //
 delimiter ;
 
@@ -1572,6 +1721,7 @@ insert into patient values(null,'emailpat@gmail.com','123','balloch','patoch','0
 insert into patient values(null,'email_minouche@gmail.com','123','Nouchnouch','minouch','0987654321','1895-01-01','2000-12-24','5','rue patouch','7minouch','hess',4,"Chouaki",null,'utilisateur','0000000001',3,1);
 insert into medecin values(null,'totaltout@gmail.com','123','total','tout','01234562879','1985-01-01',sysdate(),'15','rue du tout','750tout','toutville',4,"Chouaki",null,'super_administrateur','touticien',null);
 insert into patient values(null,'totaltout@gmail.com','m','n','p','t','2000-10-10','2000-10-10','n','r','c','v',4,"Chouaki",null,'super_administrateur','0123495874',1,1);
+insert into secretaire values(null,'emailsecretaire@gmail.com','123','nomsecretaire','prenom_secretaire','01234567879','1980-01-01',sysdate(),'12','rue_secretaire','750secretaire','secretaireville',4,"Chouaki",null,'administrateur');
 
 insert into posseder_mutuelle values(2,2);
 insert into posseder_mutuelle values(3,3);
