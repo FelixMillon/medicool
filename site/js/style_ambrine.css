@@ -1,0 +1,77 @@
+
+
+.question{
+  margin-bottom: 20px ;
+  margin-top: 20px ;
+  
+}
+
+.test{
+  margin-right: 25% ;
+  margin-left: 25% ;
+  width: 50%;
+  margin-top: 20px ;
+  
+}
+
+.cookiedeb{
+  margin-top: 20px ;
+  text-align:center;
+  
+}
+
+
+.box_question{
+  width: 50%; 
+  border-width: 2px; 
+  border-color:black;
+  border-radius: 10px; 
+  background-color: #e2cfce;
+  text-align:center;
+}
+
+.image{
+  max-width:85%; 
+  height :auto;
+}
+
+.reponse{
+  margin-bottom: 15px ;
+  
+}
+
+.titreq{
+  margin-top: 15px ;
+  
+}
+
+
+
+.checkbox-round {
+  width: 1.1em;
+  height: 1.1em;
+  background-color: white;
+  border-radius: 50%;
+  vertical-align:text-bottom;
+
+  border: 1px solid #000;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="radio"].reponse-note {
+    display: none;
+  }
+  input[type="radio"].reponse-note + label {
+
+    width: 1.7em;
+    height: 1.7em;
+    border: 1px dashed #ccc;
+    border-radius: 50%;
+    background-color: white;
+  }
+  input[type="radio"].reponse-note:checked + label {
+    border: 1px solid #000;
+  }
