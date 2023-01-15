@@ -11,7 +11,7 @@
 
 
   <ul class="nav col-12 col-md-auto mb-2 justify-content-end mb-md-0" style="padding-left: 17%;">
-    <li><a href="index.php?page=0" class="px-2 btn text-light ">Se Connecter</a></li>            
+    <li><a href="index.php?page=1" class="px-2 btn text-light ">Se Connecter</a></li>            
   </ul>
   
 </header>
