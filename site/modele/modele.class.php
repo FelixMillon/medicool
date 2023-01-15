@@ -122,6 +122,23 @@
 			$select->execute($donnees);
 			return $select->fetch();
 		}
+
+		public function selectWhere($where)
+		{
+			$donnees = array();
+			$champs=array();
+			foreach($where as $cle => $valeur)
+			{
+				$champs[] = $cle." = :".$cle;
+				$donnees[":".$cle] = $valeur;
+			}
+			$chaineWhere = implode(" and ", $champs);
+			$requete="select * from ".$this->uneTable." where ".$chaineWhere;
+			$select=$this->unPdo->prepare($requete);
+			$select->execute($donnees);
+			return $select->fetch();
+		}
+
 		public function update($tab,$where)
 		{
 			$donnees=array();
