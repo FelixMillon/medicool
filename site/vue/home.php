@@ -1,91 +1,76 @@
+
 <style>
+  body {
+    font: 20px Montserrat, sans-serif;
+    line-height: 1.8;
+    color: #f5f6f7;
+  }
+  p {font-size: 16px;}
+  .margin {margin-bottom: 45px;}
+  .bg-1 { 
+    background-color: #86B9BB; /* Green */
+    color: #ffffff;
+  }
+  .bg-2 { 
+    background-color: #474e5d; /* Dark Blue */
+    color: #ffffff;
+  }
+  .bg-3 { 
+    background-color: #ffffff; /* White */
+    color: #555555;
+  }
+  .bg-4 { 
+    background-color: #2f2f2f; /* Black Gray */
+    color: #fff;
+  }
+  .container-fluid {
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
+  .navbar {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    font-size: 12px;
+    letter-spacing: 5px;
+  }
+  .navbar-nav  li a:hover {
+    color: #1abc9c !important;
+  }
+  </style>
 
+<div>
+    <div class="container-fluid bg-1 text-center">
+    <h3 class="margin">Bienvenue dans le portail Medicool</h3>
+    <img src="img/logo_home.png" class="img-responsive img-circle margin" style="display:inline" alt="Bird" width="200" height="200">
+    </div>
 
-.form{
-	display: block;
-width: 100%;
-padding: .375rem .75rem;
-font-size: 1rem;
-font-weight: 400;
-line-height: 1.5;
-color: #212529;
-background-color: #fff;
-background-clip: padding-box;
-border: 1px solid #ced4da;
--webkit-appearance: none;
--moz-appearance: none;
-appearance: none;
-border-radius: 10px;
-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-background : white;
-color : black;
-}
+    <!-- Second Container -->
+    <div class="container-fluid bg-2 text-center">
+    <h3 class="margin">C'est quoi Medicool?</h3>
+    <p>Medicool une plateforme de e-santé. Cette solution permet aux patients de prendre des rendez-vous en ligne avec des médecins généralistes ou spécialistes. <br>
+      Elle permet aussi au médecin d'avoir le dossier médical des ses patients
+    </p>
+    </div>
 
-</style>
-
-
-<div style="height: 88vh;padding-top: 6%;"> 
-    <div class="d-flex justify-content-around">
-        <div class="col-4">
-            <div class="row align-items-center" style="height:100%;background:#86B9BB;  border-radius: 18px;">
-                <div class="d-flex flex-column">
-                    <div class="p-3"><h4 class="text-light"><u>GESTIONS DES PATIENTS</u></h4></div> 
-                    <div class="p-3">
-                        <select class="form-select w-50 text-center" style="border-radius:15px;">
-                            <option selected>Sélectionner un patient</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+    <!-- Third Container (Grid) -->
+    <div class="container-fluid bg-3 text-center">    
+    <h3 class="margin">Pourquoi utilisée Medicool ?</h3><br>
+    <div class="row">
+        <div class="col-sm-4">
+        <p>Une communauté de praticiens pour vous accompagner.</p>
+        <img src="img/equipe-medicale.png" class="img-responsive margin" style="width:25%" alt="Image">
+        </div>
+        <div class="col-sm-4"> 
+        <p>Gérez vos rendez-vous et documents de santé sur une même application.</p>
+        <img src="img/patient.png" class="img-responsive margin" style="width:25%" alt="Image">
+        </div>
+        <div class="col-sm-4"> 
+        <p>Accédez rapidement aux disponibilités de tous vos praticiens.</p>
+        <img src="img/selfie.png" class="img-responsive margin" style="width:25%" alt="Image">
         </div>
     </div>
-    <div class="d-flex justifiy-content-center" style="padding-top:6%">
-        <div class="col-2"></div>
-        <div class="col-4" style="padding-right:3%;"> 
-            <div class="row" style="height:100%;background:#86B9BB;  border-radius: 18px;">
-                    <div class="p-3"><h4 class="text-light"><u>INFORMATION DU COMPTE</u></h4></div> 
-                    <div class="text-end text-light fs-6 col-5" style="margin-left : 4%">
-                        Identifiant compte : 
-                        <br>
-                        Nom :
-                        <br>
-                        Spécialisation :
-                        <br>
-                        Email :
-                        <br>
-                        Tel :
-                    </div>
-                    <div class="col-1"></div>
-                    <div class="text-start text-light fs-6 col-5" >
-                        01
-                        <br>
-                        Dr John Doe
-                        <br>
-                        Généraliste
-                        <br>
-                        john.doe@medicool.fr
-                        <br>
-                        01 02 03 04 05
-                    </div>
-                </div>
-        </div>
-	    <div class="col-4" style="padding-left:3%"> 
-            <div class="container row align-items-center" style="height:100%; background:#86B9BB;  border-radius: 18px;">
-                <div class="d-flex flex-column">
-                    <div class="p-3"><h4 class="text-light"><u>PLANNING</u></h4></div> 
-                    <div class="p-3">
-                        <a class="btn nav-link form w-50 text-center"> Mon planning </a>
-                    </div>
-                    <div class="p-3">
-                        <a class="btn nav-link form w-50 text-center"> Mes rendes-vous </a>
-                    </div>
-                </div>
-            </div>
-	    </div>
-	
-	    <div class="col-2"></div>
     </div>
 </div>
