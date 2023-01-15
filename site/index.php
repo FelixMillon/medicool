@@ -25,14 +25,13 @@
 <?php
       $unControleur->setTable("utilisateur"); 
       $lesUtilisateurs = $unControleur->selectAll();
-      $unControleur->setTable("employe"); 
-      $lesEmployes = $unControleur->selectAll();
+      $unControleur->setTable("medecin"); 
+      $lesMedecins = $unControleur->selectAll();
       $lesID = [];
 
-      foreach($lesEmployes as $unEmploye){
-        $lesID[count($lesID)]=$unEmploye['email'];
+      foreach($lesMedecins as $unMedecin){
+      $lesID[count($lesID)]=$unMedecin['email'];
       }
-
 
 			if(isset($_SESSION['email']) && in_array($_SESSION['email'], $lesID, true))
 			{
@@ -61,7 +60,8 @@
       header("Location: index.php");
 
       default : require_once("vue/home.php");  break;
-	  case 1:  require_once("vue/espace_medecin.php");  break;
+
+	  case 1:  require_once("gestion_connexion.php");  break;
 	  case 2:  require_once("vue/gestion_patient.php");  break;
 	  case 3:  require_once("vue/planning.php");  break;
 	  case 4:  require_once("vue/hospitalisation.php");  break;
@@ -71,7 +71,7 @@
 	  case 8:  require_once("vue/operer.php");  break;
 	  case 9:  require_once("vue/pathologie.php");  break;
 	  case 10: require_once("vue/traitement.php");  break;
-	  case 11: require_once("vue/login.php");  break;
+	  case 11: require_once("vue/espace_medecin.php");  break;
     }
 		?>
 	</center>

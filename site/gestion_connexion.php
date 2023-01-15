@@ -1,10 +1,15 @@
 <?php
+require_once("vue/login.php");
 	$unControleur->setTable("utilisateur");
-	$lesUtilisateurs = $unControleur->selectAll();
+	
 
-	if(isset($_POST['SeConnecter']))
+	if(isset($_POST['seConnecter']))
 	{
-		$mdp= hash('sha256',$_POST['mdp']);
+		$tab= array($_POST['email']);
+		$remedles = $unControleur->selectfunction('remedless',$tab);
+		$remedles =$remedles["result"].$_POST['mdp'];
+		$mdp= hash('sha256',$remedles);
+		
 		$where = array('email'=>$_POST['email'] ,'mdp'=>$mdp);
 		$unControleur->setTable("utilisateur");
 		$unUser = $unControleur->selectWhere($where);
@@ -14,22 +19,10 @@
 			$_SESSION['nom'] = $unUser['nom'];
 			$_SESSION['prenom'] = $unUser['prenom'];
 			$_SESSION['id'] = $unUser['id'];
-			$unControleur->setTable("employe");
-			$unEmploye = $unControleur->selectWhere($where);
-			if(isset($unEmploye['email']))
-			{
-				$_SESSION['droits'] = $unEmploye['droits'];
-			}
+			$_SESSION['droits'] = $unUser['droits'];
 			header("Location: index.php");
 		}else{
 			echo "<br/> Vérifiez vos identifiants";
 		}
 	}
-
 ?>
-
-<form method="post">
-	<input type="text" name="email" placeholder="email">
-	<input type="password" name="mdp" placeholder="mdp">
-	<input type="submit" name="SeConnecter">
-</form>

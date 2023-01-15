@@ -51,5 +51,9 @@
 		{
 			$this->unModele->callproc($nom, $tab);
 		}
+		public function selectfunction($nom, $tab)
+		{
+			return $this->unModele->selectfunction($nom, $tab);
+		}
 	}
 ?>
