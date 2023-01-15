@@ -200,12 +200,8 @@ create table operation
     prix decimal(7,2) not null,
     resultat varchar(255) not null,
     commentaire varchar(255) not null,
-    id_medecin int(5) not null,
     id_patient int(5) not null,
     primary key (id_operation),
-    foreign key(id_medecin) references medecin(id_medecin)
-    on update cascade
-    on delete cascade,
     foreign key(id_patient) references patient(id_patient)
     on update cascade
     on delete cascade
@@ -214,12 +210,12 @@ create table operation
 create table operer
 (
     id_medecin int(5) not null,
-    id_patient int(5) not null,
-    primary key (id_medecin,id_patient),
+    id_operation int(5) not null,
+    primary key (id_medecin,id_operation),
     foreign key(id_medecin) references medecin(id_medecin)
     on update cascade
     on delete cascade,
-    foreign key(id_patient) references patient(id_patient)
+    foreign key(id_operation) references operation(id_operation)
     on update cascade
     on delete cascade
 )engine=innodb;
