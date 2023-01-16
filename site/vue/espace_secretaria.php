@@ -25,39 +25,30 @@ color : black;
 
 
 <div style="height: 88vh;padding-top: 6%;"> 
-    <div class="d-flex justify-content-around">
-        <div class="col-4">
-            <div class="row align-items-center" style="height:100%;background:#86B9BB;  border-radius: 18px;">
-                <div class="d-flex flex-column">
-                    <div class="p-3"><h4 class="text-light"><u>GESTIONS DES PATIENTS</u></h4></div> 
-                    <div class="p-3">
-                        <select class="form-select w-50 text-center" style="border-radius:15px;">
-                            <option selected>Sélectionner un patient</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                    <!--If super admin-->
-                    <div class="p-3 d-flex align-content-center flex-wrap"> 
-                        <div class="col-6" style="padding-top:1%;">
-                            <a class="btn nav-link form w-50 text-center"> Ajouter un rendez-vous </a>
-                        </div>
-                        <div class="col-6" style="padding-top:1%;">
-                            <a class="btn nav-link form w-50 text-center"> Gestion des patients </a>
-                        </div>
-                        <div class="col-6" style="padding-top:1%;">
-                            <a class="btn nav-link form w-50 text-center"> Gestion des patients (Admin) </a>
-                        </div>
-                        <div class="col-6" style="padding-top:1%;">
-                            <a class="btn nav-link form w-50 text-center"> Gestion des secrétaires (Admin) </a>
-                        </div>
-                    </div>
-                      <!--End super admin-->
-                </div>
-            </div>
+    <div class="container d-flex align-content-center flex-wrap" style="height:30%;background:#86B9BB;  border-radius: 18px;"> 
+        <div class="col-12" style="padding-top:1%;">
+           <div class="p-3"><h4 class="text-light"><u>GESTION SECRÉTARIAT</u></h4></div> </a>
         </div>
-        
+        <div class="col-6" style="padding-top:1%;">
+            <a class="btn nav-link form w-50 text-center"> Ajouter un rendez-vous </a>
+        </div>
+        <div class="col-6" style="padding-top:1%;">
+            <a class="btn nav-link form w-50 text-center"> Gestion des patients </a>
+        </div>
+        <div class="col-6" style="padding-top:1%;">
+            <a class="btn nav-link form w-50 text-center"> Gestion des factures  </a>
+        </div>
+        <div class="col-6" style="padding-top:1%;">
+            <a class="btn nav-link form w-50 text-center"> Gestion des blocages  </a>
+        </div>
+        <!--If super admin-->
+        <div class="col-6" style="padding-top:1%;">
+            <a class="btn nav-link form w-50 text-center"> Gestion des patients (Admin) </a>
+        </div>
+        <div class="col-6" style="padding-top:1%;">
+            <a class="btn nav-link form w-50 text-center"> Gestion des secrétaires (Admin) </a>
+        </div>
+        <!--End super admin-->
     </div>
     
     <div class="d-flex justifiy-content-center" style="padding-top:6%">
@@ -73,7 +64,7 @@ color : black;
                             <br>
                             Nom & Prénom :
                             <br>
-                            Spécialisation :
+                            Droit :
                             <br>
                             Email :
                             <br>
@@ -85,7 +76,7 @@ color : black;
                             <br>
                             Jean Dupuit
                             <br>
-                            Généraliste
+                            Administrateur
                             <br>
                             john.doe@gmail.com
                             <br>
