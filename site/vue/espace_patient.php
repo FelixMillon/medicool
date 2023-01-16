@@ -63,32 +63,43 @@ color : black;
         <div class="col-4"></div>
         <div class="col-4" style="padding-right:3%;"> 
             <div style="height:20vh;background:#86B9BB;  border-radius: 18px;">
-                <div class="row" style="padding-top : 4%;">
-                    <div class="p-3"><h4 class="text-light"><u>INFORMATION DU Patient</u></h4></div> 
-                    <div class="text-end text-light fs-6 col-5" style="margin-left : 4%">
-                        Identifiant compte : 
-                        <br>
-                        Nom & Prénom :
-                        <br>
-                        Date de naissance :
-                        <br>
-                        Email :
-                        <br>
-                        Tel :
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div class="col-6 row" style="padding-top : 4%;">
+                        <div class="p-3"><h4 class="text-light"><u>INFORMATION DU COMPTE</u></h4></div> 
+                        <div class="text-end text-light fs-6 col-5" style="margin-left : 4%">
+                            Identifiant compte : 
+                            <br>
+                            Nom & Prénom :
+                            <br>
+                            Date de naissance :
+                            <br>
+                            Email :
+                            <br>
+                            Tel :
+                        </div>
+                        <div class="col-1"></div>
+                        <div class="text-start text-light fs-6 col-5" >
+                            01
+                            <br>
+                            Jean Dupuit
+                            <br>
+                            15-02-2000
+                            <br>
+                            john.doe@gmail.com
+                            <br>
+                            01 02 03 04 05
+                        </div>
                     </div>
-                    <div class="col-1"></div>
-                    <div class="text-start text-light fs-6 col-5" >
-                        01
-                        <br>
-                        Jean Dupuit
-                        <br>
-                        Généraliste
-                        <br>
-                        john.doe@gmail.com
-                        <br>
-                        01 02 03 04 05
+
+                    <div class="col-6" style="padding-top : 5%;">
+                    
+                    <img src='img/user.png' width='25%' alt=''><br><br>
+                    <a class="btn nav-link form text-center w-75"><small> Demande de modification d'information</small></a>
+
                     </div>
-                </div>
+
+                </div>                
             </div>
         </div>
         <div class="col-4"></div>
