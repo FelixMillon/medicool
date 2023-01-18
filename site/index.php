@@ -72,7 +72,11 @@
 	  case 9:  require_once("vue/pathologie.php");  break;
 	  case 10: require_once("vue/traitement.php");  break;
 	  case 11: require_once("vue/espace_medecin.php");  break;
-	  case 12: require_once("vue/espace_secretaria.php");  break;
+	  case 12: require_once("vue/espace_secretariat.php");  break;
+	  case 13: require_once("vue/blocage.php");  break;
+	  case 14: require_once("vue/question_secret.php"); break;
+	  case 15: require_once("vue/nouveau_mdp.php"); break;
+	  case 16: require_once("vue/code_email.php"); break;
     }
 		?>
 	</center>
