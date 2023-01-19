@@ -24,7 +24,7 @@ color : black;
 </style>
 
 
-<div style="height: 88vh;padding-top: 6%;"> 
+<div style="height: 88vh;padding-top: 3%;"> 
     <div class="d-flex justify-content-around">
         <div class="col-4">
             <div class="row align-items-center" style="height:100%;background:#86B9BB;  border-radius: 18px;">
@@ -60,14 +60,13 @@ color : black;
         
     </div>
     
-    <div class="d-flex justifiy-content-center" style="padding-top:6%">
-        <div class="col-4"></div>
-        <div class="col-4" style="padding-right:3%;"> 
-            <div style="height:20vh;background:#86B9BB;  border-radius: 18px;">
+
+        <div class="col-6" style="padding-right:3%;padding-top : 4%;"> 
+            <div style="height:25%;background:#86B9BB;  border-radius: 18px; padding-bottom : 5%;">
                 <div class="d-flex justify-content-between align-items-center">
 
-                    <div class="col-6 row" style="padding-top : 4%;">
-                        <div class="p-3"><h4 class="text-light"><u>INFORMATION DU COMPTE</u></h4></div> 
+                    <div class="col-7 row" style="padding-top : 4%;">
+                        <div><h4 class="text-light"><u>INFORMATION DU COMPTE</u></h4></div> 
                         <div class="text-end text-light fs-6 col-5" style="margin-left : 4%">
                             Identifiant compte : 
                             <br>
@@ -93,7 +92,7 @@ color : black;
                         </div>
                     </div>
 
-                    <div class="col-6" style="padding-top : 5%;">
+                    <div class="col-5" style="padding-top : 5%;">
                     
                     <img src='img/user.png' width='25%' alt=''><br><br>
                     <a class="btn nav-link form text-center w-75"><small> Demande de modification d'information</small></a>
@@ -103,6 +102,5 @@ color : black;
                 </div>                
             </div>
         </div>
-        <div class="col-4"></div>
-    </div>
+
 </div>

@@ -64,15 +64,22 @@
 	  case 1:  require_once("gestion_connexion.php");  break;
 	  case 2:  require_once("vue/espace_patient.php");  break;
 	  case 3:  require_once("vue/planning.php");  break;
-	  case 4:  require_once("vue/hospitalisation.php");  break;
+	  case 4:  require_once("gestion_hospitalisation.php");  break;
 	  case 5:  require_once("vue/operation.php");  break;
 	  case 6:  require_once("vue/allergie.php");  break;
-	  case 7:  require_once("vue/examen.php");  break;
+	  case 7:  require_once("gestion_examen.php");  break;
 	  case 8:  require_once("vue/operer.php");  break;
 	  case 9:  require_once("vue/pathologie.php");  break;
 	  case 10: require_once("vue/traitement.php");  break;
 	  case 11: require_once("vue/espace_medecin.php");  break;
-	  case 12: require_once("vue/espace_secretaria.php");  break;
+	  case 12: require_once("vue/espace_secretariat.php");  break;
+	  case 13: require_once("vue/blocage.php");  break;
+	  case 14: require_once("vue/question_secret.php"); break;
+	  case 15: require_once("vue/nouveau_mdp.php"); break;
+	  case 16: require_once("vue/code_email.php"); break;
+	  case 17: require_once("gestion_facture.php"); break;
+	  case 18: require_once("gestion_correspondance.php"); break;
+	  case 19: require_once("gestion_patient.php"); break;
     }
 		?>
 	</center>
