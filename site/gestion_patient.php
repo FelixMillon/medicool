@@ -37,8 +37,8 @@ require_once("vue/insert_patient.php");
 if (isset($_POST['Valider']))
 {
 
-    $value = ['nom','prenom','email','tel','date_naissance','date_enregistrement','numrue','rue','cp','ville','id_medecin','id_cat_secu'];
-    $tab=array(      
+    //$value = ['nom','prenom','email','tel','date_naissance','date_enregistrement','numrue','rue','cp','ville','id_medecin','id_cat_secu'];
+    $tab=array(     
         "nom"=>$_POST["nom"],
         "prenom"=>$_POST["prenom"],
         "email"=>$_POST["email"],
@@ -50,10 +50,14 @@ if (isset($_POST['Valider']))
         "cp"=>$_POST["cp"],
         "ville"=>$_POST["ville"],
         "id_medecin"=>$_POST["id_medecin"],
-        "id_cat_secu"=>$_POST["id_cat_secu"]
+        "id_cat_secu"=>$_POST["id_cat_secu"],
+        "mdp"=>"Azerty@123",
+        "question_1"=>"1",
+        "question_2"=>"2",
+        "reponse_secrete_1"=>"a remplacer",
+        "reponse_secrete_2"=>"a remplacer"
         );
-
-    $unControleur->insertValue($tab, $value); 
+    $unControleur->insertValue($tab); 
 }
 
 
