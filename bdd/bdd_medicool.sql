@@ -221,7 +221,7 @@ create table facture
 create table correspondance
 (
     id_correspondance int(5) not null auto_increment,
-    titre varchar(100) not null,
+    titre varchar(255) not null,
     contenu varchar(255) not null,
     id_medecin_source int(5) not null,
     id_medecin_cible int(5) not null,
@@ -241,7 +241,7 @@ create table correspondance
 create table pathologie
 (
     id_path int(5) not null auto_increment,
-    libelle varchar(100) not null,
+    libelle varchar(255) not null,
     date_diagnostique date not null,
     date_guerison date,
     id_medecin int(5) not null,
@@ -258,7 +258,7 @@ create table pathologie
 create table operation
 (
     id_operation int(5) not null auto_increment,
-    libelle varchar(100) not null,
+    libelle varchar(255) not null,
     date_heure_time datetime not null,
     duree time not null,
     prix decimal(7,2) not null,
@@ -299,7 +299,7 @@ create table hopital
 create table hospitalisation 
 (
     id_hospitalisation int(5) not null auto_increment,
-    raison varchar(200) not null,
+    raison varchar(255) not null,
     date_debut date not null,
     date_fin_estimee date not null,
     date_fin date,
@@ -320,8 +320,8 @@ create table hospitalisation
 create table traitement 
 (
     id_traitement int(5) not null auto_increment,
-    libelle varchar(200) not null,
-    posologie varchar(200) not null,
+    libelle varchar(255) not null,
+    posologie varchar(255) not null,
     date_debut date not null,
     date_fin date,
     prix_par_unite float(7,2),
@@ -339,7 +339,7 @@ create table traitement
 create table allergie 
 (
     id_allergie int(5) not null auto_increment,
-    libelle varchar(200) not null,
+    libelle varchar(255) not null,
     date_diagnostique date not null,
     date_guerison date,
     id_medecin int(5) not null,
@@ -356,11 +356,11 @@ create table allergie
 create table examen
 (
     id_examen int(5) not null auto_increment,
-    libelle varchar(200) not null,
+    libelle varchar(255) not null,
     date date not null,
     prix_examen float(7,2),
-    resultat varchar(200) not null,
-    commentaire varchar(200),
+    resultat varchar(255) not null,
+    commentaire varchar(255),
     id_medecin int(5) not null,
     id_patient int(5) not null, 
     primary key (id_examen),

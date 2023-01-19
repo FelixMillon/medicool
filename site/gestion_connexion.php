@@ -1,7 +1,13 @@
 <?php
-require_once("vue/login.php");
-	$unControleur->setTable("utilisateur");
-	
+
+	require_once("vue/login.php");
+
+	$mail = new PHPMailer(true);
+
+
+
+
+
 
 	if(isset($_POST['seConnecter']))
 	{
