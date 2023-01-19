@@ -36,7 +36,6 @@ require_once("vue/insert_patient.php");
 
 if (isset($_POST['Valider']))
 {
-
     //$value = ['nom','prenom','email','tel','date_naissance','date_enregistrement','numrue','rue','cp','ville','id_medecin','id_cat_secu'];
     $tab=array(     
         "nom"=>$_POST["nom"],
@@ -49,13 +48,16 @@ if (isset($_POST['Valider']))
         "rue"=>$_POST["rue"],
         "cp"=>$_POST["cp"],
         "ville"=>$_POST["ville"],
-        "id_medecin"=>$_POST["id_medecin"],
+        "id_medecin"=>$_POST['id_medecin'],
         "id_cat_secu"=>$_POST["id_cat_secu"],
         "mdp"=>"Azerty@123",
         "question_1"=>"1",
         "question_2"=>"2",
+        "droits"=>"utilisateur",
+        "blocage"=>"unlock",
         "reponse_secrete_1"=>"a remplacer",
-        "reponse_secrete_2"=>"a remplacer"
+        "reponse_secrete_2"=>"a remplacer",
+        "numero_dossier"=>'a triggerer',
         );
     $unControleur->insertValue($tab); 
 }
@@ -63,7 +65,8 @@ if (isset($_POST['Valider']))
 
 if(isset($_POST['Modifier']))
 {
-    $where = array("id_patient"=>$id_patient);
+    $unControleur->setTable("utilisateur");
+    $where = array("id"=>$id_patient);
     $tab=array(      
         "nom"=>$_POST["nom"],
         "prenom"=>$_POST["prenom"],
@@ -73,8 +76,13 @@ if(isset($_POST['Modifier']))
         "numrue"=>$_POST["numrue"],
         "rue"=>$_POST["rue"],
         "cp"=>$_POST["cp"],
-        "ville"=>$_POST["ville"],
-        "id_medecin"=>$_POST["id_medecin"],
+        "ville"=>$_POST["ville"]
+        );
+    $unControleur->update ($tab, $where);
+    $unControleur->setTable("patient");
+    $where = array("id_patient"=>$id_patient);
+    $tab=array(      
+        "id_medecin"=>$_POST['id_medecin'],
         "id_cat_secu"=>$_POST["id_cat_secu"]
         );
     $unControleur->update ($tab, $where); 
