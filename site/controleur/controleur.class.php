@@ -19,9 +19,9 @@
 		{
 			$this->unModele->insert($tab);
 		}
-		public function insertValue($tab, $value)
+		public function insertValue($tab)
 		{
-			$this->unModele->insertValue($tab, $value);
+			$this->unModele->insertValue($tab);
 		}
 		public function insertnonull($tab)
 		{

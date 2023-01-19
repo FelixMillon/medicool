@@ -43,20 +43,23 @@
 			
 		}
 
-		public function insertValue ($tab, $value)
+		public function insertValue ($tab)
 		{
 			$champs =array();
+			$champs2 = array();
 			$donnees=array();
 			foreach ($tab as $cle => $valeur)
 			{
 				$champs[] = ":".$cle;
+				$champs2[] = $cle;
 				$donnees[":".$cle] = $valeur;
 			}
 
 			$chaineChamps = implode(",",$champs);
-			$requete ="insert into ".$this->uneTable."(nom, prenom, email, tel, date_naissance, date_enregistrement, numrue, rue, cp, ville, id_medecin, id_cat_secu) 
+			$chaineChamps2 = implode(",",$champs2);
+			$requete ="insert into ".$this->uneTable."($chaineChamps2) 
 			values (".$chaineChamps.");";
-			var_dump($value); 
+			var_dump($chaineChamps2); 
 			$insert = $this->unPdo->prepare($requete);
 			$insert->execute($donnees);
 			

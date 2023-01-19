@@ -63,6 +63,9 @@ if (isset($_POST['Valider']))
 }
 
 
+
+
+
 if(isset($_POST['Modifier']))
 {
     $where = array("id_hospitalisation"=>$id_hospitalisation);
@@ -79,6 +82,13 @@ if(isset($_POST['Modifier']))
     $unControleur->update ($tab, $where); 
     header("Location: index.php?page=4"); 
 }
+
+if(isset($_POST['Annuler']))
+{
+    $LHospitalisation=NULL;
+    header("Location: index.php?page=4&id_hospitalisation=null"); 
+}
+
 
 $unControleur->setTable("hospitalisation");
 $LesHospitalisations = $unControleur->selectAll(); 

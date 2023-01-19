@@ -59,7 +59,7 @@
                 </div>
           
                 <div class="col-6" style="padding-top: 6%"> 
-                    <input class="btn btn-outline-danger btn-lg w-75 fw-bold" type="reset" name="Annuler" value="Annuler">
+                    <input class="btn btn-outline-danger btn-lg w-75 fw-bold" type="submit" name="Annuler" value="Annuler">
                 </div>
                 <div class="col-6" style="padding-top: 6%"> 
                     <input class="btn btn-outline-success btn-lg w-75 fw-bold" type="submit" 
