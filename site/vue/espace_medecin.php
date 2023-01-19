@@ -24,7 +24,7 @@ color : black;
 </style>
 
 
-<div style="height: 88vh;padding-top: 6%;"> 
+<div style="height: 88vh;padding-top: 3%;"> 
     <div class="d-flex justify-content-around">
         <div class="col-4">
             <div class="row align-items-center" style="height:100%;background:#86B9BB;  border-radius: 18px;">

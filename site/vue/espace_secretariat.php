@@ -24,10 +24,10 @@ color : black;
 </style>
 
 
-<div style="height: 88vh;padding-top: 6%;"> 
-    <div class="container d-flex align-content-center flex-wrap" style="height:37%;background:#86B9BB;  border-radius: 18px;"> 
-        <div class="col-12" style="padding-top:1%;">
-           <div class="p-3"><h4 class="text-light"><u>GESTION SECRÉTARIAT</u></h4></div> </a>
+<div style="height: 88vh; padding-top: 6%;"> 
+    <div class="container d-flex align-content-center flex-wrap" style="height:38%;background:#86B9BB;  border-radius: 18px;"> 
+        <div class="col-12">
+           <div class="p-1"><h4 class="text-light"><u>GESTION SECRÉTARIAT</u></h4></div> </a>
         </div>
         <div class="col-6" style="padding-top:1%;">
             <a class="btn nav-link form w-50 text-center"> Ajouter un rendez-vous </a>

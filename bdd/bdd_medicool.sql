@@ -323,7 +323,7 @@ create table examen
     libelle varchar(200) not null,
     date date not null,
     prix_examen float(7,2),
-    resultat date not null,
+    resultat varchar(200) not null,
     commentaire varchar(200),
     id_medecin int(5) not null,
     id_patient int(5) not null, 
