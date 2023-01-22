@@ -37,28 +37,54 @@ require_once("vue/insert_patient.php");
 if (isset($_POST['Valider']))
 {
     //$value = ['nom','prenom','email','tel','date_naissance','date_enregistrement','numrue','rue','cp','ville','id_medecin','id_cat_secu'];
-    $tab=array(     
-        "nom"=>$_POST["nom"],
-        "prenom"=>$_POST["prenom"],
-        "email"=>$_POST["email"],
-        "tel"=>$_POST["tel"],
-        "date_naissance"=>$_POST["date_naissance"],
-        "date_enregistrement"=>date('Y-m-d'),
-        "numrue"=>$_POST["numrue"],
-        "rue"=>$_POST["rue"],
-        "cp"=>$_POST["cp"],
-        "ville"=>$_POST["ville"],
-        "id_medecin"=>$_POST['id_medecin'],
-        "id_cat_secu"=>$_POST["id_cat_secu"],
-        "mdp"=>"Azerty@123",
-        "question_1"=>"1",
-        "question_2"=>"2",
-        "droits"=>"utilisateur",
-        "blocage"=>"unlock",
-        "reponse_secrete_1"=>"a remplacer",
-        "reponse_secrete_2"=>"a remplacer",
-        "numero_dossier"=>'a triggerer',
-        );
+    if($_POST['id_medecin']==0)
+    {
+        $tab=array(     
+            "nom"=>$_POST["nom"],
+            "prenom"=>$_POST["prenom"],
+            "email"=>$_POST["email"],
+            "tel"=>$_POST["tel"],
+            "date_naissance"=>$_POST["date_naissance"],
+            "date_enregistrement"=>date('Y-m-d'),
+            "numrue"=>$_POST["numrue"],
+            "rue"=>$_POST["rue"],
+            "cp"=>$_POST["cp"],
+            "ville"=>$_POST["ville"],
+            "id_cat_secu"=>$_POST["id_cat_secu"],
+            "mdp"=>"Azerty@123",
+            "question_1"=>"1",
+            "question_2"=>"2",
+            "droits"=>"utilisateur",
+            "blocage"=>"unlock",
+            "reponse_secrete_1"=>"a remplacer",
+            "reponse_secrete_2"=>"a remplacer",
+            "numero_dossier"=>'a triggerer',
+            );
+    }else
+    {
+        $tab=array(     
+            "nom"=>$_POST["nom"],
+            "prenom"=>$_POST["prenom"],
+            "email"=>$_POST["email"],
+            "tel"=>$_POST["tel"],
+            "date_naissance"=>$_POST["date_naissance"],
+            "date_enregistrement"=>date('Y-m-d'),
+            "numrue"=>$_POST["numrue"],
+            "rue"=>$_POST["rue"],
+            "cp"=>$_POST["cp"],
+            "ville"=>$_POST["ville"],
+            "id_medecin"=>$_POST['id_medecin'],
+            "id_cat_secu"=>$_POST["id_cat_secu"],
+            "mdp"=>"Azerty@123",
+            "question_1"=>"1",
+            "question_2"=>"2",
+            "droits"=>"utilisateur",
+            "blocage"=>"unlock",
+            "reponse_secrete_1"=>"a remplacer",
+            "reponse_secrete_2"=>"a remplacer",
+            "numero_dossier"=>'a triggerer',
+            );
+    }
     $unControleur->insertValue($tab); 
 }
 
@@ -81,10 +107,19 @@ if(isset($_POST['Modifier']))
     $unControleur->update ($tab, $where);
     $unControleur->setTable("patient");
     $where = array("id_patient"=>$id_patient);
-    $tab=array(      
-        "id_medecin"=>$_POST['id_medecin'],
-        "id_cat_secu"=>$_POST["id_cat_secu"]
-        );
+    if($_POST['id_medecin']==0)
+    {
+        $tab=array(      
+            "id_cat_secu"=>$_POST["id_cat_secu"]
+            );
+    }else
+    {
+        $tab=array(      
+            "id_medecin"=>$_POST['id_medecin'],
+            "id_cat_secu"=>$_POST["id_cat_secu"]
+            );
+    }
+
     $unControleur->update ($tab, $where); 
     header("Location: index.php?page=19"); 
 }

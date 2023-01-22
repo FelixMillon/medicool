@@ -582,7 +582,7 @@ create trigger patient_before_insert
 before insert on patient
 for each row
 begin
-    if new.id_medecin='null'
+    if new.id_medecin=0
         then set new.id_medecin = null;
     end if;
     if new.email not in (select email from utilisateur)
@@ -702,6 +702,10 @@ create trigger medecin_before_insert
 before insert on medecin
 for each row
 begin
+    if new.email in (select email from secretaire)
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Insertion impossible, utilisateur déjà existant dans "secretaire"';
+    END IF;
     if new.email not in (select email from utilisateur)
     then
         set new.blocage = 'unlock';
@@ -795,6 +799,10 @@ create trigger secretaire_before_insert
 before insert on secretaire
 for each row
 begin
+    if new.email in (select email from medecin)
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Insertion impossible, utilisateur déjà existant dans "medecin"';
+    END IF;
     if new.email not in (select email from utilisateur)
     then
         set new.blocage = 'unlock';
@@ -1807,6 +1815,7 @@ insert into posseder_mutuelle values(4,2);
 insert into posseder_mutuelle values(2,3);
 insert into posseder_mutuelle values(2,1);
 
+insert into medecin values(0,'toto@gmail.com','123','toto','toto','toto','1980-01-01',sysdate(),'toto','toto','toto','toto',4,6,"toto","toto",null,'super_administrateur','toto',null);
 /**************************************INSERTS TEST SURVEY ACTIONS NE PAS SUPPRIMER (TESTS UNITAIRES)**************************************/
 /*
 insert into mutuelle values(5,'testmutuelle',10);

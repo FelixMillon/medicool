@@ -2,13 +2,6 @@
 
 	require_once("vue/login.php");
 
-	$mail = new PHPMailer(true);
-
-
-
-
-
-
 	if(isset($_POST['seConnecter']))
 	{
 		$tab= array($_POST['email']);
