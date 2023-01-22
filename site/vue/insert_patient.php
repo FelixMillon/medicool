@@ -49,7 +49,19 @@
 
             <div class="col-6">
                 <select name="id_medecin" class="form-select w-100 text-center" style="border-radius:15px;border:3px solid #86B9BB">
-                    <option selected>Médecin référent</option>
+                    <option 
+                    <?php
+                    if($LePatient['id_medecin']!=null)
+                    {
+                        $leid_medecin=$LePatient['id_medecin'];
+                    }else
+                    {
+                        $leid_medecin='null';
+                    }
+                        if ($LePatient!=NULL) echo "value='".$leid_medecin."'";
+                    ?>
+                    selected>Médecin référent</option>
+                    <option value='null'>Aucun medecin référent</option>
                     <?php
                         foreach ($lesMedecins as $unMedecin){
                             echo "<option value='".$unMedecin['id_medecin']."'>".$unMedecin['nom']." ".$unMedecin['prenom']."</option>";

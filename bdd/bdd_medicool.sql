@@ -183,10 +183,8 @@ create table patient
     id_cat_secu int(5) not null,
     id_medecin int(5),
     primary key (id_patient),
-    foreign key(id_cat_secu) references categorie_secu(id_cat_secu)
-    on update cascade,
+    foreign key(id_cat_secu) references categorie_secu(id_cat_secu),
     foreign key(id_medecin) references medecin(id_medecin)
-    on update cascade
 )engine=innodb;
 
 create table posseder_mutuelle
@@ -584,6 +582,9 @@ create trigger patient_before_insert
 before insert on patient
 for each row
 begin
+    if new.id_medecin='null'
+        then set new.id_medecin = null;
+    end if;
     if new.email not in (select email from utilisateur)
     then
         set new.blocage = 'unlock';
