@@ -30,7 +30,7 @@ create table utilisateur
     rue varchar(100) not null,
     cp varchar(10) not null,
     ville varchar(100) not null,
-    question enum(
+    question_1 enum(
         'Nom de votre ecole primaire',
         'Nom de jeune fille de votre mère',
         'Nom de votre premier amour',
@@ -38,7 +38,16 @@ create table utilisateur
         'Ville de rencontre de vos parents',
         'Nom de votre roman prefere'
     ) not null,
-    reponse_secrete varchar(255) not null,
+    question_2 enum(
+        'Nom de votre ecole primaire',
+        'Nom de jeune fille de votre mère',
+        'Nom de votre premier amour',
+        'Nom de votre professeur prefere',
+        'Ville de rencontre de vos parents',
+        'Nom de votre roman prefere'
+    ) not null,
+    reponse_secrete_1 varchar(255) not null,
+    reponse_secrete_2 varchar(255) not null,
     blocage enum('unlock','lock') default 'unlock',
     droits enum('utilisateur','developpeur','administrateur','super_administrateur') not null,
     primary key (id)
@@ -58,7 +67,7 @@ create table secretaire
     rue varchar(100) not null,
     cp varchar(10) not null,
     ville varchar(100) not null,
-    question enum(
+    question_1 enum(
         'Nom de votre ecole primaire',
         'Nom de jeune fille de votre mère',
         'Nom de votre premier amour',
@@ -66,7 +75,16 @@ create table secretaire
         'Ville de rencontre de vos parents',
         'Nom de votre roman prefere'
     ) not null,
-    reponse_secrete varchar(255) not null,
+    question_2 enum(
+        'Nom de votre ecole primaire',
+        'Nom de jeune fille de votre mère',
+        'Nom de votre premier amour',
+        'Nom de votre professeur prefere',
+        'Ville de rencontre de vos parents',
+        'Nom de votre roman prefere'
+    ) not null,
+    reponse_secrete_1 varchar(255) not null,
+    reponse_secrete_2 varchar(255) not null,
     blocage enum('unlock','lock') default 'unlock',
     droits enum('utilisateur','developpeur','administrateur','super_administrateur') not null,
     primary key (id_secretaire)
@@ -102,7 +120,7 @@ create table medecin
     rue varchar(100) not null,
     cp varchar(10) not null,
     ville varchar(100) not null,
-    question enum(
+    question_1 enum(
         'Nom de votre ecole primaire',
         'Nom de jeune fille de votre mère',
         'Nom de votre premier amour',
@@ -110,7 +128,16 @@ create table medecin
         'Ville de rencontre de vos parents',
         'Nom de votre roman prefere'
     ) not null,
-    reponse_secrete varchar(255) not null,
+    question_2 enum(
+        'Nom de votre ecole primaire',
+        'Nom de jeune fille de votre mère',
+        'Nom de votre premier amour',
+        'Nom de votre professeur prefere',
+        'Ville de rencontre de vos parents',
+        'Nom de votre roman prefere'
+    ) not null,
+    reponse_secrete_1 varchar(255) not null,
+    reponse_secrete_2 varchar(255) not null,
     blocage enum('unlock','lock') default 'unlock',
     droits enum('utilisateur','developpeur','administrateur','super_administrateur') not null,
     specialisation varchar(150) not null,
@@ -132,7 +159,7 @@ create table patient
     rue varchar(100) not null,
     cp varchar(10) not null,
     ville varchar(100) not null,
-    question enum(
+    question_1 enum(
         'Nom de votre ecole primaire',
         'Nom de jeune fille de votre mère',
         'Nom de votre premier amour',
@@ -140,17 +167,24 @@ create table patient
         'Ville de rencontre de vos parents',
         'Nom de votre roman prefere'
     ) not null,
-    reponse_secrete varchar(255) not null,
+    question_2 enum(
+        'Nom de votre ecole primaire',
+        'Nom de jeune fille de votre mère',
+        'Nom de votre premier amour',
+        'Nom de votre professeur prefere',
+        'Ville de rencontre de vos parents',
+        'Nom de votre roman prefere'
+    ) not null,
+    reponse_secrete_1 varchar(255) not null,
+    reponse_secrete_2 varchar(255) not null,
     blocage enum('unlock','lock') default 'unlock',
     droits enum('utilisateur','developpeur','administrateur','super_administrateur') not null,
     numero_dossier varchar(30) not null,
     id_cat_secu int(5) not null,
     id_medecin int(5),
     primary key (id_patient),
-    foreign key(id_cat_secu) references categorie_secu(id_cat_secu)
-    on update cascade,
+    foreign key(id_cat_secu) references categorie_secu(id_cat_secu),
     foreign key(id_medecin) references medecin(id_medecin)
-    on update cascade
 )engine=innodb;
 
 create table posseder_mutuelle
@@ -185,7 +219,7 @@ create table facture
 create table correspondance
 (
     id_correspondance int(5) not null auto_increment,
-    titre varchar(100) not null,
+    titre varchar(255) not null,
     contenu varchar(255) not null,
     id_medecin_source int(5) not null,
     id_medecin_cible int(5) not null,
@@ -205,7 +239,7 @@ create table correspondance
 create table pathologie
 (
     id_path int(5) not null auto_increment,
-    libelle varchar(100) not null,
+    libelle varchar(255) not null,
     date_diagnostique date not null,
     date_guerison date,
     id_medecin int(5) not null,
@@ -222,7 +256,7 @@ create table pathologie
 create table operation
 (
     id_operation int(5) not null auto_increment,
-    libelle varchar(100) not null,
+    libelle varchar(255) not null,
     date_heure_time datetime not null,
     duree time not null,
     prix decimal(7,2) not null,
@@ -263,7 +297,7 @@ create table hopital
 create table hospitalisation 
 (
     id_hospitalisation int(5) not null auto_increment,
-    raison varchar(200) not null,
+    raison varchar(255) not null,
     date_debut date not null,
     date_fin_estimee date not null,
     date_fin date,
@@ -284,8 +318,8 @@ create table hospitalisation
 create table traitement 
 (
     id_traitement int(5) not null auto_increment,
-    libelle varchar(200) not null,
-    posologie varchar(200) not null,
+    libelle varchar(255) not null,
+    posologie varchar(255) not null,
     date_debut date not null,
     date_fin date,
     prix_par_unite float(7,2),
@@ -303,7 +337,7 @@ create table traitement
 create table allergie 
 (
     id_allergie int(5) not null auto_increment,
-    libelle varchar(200) not null,
+    libelle varchar(255) not null,
     date_diagnostique date not null,
     date_guerison date,
     id_medecin int(5) not null,
@@ -320,11 +354,11 @@ create table allergie
 create table examen
 (
     id_examen int(5) not null auto_increment,
-    libelle varchar(200) not null,
+    libelle varchar(255) not null,
     date date not null,
     prix_examen float(7,2),
-    resultat date not null,
-    commentaire varchar(200),
+    resultat varchar(255) not null,
+    commentaire varchar(255),
     id_medecin int(5) not null,
     id_patient int(5) not null, 
     primary key (id_examen),
@@ -468,10 +502,14 @@ BEGIN
     DECLARE le_id_echec int;
     if (select count(id_echec) from nb_echec_co where id_utilisateur = le_id_user) != 0
     then
-        insert into nb_echec_co values(null,'unlock',3,sysdate(),le_id_user);
-        update nb_echec_co set etat_blocage='unlock', nb_essai_restant=3
-            where id_utilisateur = le_id_user 
-            and id_echec >=all (select id_echec from nb_echec_co where id_utilisateur = le_id_user);
+        if(select nb_essai_restant from nb_echec_co where id_utilisateur = le_id_user
+            and id_echec >=all (select id_echec from nb_echec_co where id_utilisateur = le_id_user)) !=3
+        then
+            insert into nb_echec_co values(null,'unlock',3,sysdate(),le_id_user);
+            update nb_echec_co set etat_blocage='unlock', nb_essai_restant=3
+                where id_utilisateur = le_id_user 
+                and id_echec >=all (select id_echec from nb_echec_co where id_utilisateur = le_id_user);
+        end if;
     else update utilisateur set blocage='unlock' where id = le_id_user;
     end if;
     
@@ -544,6 +582,9 @@ create trigger patient_before_insert
 before insert on patient
 for each row
 begin
+    if new.id_medecin=0
+        then set new.id_medecin = null;
+    end if;
     if new.email not in (select email from utilisateur)
     then
         set new.blocage = 'unlock';
@@ -560,8 +601,10 @@ begin
             new.rue,
             new.cp,
             new.ville,
-            new.question, 
-            new.reponse_secrete,
+            new.question_1,
+            new.question_2, 
+            new.reponse_secrete_1,
+            new.reponse_secrete_2,
             new.blocage,
             new.droits
         );
@@ -575,13 +618,15 @@ begin
         set new.rue = (select rue from utilisateur where email = new.email);
         set new.cp = (select cp from utilisateur where email = new.email);
         set new.ville = (select ville from utilisateur where email = new.email);
-        set new.question = (select question from utilisateur where email = new.email);
+        set new.question_1 = (select question_1 from utilisateur where email = new.email);
+        set new.question_2 = (select question_2 from utilisateur where email = new.email);
         set new.blocage = (select blocage from utilisateur where email = new.email);
         set new.droits = (select droits from utilisateur where email = new.email);
     end if;
     set new.id_patient = (select id from utilisateur where email = new.email);
     set new.mdp = (select mdp from utilisateur where email = new.email);
-    set new.reponse_secrete = (select reponse_secrete from utilisateur where email = new.email);
+    set new.reponse_secrete_1 = (select reponse_secrete_1 from utilisateur where email = new.email);
+    set new.reponse_secrete_2 = (select reponse_secrete_2 from utilisateur where email = new.email);
 end //
 delimiter ;
 
@@ -634,8 +679,10 @@ begin
     old.rue,
     old.cp,
     old.ville,
-    old.question,
-    old.reponse_secrete,
+    old.question_1,
+    old.question_2,
+    old.reponse_secrete_1,
+    old.reponse_secrete_2,
     old.blocage,
     old.droits,
     old.numero_dossier,
@@ -655,6 +702,10 @@ create trigger medecin_before_insert
 before insert on medecin
 for each row
 begin
+    if new.email in (select email from secretaire)
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Insertion impossible, utilisateur déjà existant dans "secretaire"';
+    END IF;
     if new.email not in (select email from utilisateur)
     then
         set new.blocage = 'unlock';
@@ -671,8 +722,10 @@ begin
             new.rue,
             new.cp,
             new.ville,
-            new.question,
-            new.reponse_secrete,
+            new.question_1,
+            new.question_2,
+            new.reponse_secrete_1,
+            new.reponse_secrete_2,
             new.blocage,
             new.droits
         );
@@ -686,13 +739,15 @@ begin
         set new.rue = (select rue from utilisateur where email = new.email);
         set new.cp = (select cp from utilisateur where email = new.email);
         set new.ville = (select ville from utilisateur where email = new.email);
-        set new.question = (select question from utilisateur where email = new.email);
+        set new.question_1 = (select question_1 from utilisateur where email = new.email);
+        set new.question_2 = (select question_2 from utilisateur where email = new.email);
         set new.blocage = (select blocage from utilisateur where email = new.email);
         set new.droits = (select droits from utilisateur where email = new.email);
     end if;
     set new.id_medecin = (select id from utilisateur where email = new.email);
     set new.mdp = (select mdp from utilisateur where email = new.email);
-    set new.reponse_secrete = (select reponse_secrete from utilisateur where email = new.email);
+    set new.reponse_secrete_1 = (select reponse_secrete_1 from utilisateur where email = new.email);
+    set new.reponse_secrete_2 = (select reponse_secrete_2 from utilisateur where email = new.email);
 end //
 delimiter ;
 
@@ -744,6 +799,10 @@ create trigger secretaire_before_insert
 before insert on secretaire
 for each row
 begin
+    if new.email in (select email from medecin)
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Insertion impossible, utilisateur déjà existant dans "medecin"';
+    END IF;
     if new.email not in (select email from utilisateur)
     then
         set new.blocage = 'unlock';
@@ -760,8 +819,10 @@ begin
             new.rue,
             new.cp,
             new.ville,
-            new.question,
-            new.reponse_secrete,
+            new.question_1,
+            new.question_2,
+            new.reponse_secrete_1,
+            new.reponse_secrete_2,
             new.blocage,
             new.droits
         );
@@ -775,13 +836,15 @@ begin
         set new.rue = (select rue from utilisateur where email = new.email);
         set new.cp = (select cp from utilisateur where email = new.email);
         set new.ville = (select ville from utilisateur where email = new.email);
-        set new.question = (select question from utilisateur where email = new.email);
+        set new.question_1 = (select question_1 from utilisateur where email = new.email);
+        set new.question_2 = (select question_2 from utilisateur where email = new.email);
         set new.blocage = (select blocage from utilisateur where email = new.email);
         set new.droits = (select droits from utilisateur where email = new.email);
     end if;
     set new.id_secretaire = (select id from utilisateur where email = new.email);
     set new.mdp = (select mdp from utilisateur where email = new.email);
-    set new.reponse_secrete = (select reponse_secrete from utilisateur where email = new.email);
+    set new.reponse_secrete_1 = (select reponse_secrete_1 from utilisateur where email = new.email);
+    set new.reponse_secrete_2 = (select reponse_secrete_2 from utilisateur where email = new.email);
 end //
 delimiter ;
 
@@ -843,10 +906,16 @@ begin
             new.mdp
             ),256
         );
-    set new.reponse_secrete = sha2(
+    set new.reponse_secrete_1 = sha2(
         concat(
             (select ednareugedles from sterces.remedles where ruetasilitu=sha2(new.email,256)),
-            new.reponse_secrete
+            new.reponse_secrete_1
+        ),256
+    );
+    set new.reponse_secrete_2 = sha2(
+        concat(
+            (select ednareugedles from sterces.remedles where ruetasilitu=sha2(new.email,256)),
+            new.reponse_secrete_2
         ),256
     );
 end //
@@ -858,6 +927,10 @@ create trigger utilisateur_before_update
 before update on utilisateur
 for each row
 begin
+    if new.email != old.email
+    then
+        update sterces.remedles set ruetasilitu = sha2(new.email,256) where ruetasilitu=sha2(old.email,256);
+    end if;
     if new.mdp not like old.mdp
     then
         set new.mdp = sha2(
@@ -867,12 +940,21 @@ begin
             ),256
         );
     end if;
-    if new.reponse_secrete not like old.reponse_secrete
+    if new.reponse_secrete_1 not like old.reponse_secrete_1
     then
-        set new.reponse_secrete = sha2(
+        set new.reponse_secrete_1 = sha2(
             concat(
                 (select ednareugedles from sterces.remedles where ruetasilitu=sha2(new.email,256)),
-                new.reponse_secrete
+                new.reponse_secrete_1
+            ),256
+        );
+    end if;
+    if new.reponse_secrete_2 not like old.reponse_secrete_2
+    then
+        set new.reponse_secrete_2 = sha2(
+            concat(
+                (select ednareugedles from sterces.remedles where ruetasilitu=sha2(new.email,256)),
+                new.reponse_secrete_2
             ),256
         );
     end if;
@@ -890,8 +972,10 @@ begin
             rue = new.rue,
             cp = new.cp,
             ville = new.ville,
-            question = new.question,
-            reponse_secrete = new.reponse_secrete,
+            question_1 = new.question_1,
+            question_2 = new.question_2,
+            reponse_secrete_1 = new.reponse_secrete_1,
+            reponse_secrete_2 = new.reponse_secrete_2,
             blocage = new.blocage,
             droits = new.droits
             where id_patient = new.id;
@@ -910,8 +994,10 @@ begin
             rue = new.rue,
             cp = new.cp,
             ville = new.ville,
-            question = new.question,
-            reponse_secrete = new.reponse_secrete,
+            question_1 = new.question_1,
+            question_2 = new.question_2,
+            reponse_secrete_1 = new.reponse_secrete_1,
+            reponse_secrete_2 = new.reponse_secrete_2,
             blocage = new.blocage,
             droits = new.droits
             where id_medecin = new.id;
@@ -930,8 +1016,10 @@ begin
             rue = new.rue,
             cp = new.cp,
             ville = new.ville,
-            question = new.question,
-            reponse_secrete = new.reponse_secrete,
+            question_1 = new.question_1,
+            question_2 = new.question_2,
+            reponse_secrete_1 = new.reponse_secrete_1,
+            reponse_secrete_2 = new.reponse_secrete_2,
             blocage = new.blocage,
             droits = new.droits
             where id_medecin = new.id;
@@ -1714,12 +1802,12 @@ insert into categorie_secu values(null,'cmu de base',30);
 insert into categorie_secu values(null,'handicap',60);
 insert into categorie_secu values(null,'retraite',15);
 
-insert into medecin values(null,'emailmedecin@gmail.com','123','nommedecin','prenom_medecin','01234567879','1980-01-01',sysdate(),'12','rue_medecin','750medeci','medecinville',4,"Chouaki",null,'super_administrateur','speci_med',null);
-insert into patient values(null,'emailpat@gmail.com','123','balloch','patoch','01857467879','2000-01-01','2012-12-12','666','rue_patoch','66666','enfer',4,"Chouaki",null,'utilisateur','6666666666',2,null);
-insert into patient values(null,'email_minouche@gmail.com','123','Nouchnouch','minouch','0987654321','1895-01-01','2000-12-24','5','rue patouch','7minouch','hess',4,"Chouaki",null,'utilisateur','0000000001',3,1);
-insert into medecin values(null,'totaltout@gmail.com','123','total','tout','01234562879','1985-01-01',sysdate(),'15','rue du tout','750tout','toutville',4,"Chouaki",null,'super_administrateur','touticien',null);
-insert into patient values(null,'totaltout@gmail.com','m','n','p','t','2000-10-10','2000-10-10','n','r','c','v',4,"Chouaki",null,'super_administrateur','0123495874',1,1);
-insert into secretaire values(null,'emailsecretaire@gmail.com','123','nomsecretaire','prenom_secretaire','01234567879','1980-01-01',sysdate(),'12','rue_secretaire','750secretaire','secretaireville',4,"Chouaki",null,'administrateur');
+insert into medecin values(null,'emailmedecin@gmail.com','123','nommedecin','prenom_medecin','01234567879','1980-01-01',sysdate(),'12','rue_medecin','750medeci','medecinville',4,6,"Chouaki","Moby-Dick",null,'super_administrateur','speci_med',null);
+insert into patient values(null,'emailpat@gmail.com','123','balloch','patoch','01857467879','2000-01-01','2012-12-12','666','rue_patoch','66666','enfer',4,6,"Chouaki","Moby-Dick",null,'utilisateur','6666666666',2,null);
+insert into patient values(null,'email_minouche@gmail.com','123','Nouchnouch','minouch','0987654321','1895-01-01','2000-12-24','5','rue patouch','7minouch','hess',4,6,"Chouaki","Moby-Dick",null,'utilisateur','0000000001',3,1);
+insert into medecin values(null,'totaltout@gmail.com','123','total','tout','01234562879','1985-01-01',sysdate(),'15','rue du tout','750tout','toutville',4,6,"Chouaki","Moby-Dick",null,'super_administrateur','touticien',null);
+insert into patient values(null,'totaltout@gmail.com','m','n','p','t','2000-10-10','2000-10-10','n','r','c','v',4,6,"Chouaki","Moby-Dick",null,'super_administrateur','0123495874',1,1);
+insert into secretaire values(null,'emailsecretaire@gmail.com','123','nomsecretaire','prenom_secretaire','01234567879','1980-01-01',sysdate(),'12','rue_secretaire','750secretaire','secretaireville',4,6,"Chouaki","Moby-Dick",null,'administrateur');
 
 insert into posseder_mutuelle values(2,2);
 insert into posseder_mutuelle values(3,3);
@@ -1727,12 +1815,13 @@ insert into posseder_mutuelle values(4,2);
 insert into posseder_mutuelle values(2,3);
 insert into posseder_mutuelle values(2,1);
 
+insert into medecin values(0,'toto@gmail.com','123','toto','toto','toto','1980-01-01',sysdate(),'toto','toto','toto','toto',4,6,"toto","toto",null,'super_administrateur','toto',null);
 /**************************************INSERTS TEST SURVEY ACTIONS NE PAS SUPPRIMER (TESTS UNITAIRES)**************************************/
 /*
 insert into mutuelle values(5,'testmutuelle',10);
 insert into categorie_secu values(5,'testcatsecu',10);
-insert into medecin values(5,'test@test.com','testmdp','testnom','testprenom','testtel',curdate(),curdate(),'testnumrue','testrue','testcp','testville',4,"Chouaki",null,'super_administrateur','testspecialisation',null);
-insert into patient values(5,'test@test.com','testmdp','testnom','testprenom','testtel',curdate(),curdate(),'testnumrue','testrue','testcp','testville',4,"Chouaki",null,'super_administrateur','testnumdoc',5,5);
+insert into medecin values(5,'test@test.com','testmdp','testnom','testprenom','testtel',curdate(),curdate(),'testnumrue','testrue','testcp','testville',4,6,"Chouaki","Moby-Dick",null,'super_administrateur','testspecialisation',null);
+insert into patient values(5,'test@test.com','testmdp','testnom','testprenom','testtel',curdate(),curdate(),'testnumrue','testrue','testcp','testville',4,6,"Chouaki","Moby-Dick",null,'super_administrateur','testnumdoc',5,5);
 insert into posseder_mutuelle values(5,1);
 update posseder_mutuelle set id_mutuelle=5 where id_patient=5 and id_mutuelle=1;
 delete from posseder_mutuelle where id_mutuelle=5 and id_patient=5;

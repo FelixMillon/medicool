@@ -40,7 +40,31 @@
 			$requete ="insert into ".$this->uneTable." values (null,".$chaineChamps.");";
 			$insert = $this->unPdo->prepare($requete);
 			$insert->execute($donnees);
+			
 		}
+
+		public function insertValue ($tab)
+		{
+			$champs =array();
+			$champs2 = array();
+			$donnees=array();
+			foreach ($tab as $cle => $valeur)
+			{
+				$champs[] = ":".$cle;
+				$champs2[] = $cle;
+				$donnees[":".$cle] = $valeur;
+			}
+
+			$chaineChamps = implode(",",$champs);
+			$chaineChamps2 = implode(",",$champs2);
+			$requete ="insert into ".$this->uneTable."($chaineChamps2) 
+			values (".$chaineChamps.");";
+			$insert = $this->unPdo->prepare($requete);
+			$insert->execute($donnees);
+			
+		}
+
+
 		public function insertnonull ($tab)
 		{
 			$champs =array();
@@ -131,6 +155,7 @@
 			{
 				$champs2[] = $cle." = :".$cle;
 				$donnees[":".$cle] = $valeur;
+				var_dump($cle." : ".$valeur."</br>"); 
 			}
 			$chaineChamps = implode(",",$champs2);
 			$champs=array();
@@ -141,6 +166,7 @@
 			}
 			$chaineWhere = implode(" and ", $champs);
 			$requete ="update ".$this->uneTable." set ".$chaineChamps." where ".$chaineWhere;
+			var_dump($requete); 
 			$update = $this->unPdo->prepare($requete);
 			$update->execute($donnees);
 		}
