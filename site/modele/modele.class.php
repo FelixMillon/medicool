@@ -59,7 +59,6 @@
 			$chaineChamps2 = implode(",",$champs2);
 			$requete ="insert into ".$this->uneTable."($chaineChamps2) 
 			values (".$chaineChamps.");";
-			var_dump($chaineChamps2); 
 			$insert = $this->unPdo->prepare($requete);
 			$insert->execute($donnees);
 			
@@ -156,6 +155,7 @@
 			{
 				$champs2[] = $cle." = :".$cle;
 				$donnees[":".$cle] = $valeur;
+				var_dump($cle." : ".$valeur."</br>"); 
 			}
 			$chaineChamps = implode(",",$champs2);
 			$champs=array();
