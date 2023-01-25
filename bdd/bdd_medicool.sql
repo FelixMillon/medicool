@@ -1794,6 +1794,97 @@ begin
 end //
 delimiter ;
 
+/********************************************************************************** VUE ******************************************************************************************/
+
+/* vue sur la table patient pour avoir le nom et prenom du medecin et le libelle de sa categorie de secu*/ 
+create or replace view vPatient as 
+(
+    select  P.*, C.libelle, M.nom as NM, M.prenom as PM
+    from patient P, categorie_secu C, medecin M
+    where P.id_cat_secu = C.id_cat_secu 
+    and P.id_medecin = M.id_medecin  
+);
+
+/* vue sur la table facture pour avoir le nom et prenom du medecin et du patient*/ 
+create or replace view vFacture as 
+(
+    select  F.*, P.nom as NP, P.prenom as PP , M.nom, M.prenom
+    from patient P, facture F, medecin M
+    where F.id_patient = P.id_patient 
+    and F.id_medecin = M.id_medecin  
+);
+
+/* vue sur la table Examen pour avoir le nom et prenom du medecin cible/source et du patient*/ 
+create or replace view vCorrespondance as 
+(
+    select  C.*, P.nom as NP, P.prenom as PP , M.nom, M.prenom
+    from patient P, correspondance C, medecin M
+    where C.id_patient = P.id_patient 
+    and C.id_medecin_source = M.id_medecin  
+    and C.id_medecin_cible = M.id_medecin  
+);
+
+/* vue sur la table pathologie pour avoir le nom et prenom du medecin et du patient*/ 
+create or replace view vPathologie as 
+(
+    select  Pa.*, P.nom as NP, P.prenom as PP , M.nom, M.prenom
+    from patient P, pathologie Pa, medecin M
+    where Pa.id_patient = P.id_patient 
+    and Pa.id_medecin = M.id_medecin  
+);
+/* vue sur la table operation pour avoir le nom et prenom du patient*/ 
+operation --> nom et prenom du patient 
+create or replace view vOperation as 
+(
+    select  O.*, P.nom, P.prenom
+    from Patient P, operation O
+    where O.id_patient = P.id_patient 
+);
+/* vue sur la table operer pour avoir le nom et prenom du medecin et le libelle de l'operation*/ 
+create or replace view vOperer as 
+(
+    select  Op.*, M.nom, M.prenom, O.libelle
+    from operation O, operer Op, medecin M
+    where Op.id_operation = O.id_operation 
+    and Op.id_medecin = M.id_medecin  
+);
+/* vue sur la table hospitalisation pour avoir le nom et prenom du medecin et du patient et le nom et la ville de l'hopital*/ 
+create or replace view vHospitalisation as 
+(
+    select  H.*, P.nom as NP, P.prenom as PP , M.nom, M.prenom, Ho.nom as hopital, Ho.ville
+    from patient P, hospitalisation H, medecin M, hopital Ho
+    where H.id_patient = P.id_patient 
+    and H.id_medecin = M.id_medecin  
+    and H.id_hopital = Ho.id_hopital 
+);
+/* vue sur la table traitement pour avoir le nom et prenom du medecin et du patient*/ 
+create or replace view vTraitement as 
+(
+    select  T.*, P.nom as NP, P.prenom as PP , M.nom, M.prenom
+    from patient P, traitement T, medecin M
+    where T.id_patient = P.id_patient 
+    and T.id_medecin = M.id_medecin  
+);
+
+/* vue sur la table allergie pour avoir le nom et prenom du medecin et du patient*/ 
+
+create or replace view vAllergie as 
+(
+    select  A.*, P.nom as NP, P.prenom as PP , M.nom, M.prenom
+    from patient P, allergie A, medecin M
+    where A.id_patient = P.id_patient 
+    and A.id_medecin = M.id_medecin  
+);
+/* vue sur la table Examen pour avoir le nom et prenom du medecin et du patient*/ 
+
+create or replace view vExamen as 
+(
+    select  E.*, P.nom as NP, P.prenom as PP , M.nom, M.prenom
+    from patient P, examen E, medecin M
+    where E.id_patient = P.id_patient 
+    and E.id_medecin = M.id_medecin  
+);
+
 /*******************************************INSERTS*******************************************/
 insert into mutuelle values(null,'lmde',55);
 insert into mutuelle values(null,'lmdesriches',95);
