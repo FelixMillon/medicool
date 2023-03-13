@@ -143,6 +143,7 @@
 			$chaineWhere = implode(" and ", $champs);
 			$requete="select * from ".$this->uneTable." where ".$chaineWhere;
 			$select=$this->unPdo->prepare($requete);
+			var_dump($requete);
 			$select->execute($donnees);
 			return $select->fetch();
 		}
@@ -182,6 +183,7 @@
 			}
 			$proc = $this->unPdo->prepare($requete);
 			$proc->execute();
+		    return $proc->fetch();
 		}
 		
 		public function selectfunction($nom,$tab)

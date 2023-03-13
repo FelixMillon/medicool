@@ -46,7 +46,16 @@
 				$_SESSION['id'] = $unUser['id'];
 				$_SESSION['droits'] = $unUser['droits'];
 				$tab= array($unUser['id']);
-				$unControleur->callproc('unlockuser',$tab);
+				$unControleur->callproc('unlockuser',$tab);		
+				
+				if($_SESSION['estPatient']){
+					$tab2=array($_SESSION['email']);
+					$cle=$unControleur->callproc('getkey',$tab2);
+					$_SESSION['cle'] = $cle['cle'];
+				}else{
+					$_SESSION['cle']="admin";
+				}
+
 				header("Location: index.php");
 			}
 			

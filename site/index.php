@@ -33,18 +33,20 @@
       $lesID[count($lesID)]=$unMedecin['email'];
       }
 
-			if(isset($_SESSION['email']) && in_array($_SESSION['email'], $lesID, true))
-			{
-				require_once ("header/header_connect.php");
-			}else{
-        	require_once ("header/header_prospec.php");
-			}
+		if(isset($_SESSION['email']) && in_array($_SESSION['email'], $lesID, true))
+		{
+			require_once ("header/header_connect.php");			
+		}else{
+		require_once ("header/header_prospec.php");
+		
+		}
 
 		?>
 
 	<center>
 
 		<?php
+
 			if(isset($_GET['page']))
 			{
 				$page = $_GET['page'];
@@ -59,8 +61,9 @@
       session_destroy();
       header("Location: index.php");
 
-      default : require_once("vue/home.php");  break;
+	  
 
+      default : require_once("vue/home.php");  break;
 	  case 1:  require_once("gestion_connexion.php");  break;
 	  case 2:  require_once("vue/espace_patient.php");  break;
 	  case 3:  require_once("vue/planning.php");  break;

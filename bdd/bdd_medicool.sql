@@ -1,8 +1,17 @@
 /*Base pour stocker les secrets (les salts)*/
 
-drop database if exists  sterces ;
+drop database if exists      ;
 create database sterces;
     use sterces;
+
+/*TABLE GENERATEUR DE CRYTO*/
+
+create table keycrypte
+(
+    utilisateur varchar(255) not null,
+    cle varchar(255) not null,
+    primary key (utilisateur)
+)engine=innodb;
 
 /*Table stock utilisateur associé à leurs salt*/
 create table remedles
@@ -516,6 +525,27 @@ BEGIN
 END //
 DELIMITER ;
 
+
+/*procédure qui insert le clé de chiffrement dans la base de donnée secret*/
+
+drop procedure if exists genekey;
+DELIMITER // 
+create procedure genekey(in utilisateurs varchar(100), in cle varchar(100))
+BEGIN
+    insert into sterces.keycrypte values(utilisateurs, cle);
+END //
+DELIMITER ;
+
+
+drop procedure if exists getkey;
+DELIMITER // 
+create procedure getkey(in utilisateurs varchar(100))
+BEGIN
+    select cle from sterces.keycrypte where utilisateur = utilisateurs;
+END //
+DELIMITER ;
+
+
 /*procédure pour créer un facture en comptant les remboursements de la secu et des eventuelles mutuelles*/
 drop procedure if exists facturation;
 DELIMITER //
@@ -570,6 +600,8 @@ CLOSE mutuelle_curseur;
     insert into facture values(null,le_libelle,curdate(),le_prix,le_montant_secu,le_montant_mutuelle,prix_cal,0,'non reglee',le_id_medecin,le_id_patient);
 END //
 DELIMITER ;
+
+
 
 
 /****************************TRIGGERS*********************************/
@@ -701,8 +733,8 @@ delimiter //
 create trigger medecin_before_insert
 before insert on medecin
 for each row
-begin
-    if new.email in (select email from secretaire)
+begin 
+    if new.email in (select email from secretaire) then
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Insertion impossible, utilisateur déjà existant dans "secretaire"';
     END IF;
@@ -799,7 +831,7 @@ create trigger secretaire_before_insert
 before insert on secretaire
 for each row
 begin
-    if new.email in (select email from medecin)
+    if new.email in (select email from medecin) then
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Insertion impossible, utilisateur déjà existant dans "medecin"';
     END IF;

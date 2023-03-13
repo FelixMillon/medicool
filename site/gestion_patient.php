@@ -1,3 +1,4 @@
+
 <div style="display: flex; flex-direction: column; height: 87vh;"> 
     <h2 class="d-flex align-items-center text-light fw-bold text-start" style="padding-left : 10%;background: #86B9BB; height:7vh" >Gestion des patients </h2>
         <div class="d-flex justifiy-content-center" style="padding-top:6%">
@@ -6,6 +7,11 @@
 
 
 <?php
+
+use \Defuse\Crypto\Crypto;
+use \Defuse\Crypto\Key;
+require "vendor/autoload.php";
+
 $LePatient=NULL;
 
 $unControleur->setTable("medecin");
@@ -33,6 +39,31 @@ if(isset($_GET['action']) && isset($_GET['id_patient']))
 }
 
 require_once("vue/insert_patient.php");
+
+
+$keyz = Key::createNewRandomKey();
+$keyz = $keyz->saveToAsciiSafeString();
+var_dump($keyz);
+// var_dump($_SESSION['cle']);  
+// var_dump($_SESSION["email"]);
+
+
+
+ $key = $_SESSION['cle'];
+ $keys = Key::loadFromAsciiSafeString($key);
+
+
+ $phrase = "Je suis un test";
+
+ $crypte = Crypto::encrypt($phrase, $keys);
+ var_dump($crypte);
+
+ var_dump("------------------------------------------");
+ var_dump("<br>");
+ $decrypte = Crypto::decrypt($phrase, $keys);
+ var_dump($decrypte);
+
+
 
 if (isset($_POST['Valider']))
 {
@@ -85,7 +116,17 @@ if (isset($_POST['Valider']))
             "numero_dossier"=>'a triggerer',
             );
     }
-    $unControleur->insertValue($tab); 
+
+    $unControleur->insertValue($tab);
+    echo 'PATIENT INSERÉR';
+    
+    $key = Key::createNewRandomKey();
+    $key = $key->saveToAsciiSafeString();
+
+
+    $tab2 = array("utilisateur"=>$_POST["email"],"cle"=>$key);
+    $unControleur->callproc('genekey',$tab2);
+
 }
 
 
