@@ -11,11 +11,15 @@
         </tr>
         
         <?php 
-        foreach ($lesCorrespondances as $uneCorrespondance) { 
+        foreach ($lesCorrespondances as $uneCorrespondance) {
+            $tab2=array($uneCorrespondance['email']);
+            $cle=$unControleur->callproc('getkey',$tab2);
+            $cle = $cle['cle'];
+
         echo "<tr class='text-center'>
             <td><center>".$uneCorrespondance['id_correspondance']."</center></td>
-            <td><center>".$uneCorrespondance['titre']."</center></td>
-            <td><center>".$uneCorrespondance['contenu']."</center></td>
+            <td><center>".$unControleur->decrypt($uneCorrespondance['titre'], $cle)."</center></td>
+            <td><center>".$unControleur->decrypt($uneCorrespondance['contenu'], $cle)."</center></td>
             <td><center>".$uneCorrespondance['id_medecin_source']."</center></td>
             <td><center>".$uneCorrespondance['id_medecin_cible']."</center></td>
             <td><center>".$uneCorrespondance['id_patient']."</center></td>

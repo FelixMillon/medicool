@@ -53,11 +53,21 @@
 		}
 		public function callproc($nom, $tab)
 		{
-			$this->unModele->callproc($nom, $tab);
+			return $this->unModele->callproc($nom, $tab);
 		}
 		public function selectfunction($nom, $tab)
 		{
 			return $this->unModele->selectfunction($nom, $tab);
 		}
+
+		public function encrypt($message, $key)
+		{
+			return $this->unModele->encrypt($message, $key);
+		} 
+
+		public function decrypt($encrypted_message, $key)
+		{
+			return $this->unModele->decrypt($encrypted_message, $key);
+		} 
 	}
 ?>

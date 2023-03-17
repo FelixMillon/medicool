@@ -1,3 +1,4 @@
+
 <div style="display: flex; flex-direction: column; height: 87vh;"> 
     <h2 class="d-flex align-items-center text-light fw-bold text-start" style="padding-left : 10%;background: #86B9BB; height:7vh" >Gestion des patients </h2>
         <div class="d-flex justifiy-content-center" style="padding-top:6%">
@@ -6,6 +7,10 @@
 
 
 <?php
+
+use \Defuse\Crypto\Crypto;
+use \Defuse\Crypto\Key;
+require "vendor/autoload.php";
 $LePatient=NULL;
 
 $unControleur->setTable("medecin");
@@ -34,14 +39,35 @@ if(isset($_GET['action']) && isset($_GET['id_patient']))
 
 require_once("vue/insert_patient.php");
 
+$keys = $_SESSION['cle'];
+
+var_dump($_SESSION['cle']);
+
+ $phrase = "Je suis un test";
+
+ $crypte = $unControleur->encrypt($phrase, $keys);
+ var_dump($crypte);
+
+
+ var_dump("<br>");
+ $decrypte = $unControleur->decrypt($crypte, $keys);
+ var_dump($decrypte);
+
+
+
 if (isset($_POST['Valider']))
 {
+
+        
+    $key = Key::createNewRandomKey();
+    $key = $key->saveToAsciiSafeString();
+    var_dump("C'est la clé generer".$key);
     //$value = ['nom','prenom','email','tel','date_naissance','date_enregistrement','numrue','rue','cp','ville','id_medecin','id_cat_secu'];
     if($_POST['id_medecin']==0)
     {
         $tab=array(     
             "nom"=>$_POST["nom"],
-            "prenom"=>$_POST["prenom"],
+            "prenom"=>$unControleur->encrypt($_POST["prenom"],$key),
             "email"=>$_POST["email"],
             "tel"=>$_POST["tel"],
             "date_naissance"=>$_POST["date_naissance"],
@@ -51,7 +77,7 @@ if (isset($_POST['Valider']))
             "cp"=>$_POST["cp"],
             "ville"=>$_POST["ville"],
             "id_cat_secu"=>$_POST["id_cat_secu"],
-            "mdp"=>"Azerty@123",
+            "mdp"=>"123",
             "question_1"=>"1",
             "question_2"=>"2",
             "droits"=>"utilisateur",
@@ -64,7 +90,7 @@ if (isset($_POST['Valider']))
     {
         $tab=array(     
             "nom"=>$_POST["nom"],
-            "prenom"=>$_POST["prenom"],
+            "prenom"=>$unControleur->encrypt($_POST["prenom"],$key),
             "email"=>$_POST["email"],
             "tel"=>$_POST["tel"],
             "date_naissance"=>$_POST["date_naissance"],
@@ -75,7 +101,7 @@ if (isset($_POST['Valider']))
             "ville"=>$_POST["ville"],
             "id_medecin"=>$_POST['id_medecin'],
             "id_cat_secu"=>$_POST["id_cat_secu"],
-            "mdp"=>"Azerty@123",
+            "mdp"=>"123",
             "question_1"=>"1",
             "question_2"=>"2",
             "droits"=>"utilisateur",
@@ -85,7 +111,15 @@ if (isset($_POST['Valider']))
             "numero_dossier"=>'a triggerer',
             );
     }
-    $unControleur->insertValue($tab); 
+
+    $Verif = NULL; 
+
+    $unControleur->insertValue($tab);
+    echo 'PATIENT INSERÉR';
+
+    $tab2 = array("utilisateur"=>$_POST["email"],"cle"=>$key);
+    $unControleur->callproc('genekey',$tab2);
+
 }
 
 

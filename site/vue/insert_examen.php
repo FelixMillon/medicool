@@ -4,8 +4,17 @@
         <div class="col p-4 d-flex flex-column position-static">
         <div class="row g-3">                       
                 <div class="col-12">
+
+                <?php if($LExamen!=NULL){
+                    $tab2=array($LExamen['email']);
+                    $cle=$unControleur->callproc('getkey',$tab2);
+                    $cle = $cle['cle'];
+                }   
+                ?>
+
+
                     <input type="text" name="libelle" placeholder="Libelle" class="inscricase form-control text-center fw-bold" 
-                    style="border:3px solid #86B9BB" value="<?php if ($LExamen!=NULL) echo $LExamen['libelle']; ?>">
+                    style="border:3px solid #86B9BB" value="<?php if ($LExamen!=NULL) echo $unControleur->decrypt($LExamen['libelle'], $cle); ?>">
                 </div>
             
                 <div class="col-12">
@@ -21,12 +30,13 @@
 
                 <div class="col-6">
                     <input type="text" name="resultat" placeholder="Resultat" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" 
-                    value="<?php if ($LExamen!=NULL) echo $LExamen['resultat']; ?>"> 
+                    value="<?php if ($LExamen!=NULL) echo $unControleur->decrypt($LExamen['resultat'], $cle); ?>"> 
+                    
                 </div>
 
                 <div class="col-12">
                     <input type="text" name="commentaire" placeholder="Commentaire" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" 
-                     value="<?php if ($LExamen!=NULL) echo $LExamen['commentaire'];?>">
+                     value="<?php if ($LExamen!=NULL) echo $unControleur->decrypt($LExamen['commentaire'], $cle); ?>">
                 </div>
 
                

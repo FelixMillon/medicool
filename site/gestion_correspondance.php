@@ -20,7 +20,7 @@ $lesMedecins = $unControleur->selectAll();
 $unControleur->setTable("patient");
 $lesPatients = $unControleur->selectAll();
 
-$unControleur->setTable("correspondance");
+$unControleur->setTable("vcorrespondance");
 
 if(isset($_GET['action']) && isset($_GET['id_correspondance']))
 {	
@@ -30,6 +30,7 @@ if(isset($_GET['action']) && isset($_GET['id_correspondance']))
     switch($_GET['action'])
     {
         case 'sup':
+            $unControleur->setTable("correspondance");
             $unControleur->delete($where);
             break;
         case 'edit':
@@ -40,15 +41,26 @@ if(isset($_GET['action']) && isset($_GET['id_correspondance']))
 
 require_once("vue/insert_correspondance.php");
 
+if(isset($_POST['Valider']) || isset($_POST['Modifier']))
+{
+    // Recherche de la clé de cryptage 
+    $unControleur->setTable("patient");
+    $where = array('id_patient'=>$_POST['id_patient']);
+    $lePatient = $unControleur->selectWhere($where);
+    $tab3=array($lePatient["email"]);
+    $key=$unControleur->callproc('getkey',$tab3);
+}
+
 if (isset($_POST['Valider']))
 {
     $tab=array(      
-        "titre"=>$_POST["titre"],
-        "contenu"=>$_POST["contenu"],
+        "titre"=>$unControleur->encrypt($_POST["titre"],$key['cle']),
+        "contenu"=>$unControleur->encrypt($_POST["contenu"],$key['cle']),
         "id_medecin_source"=>$_POST["id_medecin_source"],
         "id_medecin_cible"=>$_POST["id_medecin_cible"],
         "id_patient"=>$_POST["id_patient"]
         );
+    $unControleur->setTable("correspondance");
     $unControleur->insert($tab);    
 }
 
@@ -56,17 +68,18 @@ if(isset($_POST['Modifier']))
 {
     $where = array("id_correspondance"=>$id_correspondance);
     $tab=array(      
-        "titre"=>$_POST["titre"],
-        "contenu"=>$_POST["contenu"],
+        "titre"=>$unControleur->encrypt($_POST["titre"],$key['cle']),
+        "contenu"=>$unControleur->encrypt($_POST["contenu"],$key['cle']),
         "id_medecin_source"=>$_POST["id_medecin_source"],
         "id_medecin_cible"=>$_POST["id_medecin_cible"],
         "id_patient"=>$_POST["id_patient"]
         );
+    $unControleur->setTable("correspondance");
     $unControleur->update ($tab, $where); 
     header("Location: index.php?page=18"); 
 }
 
-$unControleur->setTable("correspondance");
+$unControleur->setTable("vcorrespondance");
 $lesCorrespondances = $unControleur->selectAll(); 
 
 require_once ("vue/les_correspondances.php"); 

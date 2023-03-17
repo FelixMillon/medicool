@@ -16,10 +16,15 @@
         </tr>
         
         <?php 
-        foreach ($LesFactures as $uneFacture) { 
+        foreach ($LesFactures as $uneFacture) {
+
+            $tab2=array($uneFacture['email']);
+            $cle=$unControleur->callproc('getkey',$tab2);
+            $cle = $cle['cle'];
+
         echo "<tr class='text-center'>
             <td><center>".$uneFacture['id_facture']."</center></td>
-            <td><center>".$uneFacture['libelle']."</center></td>
+            <td><center>".$unControleur->decrypt($uneFacture['libelle'], $cle)."</center></td>
             <td><center>".$uneFacture['date_facturation']."</center></td>
             <td><center>".$uneFacture['montant_total']."</center></td>
             <td><center>".$uneFacture['montant_secu']."</center></td>

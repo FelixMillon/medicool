@@ -27,36 +27,26 @@ color : black;
 <div style="height: 88vh;padding-top: 6%;"> 
     <div class="container d-flex align-content-center flex-wrap" style="height:37%;background:#86B9BB;  border-radius: 18px; "> 
         <div class="col-12" style="padding-top:1%;">
-           <div class="p-3"><h4 class="text-light"><u>GESTION DU PATIENT</u></h4></div> </a>
+           <div class="p-3"><h4 class="text-light"><u>DOSSIER MÉDICAL : <?php echo $_SESSION['prenom'].' '.$_SESSION['nom'] ?></u></h4></div> </a>
         </div>
         <div class="col-4" style="padding-top:1%;">
-            <a class="btn nav-link form w-50 text-center"> Hospitalisation </a>
+            <a href="index.php?page=4" class="btn nav-link form w-50 text-center"> Hospitalisation </a>
         </div>
         <div class="col-4" style="padding-top:1%;">
-            <a class="btn nav-link form w-50 text-center"> Examen </a>
+            <a href="index.php?page=7" class="btn nav-link form w-50 text-center"> Examen </a>
         </div>
         <div class="col-4" style="padding-top:1%;">
-            <a class="btn nav-link form w-50 text-center"> Correspondance </a>
+            <a href="index.php?page=10" class="btn nav-link form w-50 text-center"> Traitement </a>
         </div>
         <div class="col-4" style="padding-top:1%;">
-            <a class="btn nav-link form w-50 text-center"> Traitement </a>
+            <a href="index.php?page=8" class="btn nav-link form w-50 text-center"> Opération </a>
         </div>
         <div class="col-4" style="padding-top:1%;">
-            <a class="btn nav-link form w-50 text-center"> Opération </a>
+            <a href="index.php?page=6" class="btn nav-link form w-50 text-center"> Allérgie </a>
         </div>
         <div class="col-4" style="padding-top:1%;">
-            <a class="btn nav-link form w-50 text-center"> Dossier médical </a>
+            <a href="index.php?page=9" class="btn nav-link form w-50 text-center"> Pathologie </a>
         </div>
-        <div class="col-4" style="padding-top:1%;">
-            <a class="btn nav-link form w-50 text-center"> Allérgie </a>
-        </div>
-        <div class="col-4" style="padding-top:1%;">
-            <a class="btn nav-link form w-50 text-center"> Pathologie </a>
-        </div>
-        <div class="col-4" style="padding-top:1%;">
-            <a class="btn nav-link form w-50 text-center"> Correspondance </a>
-        </div>
-     
     </div>
     
     <div class="col-6" style="padding-right:3%;padding-top : 4%;"> 
@@ -80,9 +70,9 @@ color : black;
                         <div class="text-start text-light fs-6 col-5" >
                             01
                             <br>
-                            Jean Dupuit
+                            <?php echo $_SESSION['prenom'].' '.$_SESSION['nom'] ?>
                             <br>
-                            Généraliste
+                            <?php echo $_SESSION['prenom'] ?>
                             <br>
                             john.doe@gmail.com
                             <br>

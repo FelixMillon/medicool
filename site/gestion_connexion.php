@@ -40,13 +40,23 @@
 				{
 					$_SESSION['estPatient']=True;
 				}
+
+				if($_SESSION['estPatient']){
+					$tab2=array($unUser['email']);
+					$cle=$unControleur->callproc('getkey',$tab2);
+					$_SESSION['cle'] = $cle['cle'];
+				}
+
+
 				$_SESSION['email'] = $unUser['email'];
-				$_SESSION['nom'] = $unUser['nom'];
-				$_SESSION['prenom'] = $unUser['prenom'];
+				$_SESSION['nom'] =   $unUser['nom'];
+				$_SESSION['prenom'] = $unControleur->decrypt($unUser['prenom'], $_SESSION['cle']);
 				$_SESSION['id'] = $unUser['id'];
 				$_SESSION['droits'] = $unUser['droits'];
 				$tab= array($unUser['id']);
-				$unControleur->callproc('unlockuser',$tab);
+				$unControleur->callproc('unlockuser',$tab);		
+				
+
 				header("Location: index.php");
 			}
 			
