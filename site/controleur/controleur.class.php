@@ -59,5 +59,15 @@
 		{
 			return $this->unModele->selectfunction($nom, $tab);
 		}
+
+		public function encrypt($message, $key)
+		{
+			return $this->unModele->encrypt($message, $key);
+		} 
+
+		public function decrypt($encrypted_message, $key)
+		{
+			return $this->unModele->decrypt($encrypted_message, $key);
+		} 
 	}
 ?>

@@ -143,7 +143,6 @@
 			$chaineWhere = implode(" and ", $champs);
 			$requete="select * from ".$this->uneTable." where ".$chaineWhere;
 			$select=$this->unPdo->prepare($requete);
-			var_dump($requete);
 			$select->execute($donnees);
 			return $select->fetch();
 		}
@@ -167,7 +166,7 @@
 			}
 			$chaineWhere = implode(" and ", $champs);
 			$requete ="update ".$this->uneTable." set ".$chaineChamps." where ".$chaineWhere;
-			var_dump($requete); 
+
 			$update = $this->unPdo->prepare($requete);
 			$update->execute($donnees);
 		}
@@ -200,6 +199,21 @@
 			$select->execute();
 			return $select->fetch();
 		}
+
+		public function encrypt($message, $key) {
+			$iv_size = openssl_cipher_iv_length('AES-256-CBC');
+			$iv = openssl_random_pseudo_bytes($iv_size);
+			$encrypted = openssl_encrypt($message, 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv);
+			return base64_encode($iv . $encrypted);
+		  }
+
+		public function decrypt($encrypted_message, $key) {
+			$encrypted = base64_decode($encrypted_message);
+			$iv_size = openssl_cipher_iv_length('AES-256-CBC');
+			$iv = substr($encrypted, 0, $iv_size);
+			$encrypted = substr($encrypted, $iv_size);
+			return openssl_decrypt($encrypted, 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv);
+		  }
 
 	}
 ?>

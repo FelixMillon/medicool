@@ -4,8 +4,15 @@
         <div class="col p-4 d-flex flex-column position-static">
             <div class="row g-3">
                 <div class="col-12">
+                <?php if($LHospitalisation!=NULL){
+                    $tab2=array($LHospitalisation['email']);
+                    $cle=$unControleur->callproc('getkey',$tab2);
+                    $cle = $cle['cle'];
+                }   
+                ?>
+
                     <input type="text" name="raison" placeholder="Raison" class="inscricase form-control text-center fw-bold" 
-                    style="border:3px solid #86B9BB" value="<?php if ($LHospitalisation!=NULL) echo $LHospitalisation['raison']; ?>">
+                    style="border:3px solid #86B9BB" value="<?php if ($LHospitalisation!=NULL) echo $unControleur->decrypt($LHospitalisation['raison'], $cle); ?>">
                 </div>
 
                 <div class="col-4 fw-bold">Date de début</div>

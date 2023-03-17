@@ -1,12 +1,14 @@
 <div style="display: flex; flex-direction: column; height: 87vh;"> 
-    <h2 class="d-flex align-items-center text-light fw-bold text-start" style="padding-left : 10%;background: #86B9BB; height:7vh" >Gestion des factures </h2>
+    <h2 class="d-flex align-items-center text-light fw-bold text-start" style="padding-left : 10%;background: #86B9BB; height:7vh" >Gestion des pathologies </h2>
         <div class="d-flex justifiy-content-center" style="padding-top:12%">
             <div class="col-2"></div>
             <div class="col-4" style="padding-right:3%;"> 
 
 
 <?php
-$LaFacture=NULL;
+
+$Lapathologie=NULL;
+
 
 $unControleur->setTable("medecin");
 $lesMedecins = $unControleur->selectAll();
@@ -14,77 +16,75 @@ $lesMedecins = $unControleur->selectAll();
 $unControleur->setTable("patient");
 $lesPatients = $unControleur->selectAll();
 
-$unControleur->setTable("vfacture");
+$unControleur->setTable("vpathologie");
 
 
-
-
-if(isset($_GET['action']) && isset($_GET['id_facture']))
+if(isset($_GET['action']) && isset($_GET['id_path']))
 {	
     $action = $_GET['action'];
-    $id_facture = $_GET['id_facture'];
-    $where = array("id_facture"=>$id_facture);
+    $id_path = $_GET['id_path'];
+    $where = array("id_path"=>$id_path);
     switch($_GET['action'])
     {
         case 'sup':
-            $unControleur->setTable("facture");
+            $unControleur->setTable("pathologie");
             $unControleur->delete($where);
             break;
         case 'edit':
-            $LaFacture=$unControleur->selectWhere($where);
+            $Lapathologie=$unControleur->selectWhere($where);
             break;
     }
 }
 
-require_once("vue/insert_facture.php");
+require_once("vue/insert_pathologie.php");
 
 if(isset($_POST['Valider']) || isset($_POST['Modifier']))
 {
     // Recherche de la clé de cryptage 
     $unControleur->setTable("patient");
-
     $where = array('id_patient'=>$_POST['id_patient']);
     $lePatient = $unControleur->selectWhere($where);
-
     $tab3=array($lePatient["email"]);
-
     $key=$unControleur->callproc('getkey',$tab3);
-
-
 }
 
 
 if (isset($_POST['Valider']))
 {
-
-    $tab=array(      
-        "montant_total"=>$_POST["montant_total"],
-        "id_patient"=>$_POST["id_patient"],
+    $tab=array(    
+        "libelle"=>$unControleur->encrypt($_POST["libelle"],$key['cle']),
+        "date_diagnostique"=>$_POST["date_diagnostique"],
+        "date_guerison"=>$_POST["date_guerison"],
         "id_medecin"=>$_POST["id_medecin"],
-        "libelle"=>$unControleur->encrypt($_POST["libelle"],$key['cle'])
+        "id_patient"=>$_POST["id_patient"]
         );
-
-    $unControleur->callproc("facturation", $tab);
+    $unControleur->setTable("pathologie");
+    $unControleur->insert($tab);    
 }
 
 
 if(isset($_POST['Modifier']))
 {
-    $where = array("id_facture"=>$id_facture);
-    $tab=array(      
-        "montant_total"=>$_POST["montant_total"],
-        "id_patient"=>$_POST["id_patient"],
+
+    $where = array("id_path"=>$id_path);
+    $tab=array(
+        "libelle"=>$unControleur->encrypt($_POST["libelle"],$key['cle']),
+        "date_diagnostique"=>$_POST["date_diagnostique"],
+        "date_guerison"=>$_POST["date_guerison"],
         "id_medecin"=>$_POST["id_medecin"],
-        "libelle"=>$unControleur->encrypt($_POST["libelle"],$key['cle'])
+        "id_patient"=>$_POST["id_patient"]
         );
-    $unControleur->setTable("facture");
+
+    $unControleur->setTable("pathologie");
     $unControleur->update ($tab, $where); 
-    header("Location: index.php?page=17"); 
+    header("Location: index.php?page=9"); 
 }
 
-$unControleur->setTable("vfacture");
-$LesFactures = $unControleur->selectAll(); 
-require_once ("vue/les_factures.php"); 
+$unControleur->setTable("vpathologie");
+$LesPathologies = $unControleur->selectAll(); 
+
+require_once ("vue/les_pathologies.php"); 
+
 
 ?>
 

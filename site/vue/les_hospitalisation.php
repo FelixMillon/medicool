@@ -15,9 +15,14 @@
             
         <?php 
         foreach ($LesHospitalisations as $UneHospitalisation) { 
+
+            $tab2=array($UneHospitalisation['email']);
+            $cle=$unControleur->callproc('getkey',$tab2);
+            $cle = $cle['cle'];
+
         echo "<tr class='text-center'>
             <td><center>".$UneHospitalisation['id_hospitalisation']."</center></td>
-            <td><center>".$UneHospitalisation['raison']."</center></td>
+            <td><center>".$unControleur->decrypt($UneHospitalisation['raison'], $cle)."</center></td>
             <td><center>".$UneHospitalisation['date_debut']."</center></td>
             <td><center>".$UneHospitalisation['date_fin_estimee']."</center></td>
             <td><center>".$UneHospitalisation['date_fin']."</center></td>

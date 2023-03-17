@@ -12,8 +12,6 @@
 
                             <div class="row g-3">
                             
-
-                                
                                 <div class="col-12">
                                     <input type="text" name="libelle" placeholder="libelle" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" value="">
                                 </div>
