@@ -486,6 +486,57 @@ create table nb_echec_co
     on delete cascade
 )engine=innodb;
 
+/*******************************TABLE VUE*******************************/
+
+create view vallergie as (
+    select a.*, p.email 
+    from allergie a, patient p
+    where a.id_patient = p.id_patient
+);
+
+create view vexamen as (
+    select e.*, p.email 
+    from examen e, patient p
+    where e.id_patient = p.id_patient
+);
+
+create view vcorrespondance as (
+    select c.*, p.email 
+    from correspondance c, patient p
+    where c.id_patient = p.id_patient
+);
+
+create view vfacture as (
+    select f.*, p.email 
+    from facture f, patient p
+    where f.id_patient = p.id_patient
+);
+
+create view vhospitalisation as (
+    select h.*, p.email 
+    from hospitalisation h, patient p
+    where h.id_patient = p.id_patient
+);
+
+create view voperation as (
+    select o.*, p.email 
+    from operation o, patient p
+    where o.id_patient = p.id_patient
+);
+
+create view vpathologie as (
+    select pa.*, p.email 
+    from pathologie pa, patient p
+    where pa.id_patient = p.id_patient
+);
+
+create view vtraitement as (
+    select t.*, p.email 
+    from traitement t, patient p
+    where t.id_patient = p.id_patient
+);
+
+
 /*******************************FONCTION*******************************/
 
 drop function if exists remedless;
@@ -500,6 +551,7 @@ end //
 DELIMITER ;
 
 /****************************PROCEDURE*********************************/
+
 
 /*procédure pour débloquer un utilisateur quand après qu'il ai eu 3 echecs de connexion*/
 drop procedure if exists unlockuser;
@@ -553,7 +605,7 @@ create procedure facturation(
     in le_prix decimal(7,2),
     in le_id_patient int,
     in le_id_medecin int,
-    in le_libelle varchar(100)
+    in le_libelle varchar(255)
 )
 BEGIN
     DECLARE prix_cal decimal(7,2);
