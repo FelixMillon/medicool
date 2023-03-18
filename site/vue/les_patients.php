@@ -16,11 +16,19 @@
         </tr>
         
         <?php 
+
+
         foreach ($LesPatients as $unPatient) { 
+            
+            $tab2=array($unPatient['email']);
+            $cle=$unControleur->callproc('getkey',$tab2);
+            $cle = $cle['cle'];
+            $prenom = $unControleur->decrypt($unPatient['prenom'], $cle);
+
         echo "<tr class='text-center'>
             <td><center>".$unPatient['id_patient']."</center></td>
             <td><center>".$unPatient['email']."</center></td>
-            <td><center>".$unPatient['nom']." ".$unPatient['prenom']."</center></td>
+            <td><center>".$unPatient['nom']." ".$prenom."</center></td>
             <td><center>".$unPatient['tel']."</center></td>
             <td><center>".$unPatient['date_naissance']."</center></td>
             <td><center>".$unPatient['date_enregistrement']."</center></td>

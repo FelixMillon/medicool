@@ -23,9 +23,7 @@ $lesPatients = $unControleur->selectAll();
 $unControleur->setTable("hopital");
 $lesHopitals = $unControleur->selectAll();
 
-$unControleur->setTable("hospitalisation");
-
-
+$unControleur->setTable("vhospitalisation");
 
 
 if(isset($_GET['action']) && isset($_GET['id_hospitalisation']))
@@ -37,6 +35,7 @@ if(isset($_GET['action']) && isset($_GET['id_hospitalisation']))
     switch($_GET['action'])
     {
         case 'sup':
+            $unControleur->setTable("hospitalisation");
             $unControleur->delete($where);
             break;
         case 'edit':
@@ -47,10 +46,22 @@ if(isset($_GET['action']) && isset($_GET['id_hospitalisation']))
 
 require_once("vue/insert_hospitalisation.php");
 
+if(isset($_POST['Valider']) || isset($_POST['Modifier']))
+{
+    // Recherche de la clé de cryptage 
+    $unControleur->setTable("patient");
+    $where = array('id_patient'=>$_POST['id_patient']);
+    $lePatient = $unControleur->selectWhere($where);
+    $tab3=array($lePatient["email"]);
+    $key=$unControleur->callproc('getkey',$tab3);
+}
+
+
+
 if (isset($_POST['Valider']))
 {
     $tab=array(      
-        "raison"=>$_POST["raison"],
+        "raison"=>$unControleur->encrypt($_POST["raison"],$key['cle']),
         "date_debut"=>$_POST["date_debut"],
         "date_fin_estimee"=>$_POST["date_fin_estimee"],
         "date_fin"=>$_POST["date_fin"],
@@ -58,6 +69,7 @@ if (isset($_POST['Valider']))
         "id_patient"=>$_POST["id_patient"],
         "id_medecin"=>$_POST["id_medecin"]
         );
+    $unControleur->setTable("hospitalisation");
     $unControleur->insert($tab); 
     
 }
@@ -71,7 +83,7 @@ if(isset($_POST['Modifier']))
     $where = array("id_hospitalisation"=>$id_hospitalisation);
     $tab=array(
         "id_hospitalisation"=>$_POST["id_hospitalisation"],
-        "raison"=>$_POST["raison"],
+        "raison"=>$unControleur->encrypt($_POST["raison"],$key['cle']),
         "date_debut"=>$_POST["date_debut"],
         "date_fin_estimee"=>$_POST["date_fin_estimee"],
         "date_fin"=>$_POST["date_fin"],
@@ -79,6 +91,7 @@ if(isset($_POST['Modifier']))
         "id_patient"=>$_POST["id_patient"],
         "id_medecin"=>$_POST["id_medecin"]
         );
+    $unControleur->setTable("hospitalisation");
     $unControleur->update ($tab, $where); 
     header("Location: index.php?page=4"); 
 }
@@ -90,7 +103,7 @@ if(isset($_POST['Annuler']))
 }
 
 
-$unControleur->setTable("hospitalisation");
+$unControleur->setTable("vhospitalisation");
 $LesHospitalisations = $unControleur->selectAll(); 
 
 require_once ("vue/les_hospitalisation.php"); 

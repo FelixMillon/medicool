@@ -3,6 +3,12 @@
     <div class="container" >
         <div class="col p-4 d-flex flex-column position-static">
         <div class="row g-3">  
+        <?php if($LaFacture!=NULL){
+                    $tab2=array($LaFacture['email']);
+                    $cle=$unControleur->callproc('getkey',$tab2);
+                    $cle = $cle['cle'];
+                }   
+                ?> 
             
                 <div class="col-6">
                     <select name="id_medecin" class="form-select w-100 text-center" style="border-radius:15px;border:3px solid #86B9BB">
@@ -28,7 +34,7 @@
 
                 <div class="col-12">
                     <input type="text" name="libelle" placeholder="Libelle" class="inscricase form-control text-center fw-bold" 
-                    style="border:3px solid #86B9BB" value="<?php if ($LaFacture!=NULL) echo $LaFacture['libelle']; ?>">
+                    style="border:3px solid #86B9BB" value="<?php if($LaFacture!=NULL) echo $unControleur->decrypt($LaFacture['libelle'], $cle); ?>">
                 </div>
         
                 <div class="col-12">

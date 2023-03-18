@@ -1,8 +1,17 @@
 /*Base pour stocker les secrets (les salts)*/
 
-drop database if exists  sterces ;
+drop database if exists      ;
 create database sterces;
     use sterces;
+
+/*TABLE GENERATEUR DE CRYTO*/
+
+create table keycrypte
+(
+    utilisateur varchar(255) not null,
+    cle varchar(255) not null,
+    primary key (utilisateur)
+)engine=innodb;
 
 /*Table stock utilisateur associé à leurs salt*/
 create table remedles
@@ -477,6 +486,57 @@ create table nb_echec_co
     on delete cascade
 )engine=innodb;
 
+/*******************************TABLE VUE*******************************/
+
+create view vallergie as (
+    select a.*, p.email 
+    from allergie a, patient p
+    where a.id_patient = p.id_patient
+);
+
+create view vexamen as (
+    select e.*, p.email 
+    from examen e, patient p
+    where e.id_patient = p.id_patient
+);
+
+create view vcorrespondance as (
+    select c.*, p.email 
+    from correspondance c, patient p
+    where c.id_patient = p.id_patient
+);
+
+create view vfacture as (
+    select f.*, p.email 
+    from facture f, patient p
+    where f.id_patient = p.id_patient
+);
+
+create view vhospitalisation as (
+    select h.*, p.email 
+    from hospitalisation h, patient p
+    where h.id_patient = p.id_patient
+);
+
+create view voperation as (
+    select o.*, p.email 
+    from operation o, patient p
+    where o.id_patient = p.id_patient
+);
+
+create view vpathologie as (
+    select pa.*, p.email 
+    from pathologie pa, patient p
+    where pa.id_patient = p.id_patient
+);
+
+create view vtraitement as (
+    select t.*, p.email 
+    from traitement t, patient p
+    where t.id_patient = p.id_patient
+);
+
+
 /*******************************FONCTION*******************************/
 
 drop function if exists remedless;
@@ -491,6 +551,7 @@ end //
 DELIMITER ;
 
 /****************************PROCEDURE*********************************/
+
 
 /*procédure pour débloquer un utilisateur quand après qu'il ai eu 3 echecs de connexion*/
 drop procedure if exists unlockuser;
@@ -516,6 +577,27 @@ BEGIN
 END //
 DELIMITER ;
 
+
+/*procédure qui insert le clé de chiffrement dans la base de donnée secret*/
+
+drop procedure if exists genekey;
+DELIMITER // 
+create procedure genekey(in utilisateurs varchar(100), in cle varchar(100))
+BEGIN
+    insert into sterces.keycrypte values(utilisateurs, cle);
+END //
+DELIMITER ;
+
+
+drop procedure if exists getkey;
+DELIMITER // 
+create procedure getkey(in utilisateurs varchar(100))
+BEGIN
+    select cle from sterces.keycrypte where utilisateur = utilisateurs;
+END //
+DELIMITER ;
+
+
 /*procédure pour créer un facture en comptant les remboursements de la secu et des eventuelles mutuelles*/
 drop procedure if exists facturation;
 DELIMITER //
@@ -523,7 +605,7 @@ create procedure facturation(
     in le_prix decimal(7,2),
     in le_id_patient int,
     in le_id_medecin int,
-    in le_libelle varchar(100)
+    in le_libelle varchar(255)
 )
 BEGIN
     DECLARE prix_cal decimal(7,2);
@@ -570,6 +652,8 @@ CLOSE mutuelle_curseur;
     insert into facture values(null,le_libelle,curdate(),le_prix,le_montant_secu,le_montant_mutuelle,prix_cal,0,'non reglee',le_id_medecin,le_id_patient);
 END //
 DELIMITER ;
+
+
 
 
 /****************************TRIGGERS*********************************/
@@ -701,8 +785,8 @@ delimiter //
 create trigger medecin_before_insert
 before insert on medecin
 for each row
-begin
-    if new.email in (select email from secretaire)
+begin 
+    if new.email in (select email from secretaire) then
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Insertion impossible, utilisateur déjà existant dans "secretaire"';
     END IF;
@@ -799,7 +883,7 @@ create trigger secretaire_before_insert
 before insert on secretaire
 for each row
 begin
-    if new.email in (select email from medecin)
+    if new.email in (select email from medecin) then
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Insertion impossible, utilisateur déjà existant dans "medecin"';
     END IF;

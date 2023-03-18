@@ -14,13 +14,17 @@
         
         <?php 
         foreach ($LesExamens as $unExamen) { 
+            $tab2=array($unExamen['email']);
+            $cle=$unControleur->callproc('getkey',$tab2);
+            $cle = $cle['cle'];
+            $libelle = $unControleur->decrypt($unExamen['libelle'], $cle);
         echo "<tr class='text-center'>
             <td><center>".$unExamen['id_examen']."</center></td>
-            <td><center>".$unExamen['libelle']."</center></td>
+            <td><center>".$unControleur->decrypt($unExamen['libelle'], $cle)."</center></td>
             <td><center>".$unExamen['date']."</center></td>
             <td><center>".$unExamen['prix_examen']."</center></td>
-            <td><center>".$unExamen['resultat']."</center></td>
-            <td><center>".$unExamen['commentaire']."</center></td>
+            <td><center>".$unControleur->decrypt($unExamen['resultat'], $cle)."</center></td>
+            <td><center>".$unControleur->decrypt($unExamen['commentaire'], $cle)."</center></td>
             <td><center>".$unExamen['id_medecin']."</center></td>
             <td><center>".$unExamen['id_patient']."</center></td>
             

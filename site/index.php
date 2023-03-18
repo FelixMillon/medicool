@@ -27,24 +27,34 @@
       $lesUtilisateurs = $unControleur->selectAll();
       $unControleur->setTable("medecin"); 
       $lesMedecins = $unControleur->selectAll();
-      $lesID = [];
+	  $unControleur->setTable("patient"); 
+      $lesPatients = $unControleur->selectAll();
+      $lesIDMedecins = [];
+	  $lesIDPatients = [];
 
-      foreach($lesMedecins as $unMedecin){
-      $lesID[count($lesID)]=$unMedecin['email'];
-      }
+	foreach($lesMedecins as $unMedecin){
+	$lesIDMedecins[count($lesIDMedecins)]=$unMedecin['email'];
+	}
 
-			if(isset($_SESSION['email']) && in_array($_SESSION['email'], $lesID, true))
-			{
-				require_once ("header/header_connect.php");
-			}else{
-        	require_once ("header/header_prospec.php");
-			}
+	foreach($lesPatients as $unPatient){
+	$lesIDPatients[count($lesIDPatients)]=$unPatient['email'];
+	}
+
+		if(isset($_SESSION['email']) && in_array($_SESSION['email'], $lesIDMedecins, true))
+		{
+		require_once ("header/header_connect_med.php");			
+		}else if(isset($_SESSION['email']) && in_array($_SESSION['email'], $lesIDPatients, true)) {
+		require_once ("header/header_connect_patient.php");
+		}else{
+		require_once ("header/header_prospec.php");
+		}
 
 		?>
 
 	<center>
 
 		<?php
+
 			if(isset($_GET['page']))
 			{
 				$page = $_GET['page'];
@@ -59,18 +69,19 @@
       session_destroy();
       header("Location: index.php");
 
-      default : require_once("vue/home.php");  break;
+	  
 
+      default : require_once("vue/home.php");  break;
 	  case 1:  require_once("gestion_connexion.php");  break;
 	  case 2:  require_once("vue/espace_patient.php");  break;
 	  case 3:  require_once("vue/planning.php");  break;
 	  case 4:  require_once("gestion_hospitalisation.php");  break;
-	  case 5:  require_once("vue/operation.php");  break;
-	  case 6:  require_once("vue/allergie.php");  break;
+	  case 5:  require_once("gestion_operation.php");  break;
+	  case 6:  require_once("gestion_allergie.php");  break;
 	  case 7:  require_once("gestion_examen.php");  break;
 	  case 8:  require_once("vue/operer.php");  break;
-	  case 9:  require_once("vue/pathologie.php");  break;
-	  case 10: require_once("vue/traitement.php");  break;
+	  case 9:  require_once("gestion_pathologie.php");  break;
+	  case 10: require_once("gestion_traitement.php");  break;
 	  case 11: require_once("vue/espace_medecin.php");  break;
 	  case 12: require_once("vue/espace_secretariat.php");  break;
 	  case 13: require_once("vue/blocage.php");  break;
@@ -84,7 +95,7 @@
 		?>
 	</center>
 </div>
-<footer class="d-flex flex-wrap align-items-center justify-content-around justify-content-md-around py-4" style="background : #3B7476;">
+<footer class="d-flex flex-wrap align-items-center justify-content-around justify-content-md-around py-2" style="background : #3B7476;">
 	<p class="col-md-4 mb-0 text-light" style="padding-left: 6%; white-space: nowrap;" >©Copyright 2022 FireCrest</p>
 
 	<a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
