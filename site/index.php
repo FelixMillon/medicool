@@ -16,21 +16,25 @@
 	<link rel="stylesheet" href="js/felix.css">
 
 	<link rel="icon" type="image/png" sizes="16x16" href="img/icon.png">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" http-equiv="X-UA-Compatible" content="IE=edge" name="viewport" content="width=device-width, initial-scale=1.0">
 	<title> FireCrest - IHM</title>
 </head>
 <body class="">
 <?php
-      $unControleur->setTable("utilisateur"); 
-      $lesUtilisateurs = $unControleur->selectAll();
-      $unControleur->setTable("medecin"); 
-      $lesMedecins = $unControleur->selectAll();
-	  $unControleur->setTable("patient"); 
-      $lesPatients = $unControleur->selectAll();
-      $lesIDMedecins = [];
-	  $lesIDPatients = [];
+	if(!isset($_SESSION['jour']))
+	{
+		$date = new DateTime();
+		$date->setISODate($date->format('o'), $date->format('W'), 1);
+		$_SESSION['jour'] = $date;
+	}
+	$unControleur->setTable("utilisateur"); 
+	$lesUtilisateurs = $unControleur->selectAll();
+	$unControleur->setTable("medecin"); 
+	$lesMedecins = $unControleur->selectAll();
+	$unControleur->setTable("patient"); 
+	$lesPatients = $unControleur->selectAll();
+	$lesIDMedecins = [];
+	$lesIDPatients = [];
 
 	foreach($lesMedecins as $unMedecin){
 	$lesIDMedecins[count($lesIDMedecins)]=$unMedecin['email'];
@@ -75,7 +79,7 @@
       default : require_once("vue/home.php");  break;
 	  case 1:  require_once("gestion_connexion.php");  break;
 	  case 2:  require_once("vue/espace_patient.php");  break;
-	  case 3:  require_once("vue/planning.php");  break;
+	  case 3:  require_once("gestion_planning.php");  break;
 	  case 4:  require_once("gestion_hospitalisation.php");  break;
 	  case 5:  require_once("gestion_operation.php");  break;
 	  case 6:  require_once("gestion_allergie.php");  break;
@@ -94,6 +98,8 @@
 	  case 19: require_once("gestion_patient.php"); break;
 	  case 20: require_once("vue/changement_info.php"); break;
 	  case 21: require_once("gestion_inscription.php"); break;
+    case 999: require_once("insert_into_bdd.php"); break;
+
     }
 		?>
 	</center>
