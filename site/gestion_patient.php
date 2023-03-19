@@ -41,24 +41,9 @@ require_once("vue/insert_patient.php");
 
 $keys = $_SESSION['cle'];
 
-var_dump($_SESSION['cle']);
-
- $phrase = "Je suis un test";
-
- $crypte = $unControleur->encrypt($phrase, $keys);
- var_dump($crypte);
-
-
- var_dump("<br>");
- $decrypte = $unControleur->decrypt($crypte, $keys);
- var_dump($decrypte);
-
-
-
 if (isset($_POST['Valider']))
 {
-
-        
+     
     $key = Key::createNewRandomKey();
     $key = $key->saveToAsciiSafeString();
     var_dump("C'est la clé generer".$key);
@@ -66,16 +51,16 @@ if (isset($_POST['Valider']))
     if($_POST['id_medecin']==0)
     {
         $tab=array(     
-            "nom"=>$_POST["nom"],
+            "nom"=>$unControleur->encrypt($_POST["nom"],$key),
             "prenom"=>$unControleur->encrypt($_POST["prenom"],$key),
             "email"=>$_POST["email"],
-            "tel"=>$_POST["tel"],
-            "date_naissance"=>$_POST["date_naissance"],
-            "date_enregistrement"=>date('Y-m-d'),
-            "numrue"=>$_POST["numrue"],
-            "rue"=>$_POST["rue"],
-            "cp"=>$_POST["cp"],
-            "ville"=>$_POST["ville"],
+            "tel"=>$unControleur->encrypt($_POST["tel"],$key),
+            "date_naissance"=>$unControleur->encrypt($_POST["date_naissance"],$key),
+            "date_enregistrement"=>$unControleur->encrypt(date('Y-m-d'),$key),
+            "numrue"=>$unControleur->encrypt($_POST["numrue"],$key),
+            "rue"=>$unControleur->encrypt($_POST["rue"],$key),
+            "cp"=>$unControleur->encrypt($_POST["cp"],$key),
+            "ville"=>$unControleur->encrypt($_POST["ville"],$key),
             "id_cat_secu"=>$_POST["id_cat_secu"],
             "mdp"=>"123",
             "question_1"=>"1",
@@ -89,16 +74,16 @@ if (isset($_POST['Valider']))
     }else
     {
         $tab=array(     
-            "nom"=>$_POST["nom"],
+            "nom"=>$unControleur->encrypt($_POST["nom"],$key),
             "prenom"=>$unControleur->encrypt($_POST["prenom"],$key),
             "email"=>$_POST["email"],
-            "tel"=>$_POST["tel"],
-            "date_naissance"=>$_POST["date_naissance"],
-            "date_enregistrement"=>date('Y-m-d'),
-            "numrue"=>$_POST["numrue"],
-            "rue"=>$_POST["rue"],
-            "cp"=>$_POST["cp"],
-            "ville"=>$_POST["ville"],
+            "tel"=>$unControleur->encrypt($_POST["tel"],$key),
+            "date_naissance"=>$unControleur->encrypt($_POST["date_naissance"],$key),
+            "date_enregistrement"=>$unControleur->encrypt(date('Y-m-d'),$key),
+            "numrue"=>$unControleur->encrypt($_POST["numrue"],$key),
+            "rue"=>$unControleur->encrypt($_POST["rue"],$key),
+            "cp"=>$unControleur->encrypt($_POST["cp"],$key),
+            "ville"=>$unControleur->encrypt($_POST["ville"],$key),
             "id_medecin"=>$_POST['id_medecin'],
             "id_cat_secu"=>$_POST["id_cat_secu"],
             "mdp"=>"123",
@@ -111,14 +96,18 @@ if (isset($_POST['Valider']))
             "numero_dossier"=>'a triggerer',
             );
     }
-
     $Verif = NULL; 
-
     $unControleur->insertValue($tab);
-    echo 'PATIENT INSERÉR';
+   
 
-    $tab2 = array("utilisateur"=>$_POST["email"],"cle"=>$key);
-    $unControleur->callproc('genekey',$tab2);
+    $where = array("email"=>$_POST["email"]);
+    $Verif=$unControleur->selectWhere($where);
+
+    if($Verif){
+        $tab2 = array("utilisateur"=>$_POST["email"],"cle"=>$key);
+        $unControleur->callproc('genekey',$tab2);  
+        echo 'Inscription reussie';  
+    }
 
 }
 
@@ -128,16 +117,19 @@ if(isset($_POST['Modifier']))
     $unControleur->setTable("utilisateur");
     $where = array("id"=>$id_patient);
     $tab=array(      
-        "nom"=>$_POST["nom"],
-        "prenom"=>$_POST["prenom"],
+        "nom"=>$unControleur->encrypt($_POST["nom"],$key),
+        "prenom"=>$unControleur->encrypt($_POST["prenom"],$key),
         "email"=>$_POST["email"],
-        "tel"=>$_POST["tel"],
-        "date_naissance"=>$_POST["date_naissance"],
-        "numrue"=>$_POST["numrue"],
-        "rue"=>$_POST["rue"],
-        "cp"=>$_POST["cp"],
-        "ville"=>$_POST["ville"]
+        "tel"=>$unControleur->encrypt($_POST["tel"],$key),
+        "date_naissance"=>$unControleur->encrypt($_POST["date_naissance"],$key),
+        "date_enregistrement"=>$unControleur->encrypt(date('Y-m-d'),$key),
+        "numrue"=>$unControleur->encrypt($_POST["numrue"],$key),
+        "rue"=>$unControleur->encrypt($_POST["rue"],$key),
+        "cp"=>$unControleur->encrypt($_POST["cp"],$key),
+        "ville"=>$unControleur->encrypt($_POST["ville"],$key)
         );
+
+
     $unControleur->update ($tab, $where);
     $unControleur->setTable("patient");
     $where = array("id_patient"=>$id_patient);

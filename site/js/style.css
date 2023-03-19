@@ -5,7 +5,7 @@ background-color: #4274BD ;
 body{
 
 
-    height: 100vh; 
+    max-height: 100vh; 
 
     font-family: Arial, Helvetica, sans-serif;
     margin: 0; 

@@ -1,10 +1,10 @@
 /*Base pour stocker les secrets (les salts)*/
 
-drop database if exists      ;
+drop database if exists sterces;
 create database sterces;
     use sterces;
 
-/*TABLE GENERATEUR DE CRYTO*/
+/*TABLE GENERATEUR DE CRYTO*/ 
 
 create table keycrypte
 (
@@ -13,6 +13,17 @@ create table keycrypte
     primary key (utilisateur)
 )engine=innodb;
 
+
+create table archiv_keycrypte
+(
+    id_archiv_key int(5) not null auto_increment,
+    utilisateur varchar(255) not null,
+    cle varchar(255) not null,
+    primary key (id_archiv_key)
+)engine=innodb;
+
+
+
 /*Table stock utilisateur associé à leurs salt*/
 create table remedles
 (
@@ -20,6 +31,19 @@ create table remedles
     ednareugedles varchar(255) not null,
     primary key (ruetasilitu)
 )engine=innodb;
+
+drop trigger if exists keycrypte_after_delete;
+delimiter // 
+create trigger keycrypte_after_delete
+after delete on keycrypte
+for each row
+begin
+    insert into archiv_keycrypte values(
+    null,
+    old.utilisateur,
+    old.cle);
+end //
+delimiter ;
 
 drop database if exists bdd_medicool;
 create database bdd_medicool;
@@ -32,12 +56,12 @@ create table utilisateur
 	mdp varchar(100) not null,
     nom varchar(50) not null,
     prenom varchar(50) not null,
-    tel varchar(20) not null,
-    date_naissance date not null,
-    date_enregistrement date not null,
+    tel varchar(50) not null,
+    date_naissance varchar(50) not null,
+    date_enregistrement varchar(50) not null,
     numrue varchar(50) not null,
     rue varchar(100) not null,
-    cp varchar(10) not null,
+    cp varchar(50) not null,
     ville varchar(100) not null,
     question_1 enum(
         'Nom de votre ecole primaire',
@@ -62,6 +86,19 @@ create table utilisateur
     primary key (id)
 )engine=innodb;
 
+
+create table image
+(
+	id_image int(5) not null auto_increment,
+	nom varchar(255) not null,
+	path_file varchar(255) not null,
+    id int(5) not null,
+    primary key (id_image),
+    foreign key(id) references utilisateur(id)
+    on delete cascade
+)engine=innodb;
+
+
 create table secretaire
 (
     id_secretaire int(5) not null auto_increment,
@@ -69,12 +106,12 @@ create table secretaire
 	mdp varchar(100) not null,
     nom varchar(50) not null,
     prenom varchar(50) not null,
-    tel varchar(20) not null,
-    date_naissance date not null,
-    date_enregistrement date not null,
+    tel varchar(50) not null,
+    date_naissance varchar(50) not null,
+    date_enregistrement varchar(50) not null,
     numrue varchar(50) not null,
     rue varchar(100) not null,
-    cp varchar(10) not null,
+    cp varchar(50) not null,
     ville varchar(100) not null,
     question_1 enum(
         'Nom de votre ecole primaire',
@@ -122,12 +159,12 @@ create table medecin
 	mdp varchar(100) not null,
     nom varchar(50) not null,
     prenom varchar(50) not null,
-    tel varchar(20) not null,
-    date_naissance date not null,
-    date_enregistrement date not null,
+    tel varchar(50) not null,
+    date_naissance varchar(50) not null,
+    date_enregistrement varchar(50) not null,
     numrue varchar(50) not null,
     rue varchar(100) not null,
-    cp varchar(10) not null,
+    cp varchar(50) not null,
     ville varchar(100) not null,
     question_1 enum(
         'Nom de votre ecole primaire',
@@ -161,12 +198,12 @@ create table patient
 	mdp varchar(100) not null,
     nom varchar(50) not null,
     prenom varchar(50) not null,
-    tel varchar(20) not null,
-    date_naissance date not null,
-    date_enregistrement date not null,
+    tel varchar(50) not null,
+    date_naissance varchar(50) not null,
+    date_enregistrement varchar(50) not null,
     numrue varchar(50) not null,
     rue varchar(100) not null,
-    cp varchar(10) not null,
+    cp varchar(50) not null,
     ville varchar(100) not null,
     question_1 enum(
         'Nom de votre ecole primaire',
@@ -195,6 +232,9 @@ create table patient
     foreign key(id_cat_secu) references categorie_secu(id_cat_secu),
     foreign key(id_medecin) references medecin(id_medecin)
 )engine=innodb;
+
+
+
 
 create table posseder_mutuelle
 (
@@ -588,6 +628,13 @@ BEGIN
 END //
 DELIMITER ;
 
+drop procedure if exists Updatekey;
+DELIMITER // 
+create procedure Updatekey(in utilisateurs varchar(100), in cles varchar(100))
+BEGIN
+    update sterces.keycrypte set cle = cles where utilisateur = utilisateurs;
+END //
+DELIMITER ;
 
 drop procedure if exists getkey;
 DELIMITER // 
@@ -596,6 +643,7 @@ BEGIN
     select cle from sterces.keycrypte where utilisateur = utilisateurs;
 END //
 DELIMITER ;
+
 
 
 /*procédure pour créer un facture en comptant les remboursements de la secu et des eventuelles mutuelles*/
@@ -774,7 +822,7 @@ begin
     old.id_medecin,          
     curdate());
     insert into action_surveillance values(null,"delete",sysdate(),'patient',old.id_patient,current_user());
-
+    delete from sterces.keycrypte where utilisateur = old.email;
 end //
 delimiter ;
 
@@ -1143,6 +1191,7 @@ create trigger utilisateur_after_delete
 after delete on utilisateur
 for each row
 begin
+   delete from sterces.remedles where ruetasilitu = sha2(old.email,256);
    insert into action_surveillance values(null,"delete",sysdate(),"utilisateur",old.id,current_user());
 end //
 delimiter ;
