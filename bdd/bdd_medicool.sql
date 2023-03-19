@@ -52,17 +52,19 @@ create database bdd_medicool;
 create table utilisateur
 (
     id int(5) not null auto_increment,
-	email varchar(60) not null UNIQUE,
-	mdp varchar(100) not null,
-    nom varchar(50) not null,
-    prenom varchar(50) not null,
+
+	email varchar(255) not null UNIQUE,
+	mdp varchar(255) not null,
+    nom varchar(255) not null,
+    prenom varchar(255) not null,
     tel varchar(50) not null,
     date_naissance varchar(50) not null,
     date_enregistrement varchar(50) not null,
-    numrue varchar(50) not null,
-    rue varchar(100) not null,
+    numrue varchar(255) not null,
+    rue varchar(500) not null,
     cp varchar(50) not null,
-    ville varchar(100) not null,
+    ville varchar(255) not null,
+
     question_1 enum(
         'Nom de votre ecole primaire',
         'Nom de jeune fille de votre mère',
@@ -79,8 +81,8 @@ create table utilisateur
         'Ville de rencontre de vos parents',
         'Nom de votre roman prefere'
     ) not null,
-    reponse_secrete_1 varchar(255) not null,
-    reponse_secrete_2 varchar(255) not null,
+    reponse_secrete_1 varchar(500) not null,
+    reponse_secrete_2 varchar(500) not null,
     blocage enum('unlock','lock') default 'unlock',
     droits enum('utilisateur','developpeur','administrateur','super_administrateur') not null,
     primary key (id)
@@ -139,7 +141,7 @@ create table secretaire
 create table mutuelle
 (
     id_mutuelle int(5) not null auto_increment,
-	libelle varchar(100) not null,
+	libelle varchar(500) not null,
 	pourcent_rembourse decimal(5,2) not null,
     primary key (id_mutuelle)
 )engine=innodb;
@@ -147,7 +149,7 @@ create table mutuelle
 create table categorie_secu
 (
     id_cat_secu int(5) not null auto_increment,
-	libelle varchar(100) not null,
+	libelle varchar(500) not null,
 	pourcent_rembourse decimal(5,2) not null,
     primary key (id_cat_secu)
 )engine=innodb;
@@ -155,7 +157,7 @@ create table categorie_secu
 create table medecin
 (
     id_medecin int(5) not null auto_increment,
-	email varchar(60) not null UNIQUE,
+	email varchar(255) not null UNIQUE,
 	mdp varchar(100) not null,
     nom varchar(50) not null,
     prenom varchar(50) not null,
@@ -194,17 +196,19 @@ create table medecin
 create table patient
 (
     id_patient int(5) not null auto_increment,
-	email varchar(60) not null UNIQUE,
-	mdp varchar(100) not null,
-    nom varchar(50) not null,
-    prenom varchar(50) not null,
+
+	email varchar(255) not null UNIQUE,
+	mdp varchar(255) not null,
+    nom varchar(255) not null,
+    prenom varchar(255) not null,
     tel varchar(50) not null,
     date_naissance varchar(50) not null,
     date_enregistrement varchar(50) not null,
-    numrue varchar(50) not null,
-    rue varchar(100) not null,
+    numrue varchar(255) not null,
+    rue varchar(255) not null,
     cp varchar(50) not null,
-    ville varchar(100) not null,
+    ville varchar(255) not null,
+
     question_1 enum(
         'Nom de votre ecole primaire',
         'Nom de jeune fille de votre mère',
@@ -246,7 +250,7 @@ create table posseder_mutuelle
 create table facture
 (
     id_facture int(5) not null auto_increment,
-    libelle varchar(100) not null,
+    libelle varchar(500) not null,
     date_facturation date not null,
     montant_total decimal(7,2) not null,
     montant_secu decimal(7,2) not null,
@@ -268,8 +272,8 @@ create table facture
 create table correspondance
 (
     id_correspondance int(5) not null auto_increment,
-    titre varchar(255) not null,
-    contenu varchar(255) not null,
+    titre varchar(1000) not null,
+    contenu varchar(1000) not null,
     id_medecin_source int(5) not null,
     id_medecin_cible int(5) not null,
     id_patient int(5) not null,
@@ -288,7 +292,7 @@ create table correspondance
 create table pathologie
 (
     id_path int(5) not null auto_increment,
-    libelle varchar(255) not null,
+    libelle varchar(1000) not null,
     date_diagnostique date not null,
     date_guerison date,
     id_medecin int(5) not null,
@@ -305,12 +309,12 @@ create table pathologie
 create table operation
 (
     id_operation int(5) not null auto_increment,
-    libelle varchar(255) not null,
+    libelle varchar(500) not null,
     date_heure_time datetime not null,
     duree time not null,
     prix decimal(7,2) not null,
-    resultat varchar(255) not null,
-    commentaire varchar(255) not null,
+    resultat varchar(1000) not null,
+    commentaire varchar(1000) not null,
     id_patient int(5) not null,
     primary key (id_operation),
     foreign key(id_patient) references patient(id_patient)
@@ -346,7 +350,7 @@ create table hopital
 create table hospitalisation 
 (
     id_hospitalisation int(5) not null auto_increment,
-    raison varchar(255) not null,
+    raison varchar(1000) not null,
     date_debut date not null,
     date_fin_estimee date not null,
     date_fin date,
@@ -367,8 +371,8 @@ create table hospitalisation
 create table traitement 
 (
     id_traitement int(5) not null auto_increment,
-    libelle varchar(255) not null,
-    posologie varchar(255) not null,
+    libelle varchar(1000) not null,
+    posologie varchar(1000) not null,
     date_debut date not null,
     date_fin date,
     prix_par_unite float(7,2),
@@ -386,7 +390,7 @@ create table traitement
 create table allergie 
 (
     id_allergie int(5) not null auto_increment,
-    libelle varchar(255) not null,
+    libelle varchar(1000) not null,
     date_diagnostique date not null,
     date_guerison date,
     id_medecin int(5) not null,
@@ -403,11 +407,11 @@ create table allergie
 create table examen
 (
     id_examen int(5) not null auto_increment,
-    libelle varchar(255) not null,
+    libelle varchar(500) not null,
     date date not null,
     prix_examen float(7,2),
-    resultat varchar(255) not null,
-    commentaire varchar(255),
+    resultat varchar(1000) not null,
+    commentaire varchar(1000),
     id_medecin int(5) not null,
     id_patient int(5) not null, 
     primary key (id_examen),
@@ -1936,18 +1940,18 @@ insert into categorie_secu values(null,'handicap',60);
 insert into categorie_secu values(null,'retraite',15);
 
 insert into medecin values(null,'emailmedecin@gmail.com','123','nommedecin','prenom_medecin','01234567879','1980-01-01',sysdate(),'12','rue_medecin','750medeci','medecinville',4,6,"Chouaki","Moby-Dick",null,'super_administrateur','speci_med',null);
-insert into patient values(null,'emailpat@gmail.com','123','balloch','patoch','01857467879','2000-01-01','2012-12-12','666','rue_patoch','66666','enfer',4,6,"Chouaki","Moby-Dick",null,'utilisateur','6666666666',2,null);
+/*insert into patient values(null,'emailpat@gmail.com','123','balloch','patoch','01857467879','2000-01-01','2012-12-12','666','rue_patoch','66666','enfer',4,6,"Chouaki","Moby-Dick",null,'utilisateur','6666666666',2,null);
 insert into patient values(null,'email_minouche@gmail.com','123','Nouchnouch','minouch','0987654321','1895-01-01','2000-12-24','5','rue patouch','7minouch','hess',4,6,"Chouaki","Moby-Dick",null,'utilisateur','0000000001',3,1);
-insert into medecin values(null,'totaltout@gmail.com','123','total','tout','01234562879','1985-01-01',sysdate(),'15','rue du tout','750tout','toutville',4,6,"Chouaki","Moby-Dick",null,'super_administrateur','touticien',null);
-insert into patient values(null,'totaltout@gmail.com','m','n','p','t','2000-10-10','2000-10-10','n','r','c','v',4,6,"Chouaki","Moby-Dick",null,'super_administrateur','0123495874',1,1);
-insert into secretaire values(null,'emailsecretaire@gmail.com','123','nomsecretaire','prenom_secretaire','01234567879','1980-01-01',sysdate(),'12','rue_secretaire','750secretaire','secretaireville',4,6,"Chouaki","Moby-Dick",null,'administrateur');
-
+*/insert into medecin values(null,'totaltout@gmail.com','123','total','tout','01234562879','1985-01-01',sysdate(),'15','rue du tout','750tout','toutville',4,6,"Chouaki","Moby-Dick",null,'super_administrateur','touticien',null);
+/*insert into patient values(null,'totaltout@gmail.com','m','n','p','t','2000-10-10','2000-10-10','n','r','c','v',4,6,"Chouaki","Moby-Dick",null,'super_administrateur','0123495874',1,1);
+*/insert into secretaire values(null,'emailsecretaire@gmail.com','123','nomsecretaire','prenom_secretaire','01234567879','1980-01-01',sysdate(),'12','rue_secretaire','750secretaire','secretaireville',4,6,"Chouaki","Moby-Dick",null,'administrateur');
+/*
 insert into posseder_mutuelle values(2,2);
 insert into posseder_mutuelle values(3,3);
 insert into posseder_mutuelle values(4,2);
 insert into posseder_mutuelle values(2,3);
 insert into posseder_mutuelle values(2,1);
-
+*/
 insert into medecin values(0,'toto@gmail.com','123','toto','toto','toto','1980-01-01',sysdate(),'toto','toto','toto','toto',4,6,"toto","toto",null,'super_administrateur','toto',null);
 /**************************************INSERTS TEST SURVEY ACTIONS NE PAS SUPPRIMER (TESTS UNITAIRES)**************************************/
 /*
