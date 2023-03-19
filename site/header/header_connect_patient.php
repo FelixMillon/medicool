@@ -21,7 +21,7 @@
       <li><a class="nav-link px-2 link-light"> '.$_SESSION['prenom'].' '.$_SESSION['nom'].' </a></li>';
     }
   ?>
-
-         
+  
   </ul>
 </header>
+

@@ -28,7 +28,7 @@ color : black;
     <div class="container d-flex align-content-center flex-wrap" style="height:37%;background:#86B9BB;  border-radius: 18px; "> 
         <div class="col-12" style="padding-top:1%;">
            <div class="p-3"><h4 class="text-light"><u>DOSSIER MÉDICAL : <?php echo $_SESSION['prenom'].' '.$_SESSION['nom'] ?></u></h4></div> </a>
-        </div>
+        </div>                                                 
         <div class="col-4" style="padding-top:1%;">
             <a href="index.php?page=4" class="btn nav-link form w-50 text-center"> Hospitalisation </a>
         </div>
@@ -60,30 +60,46 @@ color : black;
                             <br>
                             Nom & Prénom :
                             <br>
-                            Spécialisation :
+                            Adresse :
                             <br>
                             Email :
                             <br>
                             Tel :
+                            <br>
+                            Date de naissance :
                         </div>
                         <div class="col-1"></div>
                         <div class="text-start text-light fs-6 col-5" >
-                            01
+                            <?php echo $_SESSION['id'] ?>
                             <br>
                             <?php echo $_SESSION['prenom'].' '.$_SESSION['nom'] ?>
                             <br>
-                            <?php echo $_SESSION['prenom'] ?>
+                            <?php echo $_SESSION['numrue'].' '.$_SESSION['rue'].',  '.$_SESSION['ville'].' '.$_SESSION['cp'] ?>
                             <br>
-                            john.doe@gmail.com
+                            <?php echo $_SESSION['email'] ?>
                             <br>
-                            01 02 03 04 05
+                            <?php echo $_SESSION['tel'] ?>
+                            <br>
+                            <?php echo $_SESSION['date_naissance'] ?>
                         </div>
                     </div>
 
                     <div class="col-5" style="padding-top : 5%;">
-                    
-                    <img src='img/user.png' width='25%' alt=''><br><br>
-                    <a class="btn nav-link form text-center w-75"><small> Demande de modification d'information</small></a>
+                    <?php
+                    $ext = "toto"; 
+                    $type_image = array(".png",".PNG",".jpg",".JPG",".jpeg",".JPEG");
+                    foreach($type_image as $type){
+                        if(file_exists("image_user/profil_".$_SESSION['id'].$type)){
+                            $ext=$type;
+                        }
+                    }
+                    if($ext != "toto"){
+                        echo "<img src='image_user/profil_".$_SESSION['id'].$ext."' width='35%' alt=''><br><br>";
+                    }else{
+                        echo "<img src='img/user.png' width='35%' alt=''><br><br>";
+                    }  
+                    ?><br><br>
+                    <a href="index.php?page=20" class="btn nav-link form text-center w-75"><small> Demande de modification d'information</small></a>
 
                     </div>
 
