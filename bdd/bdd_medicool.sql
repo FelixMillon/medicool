@@ -4,7 +4,7 @@ drop database if exists sterces;
 create database sterces;
     use sterces;
 
-/*TABLE GENERATEUR DE CRYTO*/
+/*TABLE GENERATEUR DE CRYTO*/ 
 
 create table keycrypte
 (
@@ -12,6 +12,17 @@ create table keycrypte
     cle varchar(255) not null,
     primary key (utilisateur)
 )engine=innodb;
+
+
+create table archiv_keycrypte
+(
+    id_archiv_key int(5) not null auto_increment,
+    utilisateur varchar(255) not null,
+    cle varchar(255) not null,
+    primary key (id_archiv_key)
+)engine=innodb;
+
+
 
 /*Table stock utilisateur associé à leurs salt*/
 create table remedles
@@ -21,6 +32,19 @@ create table remedles
     primary key (ruetasilitu)
 )engine=innodb;
 
+drop trigger if exists keycrypte_after_delete;
+delimiter // 
+create trigger keycrypte_after_delete
+after delete on keycrypte
+for each row
+begin
+    insert into archiv_keycrypte values(
+    null,
+    old.utilisateur,
+    old.cle);
+end //
+delimiter ;
+
 drop database if exists bdd_medicool;
 create database bdd_medicool;
 	use bdd_medicool;
@@ -28,6 +52,7 @@ create database bdd_medicool;
 create table utilisateur
 (
     id int(5) not null auto_increment,
+
 	email varchar(255) not null UNIQUE,
 	mdp varchar(255) not null,
     nom varchar(255) not null,
@@ -39,6 +64,7 @@ create table utilisateur
     rue varchar(500) not null,
     cp varchar(50) not null,
     ville varchar(255) not null,
+
     question_1 enum(
         'Nom de votre ecole primaire',
         'Nom de jeune fille de votre mère',
@@ -170,6 +196,7 @@ create table medecin
 create table patient
 (
     id_patient int(5) not null auto_increment,
+
 	email varchar(255) not null UNIQUE,
 	mdp varchar(255) not null,
     nom varchar(255) not null,
@@ -181,6 +208,7 @@ create table patient
     rue varchar(255) not null,
     cp varchar(50) not null,
     ville varchar(255) not null,
+
     question_1 enum(
         'Nom de votre ecole primaire',
         'Nom de jeune fille de votre mère',
@@ -621,6 +649,7 @@ END //
 DELIMITER ;
 
 
+
 /*procédure pour créer un facture en comptant les remboursements de la secu et des eventuelles mutuelles*/
 drop procedure if exists facturation;
 DELIMITER //
@@ -797,7 +826,7 @@ begin
     old.id_medecin,          
     curdate());
     insert into action_surveillance values(null,"delete",sysdate(),'patient',old.id_patient,current_user());
-
+    delete from sterces.keycrypte where utilisateur = old.email;
 end //
 delimiter ;
 

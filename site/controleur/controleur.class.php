@@ -49,7 +49,17 @@
 		}
 		public function update($tab, $where)
 		{
-			$this->unModele->update($tab, $where);
+			$vide = true;
+			foreach ($tab as $cle => $valeur)
+			{
+				if($valeur != ""){
+					$vide = false;
+				}
+			
+			}
+			if($vide == false){
+				$this->unModele->update($tab, $where);
+			}		
 		}
 		public function callproc($nom, $tab)
 		{

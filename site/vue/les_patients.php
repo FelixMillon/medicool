@@ -23,16 +23,15 @@
             $tab2=array($unPatient['email']);
             $cle=$unControleur->callproc('getkey',$tab2);
             $cle = $cle['cle'];
-            $prenom = $unControleur->decrypt($unPatient['prenom'], $cle);
 
         echo "<tr class='text-center'>
             <td><center>".$unPatient['id_patient']."</center></td>
             <td><center>".$unPatient['email']."</center></td>
-            <td><center>".$unPatient['nom']." ".$prenom."</center></td>
-            <td><center>".$unPatient['tel']."</center></td>
-            <td><center>".$unPatient['date_naissance']."</center></td>
-            <td><center>".$unPatient['date_enregistrement']."</center></td>
-            <td><center>".$unPatient['numrue']." ".$unPatient['rue']." <br> ,".$unPatient['ville']." &nbsp;".$unPatient['cp']."</center></td>
+            <td><center>".$unControleur->decrypt($unPatient['nom'], $cle)." ".$unControleur->decrypt($unPatient['prenom'], $cle)."</center></td>
+            <td><center>".$unControleur->decrypt($unPatient['tel'], $cle)."</center></td>
+            <td><center>".$unControleur->decrypt($unPatient['date_naissance'], $cle)."</center></td>
+            <td><center>".$unControleur->decrypt($unPatient['date_enregistrement'], $cle)."</center></td>
+            <td><center>".$unControleur->decrypt($unPatient['numrue'], $cle)." ".$unControleur->decrypt($unPatient['rue'], $cle)." <br> ,".$unControleur->decrypt($unPatient['ville'], $cle)." &nbsp;".$unControleur->decrypt($unPatient['cp'], $cle)."</center></td>
             <td><center>".$unPatient['droits']."</center></td>
             <td><center>".$unPatient['numero_dossier']."</center></td>
             <td><center>".$unPatient['id_cat_secu']."</center></td>

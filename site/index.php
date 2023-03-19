@@ -43,6 +43,7 @@
 	foreach($lesPatients as $unPatient){
 	$lesIDPatients[count($lesIDPatients)]=$unPatient['email'];
 	}
+	
 
 		if(isset($_SESSION['email']) && in_array($_SESSION['email'], $lesIDMedecins, true))
 		{
@@ -95,7 +96,10 @@
 	  case 17: require_once("gestion_facture.php"); break;
 	  case 18: require_once("gestion_correspondance.php"); break;
 	  case 19: require_once("gestion_patient.php"); break;
-	  case 999: require_once("insert_into_bdd.php"); break;
+	  case 20: require_once("vue/changement_info.php"); break;
+	  case 21: require_once("gestion_inscription.php"); break;
+    case 999: require_once("insert_into_bdd.php"); break;
+
     }
 		?>
 	</center>
