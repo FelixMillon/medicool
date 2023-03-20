@@ -78,6 +78,43 @@
 		public function decrypt($encrypted_message, $key)
 		{
 			return $this->unModele->decrypt($encrypted_message, $key);
-		} 
+		}
+
+		public function RefreshHospitals()
+        {
+            if(file_exists("json/hopitaux.json"))
+            {
+                $f = fopen ("json/hopitaux.json", "r"); 
+                $octet=filesize("json/hopitaux.json");
+                if ($octet!=0 and $f!= null)
+                {
+                    $lesHopitauxJson = file_get_contents("json/hopitaux.json");
+                    $lesHopitaux = json_decode($lesHopitauxJson, true);
+                    foreach($lesHopitaux as $unHopital)
+                    {
+						if($unHopital['fields']['raison_sociale_entite_juridique']!=null
+						and $unHopital['fields']['num_voie']!=null
+						and $unHopital['fields']['voie']!=null
+						and $unHopital['fields']['cp_ville']!=null
+						and $unHopital['fields']['raison_sociale']!=null)
+						{
+							$tab= array(
+								"nom"=>$unHopital['fields']['raison_sociale_entite_juridique'],
+								"numrue"=>$unHopital['fields']['num_voie'],
+								"rue"=>$unHopital['fields']['voie'],
+								"cp"=>substr($unHopital['fields']['cp_ville'],0,5),
+								"ville"=>substr($unHopital['fields']['cp_ville'],6,-1),
+								"specialisation"=>$unHopital['fields']['raison_sociale']
+							);
+							$this->unModele->setTable('hopital');
+							$this->unModele->insert($tab);
+							print("hopital inséré <br>");
+						}
+						
+                    }
+                }
+                fclose($f);
+            }
+        }
 	}
 ?>

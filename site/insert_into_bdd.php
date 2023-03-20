@@ -11,16 +11,26 @@ $lesMedecins = $unControleur->selectAll();
 $unControleur->setTable("categorie_secu");
 $lesCategories_secu = $unControleur->selectAll();
 
+
 $unControleur->setTable("patient");
 
-
 require_once("vue/insert_patient_test.php");
+
+if(isset($_POST['RefreshHosp']))
+{
+    $unControleur->setTable('hopital');
+    $where=array("1"=>"1");
+    $unControleur->delete($where);
+    $unControleur->RefreshHospitals();
+    $unControleur->setTable("patient");
+}
 
 $lesentrees = array(
     array('emailpat@gmail.com','123','balloch','patoch','01857467879','2000-01-01','2012-12-12','666','rue_patoch','66666','enfer','4','6',"Chouaki","Moby-Dick",'null','utilisateur','6666666666','2','null'),
     array('email_minouche@gmail.com','123','Nouchnouch','minouch','0987654321','1895-01-01','2000-12-24','5','rue patouch','7minouch','hess','4','6',"Chouaki","Moby-Dick",'null','utilisateur','0000000001','3','1'),
     array('totaltout@gmail.com','m','n','p','t','2000-10-10','2000-10-10','n','r','c','v','4','6',"Chouaki","Moby-Dick",'null','super_administrateur','0123495874','1','1')
 );
+
 if (isset($_POST['Valider']))
 {
     $key = Key::createNewRandomKey();
@@ -60,7 +70,7 @@ if (isset($_POST['Valider']))
 
 $unControleur->setTable("patient");
 $LesPatients = $unControleur->selectAll(); 
-require_once ("vue/les_patients.php"); 
+//require_once ("vue/les_patients.php"); 
 
 ?>
 
