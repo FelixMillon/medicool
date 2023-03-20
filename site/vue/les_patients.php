@@ -19,6 +19,11 @@
 
 
         foreach ($LesPatients as $unPatient) { 
+
+            if(($_SESSION['estMedecin'] == True and $_SESSION['id'] == $unPatient['id_medecin']) 
+                or $unPatient['id_medecin'] == null or $_SESSION['estSecretaire'] == True){ 
+
+
             
             $tab2=array($unPatient['email']);
             $cle=$unControleur->callproc('getkey',$tab2);
@@ -42,6 +47,7 @@
                 <a href='index.php?page=19&action=edit&id_patient=".$unPatient['id_patient']."'><img src='img/edit.png' height='30' width='30'></a>
             </td>
         </tr>";
+            }
         } 
         ?>
     </table>
