@@ -33,7 +33,7 @@
                         style="border:3px solid #86B9BB" value="<?php if ($LHospitalisation!=NULL) echo $LHospitalisation['date_fin']; ?>">
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-12">
                     <select name="id_hopital" class="form-select w-100 text-center" style="border-radius:15px;border:3px solid #86B9BB">
                         <option selected>Hopital</option>
                         <?php 
@@ -44,33 +44,6 @@
                     </select>
                     </div>
 
-                    <div class="col-4">
-                    <select name="id_medecin" class="form-select w-100 text-center" style="border-radius:15px;border:3px solid #86B9BB">
-                        <option selected>Médecin</option>
-                        <?php
-                            foreach ($lesMedecins as $unMedecin){
-                                echo "<option value='".$unMedecin['id_medecin']."'>".$unMedecin['nom']." ".$unMedecin['prenom']." </option>";
-                            }			    
-                        ?>
-                    </select>
-                    </div>
-
-                    <div class="col-4">
-                        <select name="id_patient" class="form-select w-100 text-center" style="border-radius:15px;border:3px solid #86B9BB">
-                            <option selected>Patient</option>
-                            <?php 
-                            foreach ($lesPatients as $unPatient){
-                                $tab2=array($unPatient['email']);
-                                $cle=$unControleur->callproc('getkey',$tab2);
-                                $cle = $cle['cle'];
-                                $prenom = $unControleur->decrypt($unPatient['prenom'], $cle);
-                                $nom = $unControleur->decrypt($unPatient['nom'], $cle);
-                    
-                                echo "<option value='".$unPatient['id_patient']."'>".$nom." ".$prenom." </option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
             
                     <div class="col-6" style="padding-top: 6%"> 
                         <input class="btn btn-outline-danger btn-lg w-75 fw-bold" type="submit" name="Annuler" value="Annuler">

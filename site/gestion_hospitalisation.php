@@ -62,7 +62,7 @@ if(isset($_POST['Valider']) || isset($_POST['Modifier']))
 {
     // Recherche de la clé de cryptage 
     $unControleur->setTable("patient");
-    $where = array('id_patient'=>$_POST['id_patient']);
+    $where = array('id_patient'=>$_SESSION['id_patient']);
     $lePatient = $unControleur->selectWhere($where);
     $tab3=array($lePatient["email"]);
     $key=$unControleur->callproc('getkey',$tab3);
@@ -78,8 +78,8 @@ if (isset($_POST['Valider']))
         "date_fin_estimee"=>$_POST["date_fin_estimee"],
         "date_fin"=>$_POST["date_fin"],
         "id_hopital"=>$_POST["id_hopital"],
-        "id_patient"=>$_POST["id_patient"],
-        "id_medecin"=>$_POST["id_medecin"]
+        "id_patient"=>$_SESSION["id_patient"],
+        "id_medecin"=>$_SESSION["id"]
         );
     $unControleur->setTable("hospitalisation");
     $unControleur->insert($tab); 
@@ -100,8 +100,8 @@ if(isset($_POST['Modifier']))
         "date_fin_estimee"=>$_POST["date_fin_estimee"],
         "date_fin"=>$_POST["date_fin"],
         "id_hopital"=>$_POST["id_hopital"],
-        "id_patient"=>$_POST["id_patient"],
-        "id_medecin"=>$_POST["id_medecin"]
+        "id_patient"=>$_SESSION["id_patient"],
+        "id_medecin"=>$_SESSION["id"]
         );
     $unControleur->setTable("hospitalisation");
     $unControleur->update ($tab, $where); 

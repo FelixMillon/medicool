@@ -45,13 +45,16 @@
 	}
 	
 
-		if(isset($_SESSION['email']) && in_array($_SESSION['email'], $lesIDMedecins, true))
+		if(isset($_SESSION['email']) && $_SESSION['estSecretaire'])
 		{
-		require_once ("header/header_connect_med.php");			
-		}else if(isset($_SESSION['email']) && in_array($_SESSION['email'], $lesIDPatients, true)) {
-		require_once ("header/header_connect_patient.php");
+			require_once ("header/header_connect_sec.php");			
+		}else if(isset($_SESSION['email']) && $_SESSION['estMedecin'])
+		{
+			require_once ("header/header_connect_med.php");			
+		}else if(isset($_SESSION['email']) && $_SESSION['estPatient']) {
+			require_once ("header/header_connect_patient.php");
 		}else{
-		require_once ("header/header_prospec.php");
+			require_once ("header/header_prospec.php");
 		}
 
 		?>
@@ -99,6 +102,8 @@
 	  case 20: require_once("vue/changement_info.php"); break;
 	  case 21: require_once("gestion_inscription.php"); break;
 	  case 22:  require_once("vue/espace_patient_med.php");  break;
+	  case 23: require_once("gestion_medecin.php"); break;
+	  case 24: require_once("gestion_secretaire.php"); break;
       case 999: require_once("insert_into_bdd.php"); break;
 
 
