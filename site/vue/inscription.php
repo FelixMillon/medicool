@@ -96,8 +96,8 @@ transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 								?>
 							</select>
 						</div>
-						<div class="col-6 py-2"><input type="text" class="form text-center" name="mdp"  placeholder="Mot de passe"></div> 
-						<div class="col-6 py-2"><input type="text" class="form text-center" placeholder="Confirmer le mot de passe"></div> 
+						<div class="col-6 py-2"><input type="password" class="form text-center" name="mdp"  placeholder="Mot de passe"></div> 
+						<div class="col-6 py-2"><input type="password" class="form text-center" name="verifmdp"placeholder="Confirmer le mot de passe"></div> 
 
 					</div>
 					

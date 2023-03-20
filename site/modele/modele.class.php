@@ -33,17 +33,18 @@
 			$donnees=array();
 			foreach ($tab as $cle => $valeur)
 			{
-				$champs[] = ":".$cle;
-				$donnees[":".$cle] = $valeur;
-				// var_dump($cle." : ".$valeur."</br>"); 
+				if($valeur=="" or $valeur=="0000-00-00")
+				{
+					$champs[] = "null";
+				}else{
+					$champs[] = ":".$cle;
+					$donnees[":".$cle] = $valeur;
+				}
 			}
 			$chaineChamps = implode(",",$champs);
 			$requete ="insert into ".$this->uneTable." values (null,".$chaineChamps.");";
 			$insert = $this->unPdo->prepare($requete);
 			$insert->execute($donnees);
-			//var_dump($donnees);
-			//var_dump($requete);
-			
 		}
 
 		public function insertValue ($tab)
@@ -157,12 +158,10 @@
 			$champs2=array();
 			foreach ($tab as $cle => $valeur)
 			{
-				if($valeur != ""){
-				$champs2[] = $cle." = :".$cle;
-				$donnees[":".$cle] = $valeur;
-				// var_dump($cle." : ".$valeur."</br>"); 
-				}
-			
+				if($valeur != "" or $valeur=="0000-00-00"){
+					$champs2[] = $cle." = :".$cle;
+					$donnees[":".$cle] = $valeur;
+				}		
 			}
 			$chaineChamps = implode(",",$champs2);
 			$champs=array();
@@ -176,8 +175,6 @@
 
 			$update = $this->unPdo->prepare($requete);
 			$update->execute($donnees);
-			// var_dump($requete); 
-			// var_dump($donnees);
 		}
 
 		public function callproc($nom,$tab)
