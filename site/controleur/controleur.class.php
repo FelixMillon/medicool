@@ -80,6 +80,17 @@
 			return $this->unModele->decrypt($encrypted_message, $key);
 		}
 
+		public function verifMotDePasse(string $motDePasse) : bool {
+			if(strlen($motDePasse) < 8) {
+			  return false;
+			}
+			$regex = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).+$/";
+			if(!preg_match($regex, $motDePasse)) {
+			  return false;
+			}
+			return true;
+		}
+
 		public function RefreshHospitals()
         {
             if(file_exists("json/hopitaux.json"))
