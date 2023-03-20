@@ -87,7 +87,7 @@
 	  case 8:  require_once("vue/operer.php");  break;
 	  case 9:  require_once("gestion_pathologie.php");  break;
 	  case 10: require_once("gestion_traitement.php");  break;
-	  case 11: require_once("vue/espace_medecin.php");  break;
+	  case 11: require_once("gestion_espace_medecin.php");  break;
 	  case 12: require_once("vue/espace_secretariat.php");  break;
 	  case 13: require_once("vue/blocage.php");  break;
 	  case 14: require_once("vue/question_secret.php"); break;
@@ -98,7 +98,9 @@
 	  case 19: require_once("gestion_patient.php"); break;
 	  case 20: require_once("vue/changement_info.php"); break;
 	  case 21: require_once("gestion_inscription.php"); break;
-    case 999: require_once("insert_into_bdd.php"); break;
+	  case 22:  require_once("vue/espace_patient_med.php");  break;
+      case 999: require_once("insert_into_bdd.php"); break;
+
 
     }
 		?>

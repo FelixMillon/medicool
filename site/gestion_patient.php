@@ -39,8 +39,6 @@ if(isset($_GET['action']) && isset($_GET['id_patient']))
 
 require_once("vue/insert_patient.php");
 
-$keys = $_SESSION['cle'];
-
 if (isset($_POST['Valider']))
 {
      
