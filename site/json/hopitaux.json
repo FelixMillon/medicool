@@ -133,49 +133,6 @@
     },
     {
       "datasetid": "les_etablissements_hospitaliers_franciliens",
-      "recordid": "1d24fa3cc1e60949497edd809770913a29792be9",
-      "fields": {
-        "categorie_de_l_etablissement": "Etablissement R\\u00e9adaptation Fonctionnelle",
-        "date_ouverture": "1956-11-23",
-        "raison_sociale_entite_juridique": "CENTRE DE MEDECINE PHYSIQUE ET DE READAPTATION DE BAZINCOURT",
-        "voie": "DE VERNEUIL",
-        "num_type": 1107,
-        "finess_ej": "780822193",
-        "adresse_complete": "RTE DE VERNEUIL",
-        "finess_et": "780700027",
-        "lng": "1.944629",
-        "num_fax": "01 34 74 82 92",
-        "type_etablissement": "Etablissements de Soins de Suite et de R\\u00e9adaptation",
-        "cp_ville": "78130 CHAPET",
-        "dept": "YVELINES",
-        "wgs84": [
-          48.970397,
-          1.944629
-        ],
-        "code_ape": "8610Z",
-        "raison_sociale": "CMPR DE BAZINCOURT",
-        "num_tel": "01 30 90 40 63",
-        "lib_tarification": "ARS \\u00e9tablissements de sant\\u00e9 non financ\\u00e9s dotation globale",
-        "num_cat": 135,
-        "num_siret": "39390213500010",
-        "participant_service_public_hospitalier": "Non concern\\u00e9",
-        "code_tarif": 7,
-        "type_voie": "RTE",
-        "code_psph": 0,
-        "lat": "48.970397",
-        "num_dept": 78
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.944629,
-          48.970397
-        ]
-      },
-      "record_timestamp": "2014-08-13T21:32:08Z"
-    },
-    {
-      "datasetid": "les_etablissements_hospitaliers_franciliens",
       "recordid": "1804a839244c5fdb7f853534cdf66ac384d6eea0",
       "fields": {
         "categorie_de_l_etablissement": "Maison de Sant\\u00e9 pour Maladies Mentales",
