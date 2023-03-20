@@ -27,6 +27,7 @@
 				if(isset($LeMedecin['email']))
 				{
 					$_SESSION['estMedecin']=True;
+					$_SESSION['specialisation']=$LeMedecin['specialisation'];
 				}
 				$unControleur->setTable("secretaire");
 				$LeSecretaire = $unControleur->selectWhere($where);
@@ -69,9 +70,6 @@
 					$_SESSION['ville'] = $unUser['ville'];
 					$_SESSION['cp'] = $unUser['cp'];
 				}
-
-
-
 
 
 				$_SESSION['email'] = $unUser['email'];
