@@ -39,7 +39,7 @@ if (isset($_POST['sInscrire']))
             "cp"=>$unControleur->encrypt($_POST["cp"],$key),
             "ville"=>$unControleur->encrypt($_POST["ville"],$key),
             "id_cat_secu"=>$_POST["id_cat_secu"],
-            "mdp"=>$_POST["id_cat_secu"],
+            "mdp"=>$_POST["mdp  "],
             "question_1"=>$_POST["question_1"],
             "question_2"=>$_POST["question_2"],
             "droits"=>"utilisateur",
@@ -63,7 +63,7 @@ if (isset($_POST['sInscrire']))
             "ville"=>$unControleur->encrypt($_POST["ville"],$key),
             "id_medecin"=>$_POST['id_medecin'],
             "id_cat_secu"=>$_POST["id_cat_secu"],
-            "mdp"=>$_POST["id_cat_secu"],
+            "mdp"=>$_POST["mdp"],
             "question_1"=>$_POST["question_1"],
             "question_2"=>$_POST["question_2"],
             "droits"=>"utilisateur",
@@ -152,7 +152,7 @@ if (isset($_POST['sInscrire']))
             $unControleur->callproc('unlockuser',$tab);		
             
 
-            header("Location: index.php");	
+           header("Location: index.php");	
 
     }         
 }
