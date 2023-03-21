@@ -1,49 +1,51 @@
 <form method="POST">
-    <input type="submit" value="Semaine précedente" name="prevWeek">
-    <input type="submit" value="Semaine courante" name="thisWeek">
-    <select name="annee">
-        <option value="">Année</option>
-        <?php
-            $current_year = date('Y');
-            for ($i = $current_year - 5; $i <= $current_year + 5; $i++) {
-            echo '<option value="' . $i . '">' . $i . '</option>';
+    <div class="d-flex justify-content-center">
+        <input class="btn btn-lg text-light fw-bold"  style="background:#3B7476;" type="submit" value="< <" name="prevWeek">
+        <input class="btn btn-lg text-light fw-bold"  style="background:#3B7476;" type="submit" value="Semaine courante" name="thisWeek">
+        <select name="annee"  class="form-select text-center" style="border-radius:15px; border:3px solid #86B9BB; width : 8%;" >
+            <option value="">Année</option>
+            <?php
+                $current_year = date('Y');
+                for ($i = $current_year - 5; $i <= $current_year + 5; $i++) {
+                echo '<option value="' . $i . '">' . $i . '</option>';
+                }
+            ?>
+        </select>
+        <select  name="mois"  class="form-select text-center" style="border-radius:15px; border:3px solid #86B9BB; width : 8%;">
+            <?php
+            $months = array(
+                "" => 'Mois',
+                1 => 'Janvier',
+                2 => 'Février',
+                3 => 'Mars',
+                4 => 'Avril',
+                5 => 'Mai',
+                6 => 'Juin',
+                7 => 'Juillet',
+                8 => 'Août',
+                9 => 'Septembre',
+                10 => 'Octobre',
+                11 => 'Novembre',
+                12 => 'Décembre'
+            );
+            foreach ($months as $value => $label) {
+                echo '<option value="' . $value . '">' . $label . '</option>';
             }
-        ?>
-    </select>
-    <select  name="mois">
-        <?php
-        $months = array(
-            "" => 'Mois',
-            1 => 'Janvier',
-            2 => 'Février',
-            3 => 'Mars',
-            4 => 'Avril',
-            5 => 'Mai',
-            6 => 'Juin',
-            7 => 'Juillet',
-            8 => 'Août',
-            9 => 'Septembre',
-            10 => 'Octobre',
-            11 => 'Novembre',
-            12 => 'Décembre'
-        );
-        foreach ($months as $value => $label) {
-            echo '<option value="' . $value . '">' . $label . '</option>';
-        }
-        ?>
-    </select>
-    <select name="semaine">
-        <option value="">Semaine</option>
-        <?php
-            for ($i = 1; $i <= 4; $i++) {
-            echo '<option value="' . $i . '">' . $i . '</option>';
-            }
-        ?>
-    </select>
-        <input type="submit" value="Afficher" name="Afficher">
-        <input type="submit" value="Semaine suivante" name="nextWeek">
+            ?>
+        </select>
+        <select name="semaine"  class="form-select text-center" style="border-radius:15px; border:3px solid #86B9BB; width : 8%;">
+            <option value="">Semaine</option>
+            <?php
+                for ($i = 1; $i <= 4; $i++) {
+                echo '<option value="' . $i . '">' . $i . '</option>';
+                }
+            ?>
+        </select>
+            <input class="btn btn-lg text-light fw-bold"  style="background:#3B7476;" type="submit" value="Afficher" name="Afficher">
+            <input class="btn btn-lg text-light fw-bold" style="background:#3B7476;" type="submit" value="> >" name="nextWeek">
+    </div>
 </form>
-<div style="display: flex; flex-direction: column; height: 87vh;"> 
+<div style="display: flex; flex-direction: column; height: 84vh;"> 
     <div style="margin: 6% 6% 3% 6%;" >
     <div class="table-responsive" style="height:72vh;">
 

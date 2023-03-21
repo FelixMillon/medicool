@@ -1,4 +1,4 @@
-
+<div class="col-4" style="padding-right:3%;"> 
         <!-- Début insert -->
         <form method="post" action="">
             <div class="container" >
@@ -86,5 +86,5 @@
 
 
     </div>
-	<div class="col-4" style="padding-left:3%"> 
+
 

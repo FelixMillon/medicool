@@ -175,6 +175,8 @@
 
 			$update = $this->unPdo->prepare($requete);
 			$update->execute($donnees);
+
+			var_dump($requete); var_dump($donnees); 
 		}
 
 		public function callproc($nom,$tab)

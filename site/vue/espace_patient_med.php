@@ -45,8 +45,8 @@ color : black;
     ?>
 
 
-<div style="height: 88vh;padding-top: 1%;"> 
-    <div class="container d-flex align-content-center flex-wrap" style="height:37%;background:#86B9BB;  border-radius: 18px; "> 
+<div style="padding-top: 1%; padding-bottom: 6%;"> 
+    <div class="container d-flex align-content-center flex-wrap" style="height:33vh;background:#86B9BB;  border-radius: 18px; "> 
         <div class="col-12" style="padding-top:1%;">
            <div class="p-3"><h4 class="text-light"><u>DOSSIER MÉDICAL : <?php echo $unUser['prenom'].' '.$unUser['nom'] ?></u></h4></div> </a>
         </div>                                                 
@@ -60,7 +60,7 @@ color : black;
             <a href="index.php?page=10" class="btn nav-link form w-50 text-center"> Traitement </a>
         </div>
         <div class="col-4" style="padding-top:1%;">
-            <a href="index.php?page=8" class="btn nav-link form w-50 text-center"> Opération </a>
+            <a href="index.php?page=5" class="btn nav-link form w-50 text-center"> Opération </a>
         </div>
         <div class="col-4" style="padding-top:1%;">
             <a href="index.php?page=6" class="btn nav-link form w-50 text-center"> Allérgie </a>

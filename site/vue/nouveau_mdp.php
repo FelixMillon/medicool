@@ -27,36 +27,55 @@ color : black;
 }
 </style>
 
+<?php 
+	if(isset($_POST['Suivants3']))
+	{
 
-<div style="height: 88vh;padding-top: 10%;"> 
-    <div class="container d-flex  flex-wrap text-light" style="height:75%;width:50%;background:#86B9BB;  border-radius: 11px;"> 
-        <div class="col-12">
-           <div class="p-3 fs-4"><u>Nouveau mot de passe </u></div> </a>
-        </div>
-        <div class="col-6 w-50 p-1 ">
-        Mot de passe (12 caractères dont une majuscule, une minuscule, 1 chiffres et 1 caractères spécial)
-        </div>
-        <div class="col-6 fs-5 " style="padding: 1% 0 0 2%;">
-            <input type="text" name="question2" class="form-control w-75" value="">
-        </div>
-        <div class="col-6 w-50 p-3">
-        Confirmer le mot de passe
-        </div>
-        <div class="col-6" style="padding: 1% 0 0 2%;">
-            <input type="text" name="question2" class="form-control w-75" value="">
-        </div>
+        $where = array(
+            'id_patient'=>$_SESSION['id_recup']
+        );
 
-        <div class="col-6" style="padding-top:1%; ">
-            <input class="btn btn-danger btn-lg w-50 fw-bold" type="reset" name="Annuler" value="Annuler">
-        </div>
-        <div class="col-6" style="padding-top:1%;">
-            <input class="btn btn-success btn-lg w-50 fw-bold" type="submit"> 
+        $tab = array(
+            'mdp'=>$_POST['mdp']
+        );
+           
+		$unControleur->setTable("patient");
+        $unControleur->update ($tab, $where);
+
+        
+    }
+
+?>
+
+
+<form method="post" action="">
+    <div style="height: 88vh;padding-top: 10%;"> 
+        <div class="container d-flex  flex-wrap text-light" style="height:75%;width:50%;background:#86B9BB;  border-radius: 11px;"> 
+            <div class="col-12">
+            <div class="p-3 fs-4"><u>Nouveau mot de passe </u></div> </a>
+            </div>
+            <div class="col-6 w-50 p-1 ">
+            Mot de passe (12 caractères dont une majuscule, une minuscule, 1 chiffres et 1 caractères spécial)
+            </div>
+            <div class="col-6 fs-5 " style="padding: 1% 0 0 2%;">
+                <input type="text" name="mdp" placeholder="Nouveau mot de passe" class="form-control w-75 text-center" value="">
+            </div>
+            <div class="col-6 w-50 p-3">
+            Confirmer le mot de passe
+            </div>
+            <div class="col-6" style="padding: 1% 0 0 2%;">
+                <input type="text" name="mdp2" placeholder="Mot de passe" class="form-control w-75 text-center" value="">
+            </div>
+
+            <div class="col-6" style="padding-top:1%; ">
+                <input class="btn btn-danger btn-lg w-50 fw-bold" type="reset" name="Annuler" value="Annuler">
+            </div>
+            <div class="col-6" style="padding-top:1%;">
+            <input class="btn btn-success btn-lg w-50 fw-bold" type="submit" name="Suivants3" value="Suivant" > 
+            </div>
         </div>
     </div>
-
-  
-    
-</div>
+</form>
 
 
 
