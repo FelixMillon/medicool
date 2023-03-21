@@ -16,7 +16,7 @@
                 <td>Hopital</td>
                 <?php if($_SESSION['estMedecin'] == True){ echo"<td>Patient</td>";}?>
                 <td>Medecin</td>
-                <td>Opération</td>
+                <?php if($_SESSION['estMedecin'] == True){ echo"<td>Opération</td>";}?>
             </tr>
             
         <?php 
@@ -62,13 +62,15 @@
             echo"<td><center>".$lepatient."</center></td>";
             }
             echo "
-            <td><center>".$lemedecin."</center></td>
-            
-            <td> 
+            <td><center>".$lemedecin."</center></td>";
+            if($_SESSION['estMedecin'] == True){ 
+                echo "<td> 
                 <a href='index.php?page=4&action=sup&id_hospitalisation=".$UneHospitalisation['id_hospitalisation']."'><img src='img/sup.png' height='30' width='30'></a>                            
                 <a href='index.php?page=4&action=edit&id_hospitalisation=".$UneHospitalisation['id_hospitalisation']."'><img src='img/edit.png' height='30' width='30'></a>
-            </td>
-        </tr>";
+            </td>";
+        }
+
+        echo"</tr>";
         }
     }
     

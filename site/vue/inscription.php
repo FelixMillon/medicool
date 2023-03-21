@@ -25,24 +25,24 @@ transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 
 </style>
 
-<div class="row" style="margin : 0; padding-bottom : 5%;" >
-	<div class="col-3"></div>
-		<div class="col-6 text-light" > 
+<div class="row" style="margin : 0; padding-bottom : 3%;" >
+	<div class="col-2"></div>
+		<div class="col-8 text-light" > 
 			<form method="post" class="d-flex flex-column bd-highlight" style="padding-top : 5%;">
 				<div style="padding: 2% 5% 5% 5%; background:#86B9BB; border-radius:25px;"> 
 					<img src="img/logo_login.png" class="bi me-2 img border" style="width: 10vw;" role="img" alt=""> 
 					<div class="row justify-content-center">
-						<div class="col-6 py-2"><input type="text" class="form text-center" name="nom" placeholder="Nom"></div> 
-						<div class="col-6 py-2"><input type="text" class="form text-center" name="prenom" placeholder="Prénom"></div>
-						<div class="col-6 py-2"><input type="text" class="form text-center" name="email" placeholder="Email"></div> 
-						<div class="col-6 py-2"><input type="text" class="form text-center" name="tel" placeholder="Tel"></div> 
-						<div class="col-6 py-3">Date de naissance</div> 
-						<div class="col-6 py-2"><input type="date" class="form text-center" name="date_naissance"></div> 
-						<div class="col-6 py-2"><input type="text" class="form text-center" name="numrue" placeholder="Numéro de rue"></div> 
-						<div class="col-6 py-2"><input type="text" class="form text-center" name="rue" placeholder="Nom de la rue"></div> 
-						<div class="col-6 py-2"><input type="text" class="form text-center" name="ville"  placeholder="Ville"></div> 
-						<div class="col-6 py-2"><input type="text" class="form text-center" name="cp"  placeholder="Code postal"></div> 
-						<div class="col-6 py-2"> 
+						<div class="col-4 py-2"><input type="text" class="form text-center" name="nom" placeholder="Nom"></div> 		
+						<div class="col-4 py-3">Date de naissance</div>
+						<div class="col-4 py-2"><input type="text" class="form text-center" name="prenom" placeholder="Prénom"></div>
+						<div class="col-4 py-2"><input type="text" class="form text-center" name="tel" placeholder="Tel"></div> 
+						<div class="col-4 py-2"><input type="date" class="form text-center" name="date_naissance"></div>
+						<div class="col-4 py-2"><input type="text" class="form text-center" name="email" placeholder="Email"></div>
+						<div class="col-4 py-2"><input type="text" class="form text-center" name="numrue" placeholder="Numéro de rue"></div> 
+						<div class="col-4 py-2"><input type="text" class="form text-center" name="rue" placeholder="Nom de la rue"></div> 
+						<div class="col-4 py-2"><input type="text" class="form text-center" name="ville"  placeholder="Ville"></div> 
+						<div class="col-4 py-2"><input type="text" class="form text-center" name="cp"  placeholder="Code postal"></div> 
+						<div class="col-4 py-2"> 
 							<select name="question_1"  class="form-select w-100 text-center" style="border-radius:15px; border:3px solid #86B9BB;">
 								<option value="1">Nom de votre école primaire ?</option>
 								<option value="2">Nom de jeune fille de votre mère ?</option>
@@ -52,7 +52,7 @@ transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 								<option value="6">Nom de votre roman préféré ?</option>
 							</select>
 						</div>
-						<div class="col-6 py-2"> 
+						<div class="col-4 py-2"> 
 							<select name="question_2"  class="form-select w-100 text-center" style="border-radius:15px; border:3px solid #86B9BB;">
 								<option value="1">Nom de votre école primaire ?</option>
 								<option value="2">Nom de jeune fille de votre mère ?</option>
@@ -61,10 +61,8 @@ transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 								<option value="5">Ville de rencontre de vos parents ?</option>
 								<option value="6">Nom de votre roman préféré ?</option>
 							</select>
-						</div>			
-						<div class="col-6 py-2"><input type="text" class="form text-center" name="reponse_secrete_1"  placeholder="Reponse 1"></div> 
-						<div class="col-6 py-2"><input type="text" class="form text-center" name="reponse_secrete_2"  placeholder="Reponse 2"></div>
-						<div class="col-6">
+						</div>
+						<div class="col-4">
 							<select name="id_medecin" class="form-select w-100 text-center" style="border-radius:15px; border:3px solid #86B9BB;">
 								<option 
 								<?php
@@ -85,8 +83,11 @@ transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 									}			    
 								?>
 							</select>
-						</div>
-						<div class="col-6">
+						</div>			
+						<div class="col-4 py-2"><input type="text" class="form text-center" name="reponse_secrete_1"  placeholder="Reponse 1"></div> 
+						<div class="col-4 py-2"><input type="text" class="form text-center" name="reponse_secrete_2"  placeholder="Reponse 2"></div>
+						
+						<div class="col-4">
 							<select name="id_cat_secu" class="form-select w-100 text-center" style="border-radius:15px;border:3px solid #86B9BB">
 								<option selected>Catégorie sécurité social </option>
 								<?php 
@@ -96,20 +97,20 @@ transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 								?>
 							</select>
 						</div>
-						<div class="col-6 py-2"><input type="password" class="form text-center" name="mdp"  placeholder="Mot de passe"></div> 
-						<div class="col-6 py-2"><input type="password" class="form text-center" name="verifmdp"placeholder="Confirmer le mot de passe"></div> 
+						<div class="col-4 py-2"><input type="password" class="form text-center" name="mdp"  placeholder="Mot de passe"></div> 
+						<div class="col-4 py-2"><input type="password" class="form text-center" name="verifmdp"placeholder="Confirmer le mot de passe"></div> 
 
 					</div>
 					
 					
 		
 					<div class="d-flex justify-content-center" style="width: 75%; padding:5% 13% 0px 13%;" > 
-						<input type="submit" class="col-6 form" name="sInscrire" value="S'inscrire" style="margin-right : 5%; border : 5px solid white; border-radius: 15px; background : #3B7476">
-						<input type="reset"  class="col-6 form" value="Annuler" style="margin-right : 5%; border : 5px solid white; border-radius: 15px; background : #3B7476">
+						<input type="submit" class="col-6 form text-light" name="sInscrire" value="S'inscrire" style="margin-right : 5%; border : 5px solid white; border-radius: 15px; background : #3B7476">
+						<input type="reset"  class="col-6 form text-light" value="Annuler" style="margin-right : 5%; border : 5px solid white; border-radius: 15px; background : #3B7476">
 					</div>
 				
 				</div>
 			</form>
 		</div>
-	<div class="col-3"></div>
+	<div class="col-2"></div>
 </div>

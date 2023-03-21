@@ -14,7 +14,6 @@ padding: .375rem .75rem;
 font-size: 1rem;
 font-weight: 400;
 line-height: 1.5;
-color: #212529;
 background-color: #fff;
 background-clip: padding-box;
 border: 1px solid #ced4da;
@@ -23,8 +22,8 @@ border: 1px solid #ced4da;
 appearance: none;
 border-radius: .25rem;
 transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-background : #3B7476;
-color : white;
+
+color : black;
 }
 
 </style>
@@ -34,7 +33,7 @@ color : white;
 	<div class="col-4 text-light"> 
 		<form method="post" class="d-flex flex-column bd-highlight mb-3">
 			<div class="p-2 bd-highlight">
-				<div style="padding-top : 20%;">
+				<div style="padding-top : 15%;">
 				</div>
 			</div>
 			<div class="p-2 bd-highlight">
@@ -44,8 +43,8 @@ color : white;
 					<input type="password" class="form text-center" name="mdp"  placeholder="MOT DE PASSE"> 
 		
 					<div class="d-flex justify-content-center" style="width: 75%; padding:5% 13% 0px 13%;" > 
-						<input type="submit" class="col-6 form" name="seConnecter" value="Se Connecter" style="margin-right : 5%; border : 5px solid white; border-radius: 15px">
-						<input type="reset"  class="col-6 form" value="Annuler" style="margin-right : 5%; border : 5px solid white; border-radius: 15px">
+						<input type="submit" class="col-6 form text-light" name="seConnecter" value="Se Connecter" style="background : #3B7476; margin-right : 5%; border : 5px solid white; border-radius: 15px">
+						<input type="reset"  class="col-6 form text-light" value="Annuler" style="background : #3B7476; margin-right : 5%; border : 5px solid white; border-radius: 15px">
 					</div>
 				
 					<div class="d-flex justify-content-between align-items-center" style="padding-top: 5%">
@@ -56,7 +55,7 @@ color : white;
 							</label>
 						</div>
 						<div class="col-6">
-							<a href="index.jsp?page=0" class="nav-link link-light"> <small>  Mot de passe oublié ? </small></a> 
+							<a href="index.php?page=16" class="nav-link link-light"> <small>  Mot de passe oublié ? </small></a> 
 						</div>
 					</div>
 				</div>

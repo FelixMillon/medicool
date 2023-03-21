@@ -1,8 +1,7 @@
 <div style="display: flex; flex-direction: column; height: 87vh;"> 
     <h2 class="d-flex align-items-center text-light fw-bold text-start" style="padding-left : 10%;background: #86B9BB; height:7vh" >Gestion des allergies </h2>
-        <div class="d-flex justifiy-content-center" style="padding-top:12%">
-            <div class="col-2"></div>
-            <div class="col-4" style="padding-right:3%;"> 
+        <div class="d-flex justifiy-content-center" style="padding-top:7%">
+            <div class="col-1"></div>
 
 
 <?php
@@ -36,7 +35,9 @@ if(isset($_GET['action']) && isset($_GET['id_allergie']))
     }
 }
 
-require_once("vue/insert_allergie.php");
+if($_SESSION['estMedecin'] == True){
+    require_once("vue/insert_allergie.php");
+}
 
 if(isset($_POST['Valider']) || isset($_POST['Modifier']))
 {
@@ -81,29 +82,23 @@ if(isset($_POST['Modifier']))
     header("Location: index.php?page=6"); 
 }
 
+
+if(isset($_POST['Annuler']))
+{
+    $LHospitalisation=NULL;
+    header("Location: index.php?page=6&id_allergie=null"); 
+}
+
 $unControleur->setTable("vallergie");
 $LesAllergies = $unControleur->selectAll(); 
 
 require_once ("vue/les_allergies.php"); 
 
 
-?>
-
-
-        <!-- Début insert -->
-
-        <!-- Fin insert -->
-   
-
-    <!-- Début All -->
-
-    
-    <!-- Fin All -->
-
-		
+?>		
 	</div>
 	
-	<div class="col-2"></div>
+	<div class="col-1"></div>
 
 </div>
 

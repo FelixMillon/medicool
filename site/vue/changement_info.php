@@ -83,41 +83,130 @@ if (isset($_POST['ModifierInfo']))
 
     $tab3=array($_SESSION["email"]);
     $key=$unControleur->callproc('getkey',$tab3);
-    
+
 
     $id = $_SESSION['id'];
 
-
-    $where = array("id_patient"=>$id);
-    $tab=array(
-        "id_cat_secu"=>$_POST["id_cat_secu"]
-    );
-
-    $unControleur->setTable("patient");
-    $unControleur->update($tab, $where);
+    if($_SESSION['estPatient']){
+        $where = array("id_patient"=>$id);
+        $tab=array(
+            "id_cat_secu"=>$_POST["id_cat_secu"]
+        );
+        $unControleur->setTable("patient");
+        $unControleur->update($tab, $where);
+    }
 
     $where = array("id"=>$id);
 
+    if($_SESSION['estPatient']){
+
+        if(!empty($_POST["nom"])){
+            $nom = $unControleur->encrypt($_POST["nom"],$key['cle']);
+        }else{
+            $nom = $_POST["nom"];
+        }
+
+        if(!empty($_POST["prenom"])){
+            $prenom = $unControleur->encrypt($_POST["prenom"],$key['cle']);
+        }else{
+            $prenom = $_POST["prenom"];
+        }
+
+        if(!empty($_POST["tel"])){
+            $tel = $unControleur->encrypt($_POST["tel"],$key['cle']);
+        }else{
+            $tel = $_POST["tel"];
+        }
+
+        if(!empty($_POST["date_naissance"])){
+            $date_naissance = $unControleur->encrypt($_POST["date_naissance"],$key['cle']);
+        }else{
+            $date_naissance = $_POST["date_naissance"];
+        }
+
+        if(!empty($_POST["numrue"])){
+            $numrue = $unControleur->encrypt($_POST["nom"],$key['numrue']);
+        }else{
+            $numrue = $_POST["numrue"];
+        }
+
+        if(!empty($_POST["rue"])){
+            $rue = $unControleur->encrypt($_POST["nom"],$key['rue']);
+        }else{
+            $rue = $_POST["rue"];
+        }
+
+        if(!empty($_POST["cp"])){
+            $cp = $unControleur->encrypt($_POST["nom"],$key['cp']);
+        }else{
+            $cp = $_POST["cp"];
+        }
+
+        if(!empty($_POST["ville"])){
+            $ville = $unControleur->encrypt($_POST["nom"],$key['ville']);
+        }else{
+            $ville = $_POST["ville"];
+        }
+
     $tab=array(     
-        "nom"=>$unControleur->encrypt($_POST["nom"],$key['cle']),
-        "prenom"=>$unControleur->encrypt($_POST["prenom"],$key['cle']),
-        "tel"=>$unControleur->encrypt($_POST["tel"],$key['cle']),
-        "date_naissance"=>$unControleur->encrypt($_POST["date_naissance"],$key['cle']),
-        "numrue"=>$unControleur->encrypt($_POST["numrue"],$key['cle']),
-        "rue"=>$unControleur->encrypt($_POST["rue"],$key['cle']),
-        "cp"=>$unControleur->encrypt($_POST["cp"],$key['cle']),
-        "ville"=>$unControleur->encrypt($_POST["ville"],$key['cle']),
+        "nom"=>$nom,
+        "prenom"=>$prenom,
+        "tel"=>$tel,
+        "date_naissance"=>$date_naissance,
+        "numrue"=>$numrue,
+        "rue"=>$rue,
+        "cp"=>$cp,
+        "ville"=>$ville,
         );
-
-
-
+        var_dump($unControleur->encrypt($_POST["ville"],$key['cle']));
+    }else{
+        $tab=array(     
+            "nom"=>$_POST["nom"],
+            "prenom"=>$_POST["prenom"],
+            "tel"=>$_POST["tel"],
+            "date_naissance"=>$_POST["date_naissance"],
+            "numrue"=>$_POST["numrue"],
+            "rue"=>$_POST["rue"],
+            "cp"=>$_POST["cp"],
+            "ville"=>$_POST["ville"]
+            );  
+    }
     $unControleur->setTable("utilisateur");
     $unControleur->update ($tab, $where);
+
+    $unControleur->setTable("utilisateur");
+    $unUser = $unControleur->selectWhere($where);
+
+    if($_SESSION['estPatient']){
+
+    $_SESSION['nom'] =   $unControleur->decrypt($unUser['nom'], $_SESSION['cle']);
+    $_SESSION['prenom'] = $unControleur->decrypt($unUser['prenom'], $_SESSION['cle']);
+    $_SESSION['tel'] = $unControleur->decrypt($unUser['tel'], $_SESSION['cle']);
+    $_SESSION['date_naissance'] = $unControleur->decrypt($unUser['date_naissance'], $_SESSION['cle']);
+    $_SESSION['numrue'] = $unControleur->decrypt($unUser['numrue'], $_SESSION['cle']);
+    $_SESSION['rue'] = $unControleur->decrypt($unUser['rue'], $_SESSION['cle']);
+    $_SESSION['ville'] = $unControleur->decrypt($unUser['ville'], $_SESSION['cle']);
+    $_SESSION['cp'] = $unControleur->decrypt($unUser['cp'], $_SESSION['cle']);
+    header("Location: index.php?page=20");
+    }else{
+
+    $_SESSION['nom'] = $unUser['nom'];
+    $_SESSION['prenom'] = $unUser['prenom'];
+    $_SESSION['tel'] = $unUser['tel'];
+    $_SESSION['date_naissance'] = $unUser['date_naissance'];
+    $_SESSION['numrue'] = $unUser['numrue'];
+    $_SESSION['rue'] = $unUser['rue'];
+    $_SESSION['ville'] = $unUser['ville'];
+    $_SESSION['cp'] = $unUser['cp'];
+    header("Location: index.php?page=20");
+    }
+
+
     }
 
 ?>
 
-<form method="post" action="" enctype="multipart/form-data" style="padding-top : 5%; padding-bottom : 11%;">
+<form method="post" action="" enctype="multipart/form-data" style="padding-top : 1%; padding-bottom : 7%;">
     <div class="container" style="background:#86B9BB;  border-radius: 18px; padding-bottom : 5%;">
         <div class="row justify-content-between align-items-center" > 
             <div class="col-7 row" style="padding-top : 4%;">
@@ -159,7 +248,7 @@ if (isset($_POST['ModifierInfo']))
                         <span> <input name="cp" id="nomp" type="text" placeholder="<?php echo $_SESSION['cp'] ?>" class="text-center fw-bold" style="height : 23px; width : 130%;"></span>
                     </div>
                     
-
+                    <?php if($_SESSION['estPatient']){ ?>
                     <div class="d-flex justify-content-between align-items-center">
                         <label for="cat" class="fw-bold py-3"> Catégorie sécruite social </label>
                         <select for="cat" name="id_cat_secu" class="text-center" style="border-radius:15px;border:3px solid #86B9BB">
@@ -172,7 +261,7 @@ if (isset($_POST['ModifierInfo']))
                             ?>
                         </select>
                     </div>
-
+                    <?php } ?>
                 </div>
             </div>
 
@@ -207,7 +296,8 @@ if (isset($_POST['ModifierInfo']))
         <input class="btn btn-primary text-light btn-lg w-25 fw-bold" type="submit" name="ModifierInfo" value="Modifier">
         <div class="col-2"> </div>
     </div>
-
-        </div>
+    <br><a href="index.php?page=11" class="btn btn-lg text-light fw-bold w-25" style="background:#3B7476;">Retour</a>
+    </div>
+        
     </div>
 </form>
