@@ -32,12 +32,12 @@ transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 				<div style="padding: 2% 5% 5% 5%; background:#86B9BB; border-radius:25px;"> 
 					<img src="img/logo_login.png" class="bi me-2 img border" style="width: 10vw;" role="img" alt=""> 
 					<div class="row justify-content-center">
-						<div class="col-4 py-2"><input type="text" class="form text-center" name="nom" placeholder="Nom"></div> 
+						<div class="col-4 py-2"><input type="text" class="form text-center" name="nom" placeholder="Nom"></div> 		
+						<div class="col-4 py-3">Date de naissance</div>
 						<div class="col-4 py-2"><input type="text" class="form text-center" name="prenom" placeholder="Prénom"></div>
-						<div class="col-4 py-2"><input type="text" class="form text-center" name="email" placeholder="Email"></div> 
 						<div class="col-4 py-2"><input type="text" class="form text-center" name="tel" placeholder="Tel"></div> 
-						<div class="col-4 py-3">Date de naissance</div> 
-						<div class="col-4 py-2"><input type="date" class="form text-center" name="date_naissance"></div> 
+						<div class="col-4 py-2"><input type="date" class="form text-center" name="date_naissance"></div>
+						<div class="col-4 py-2"><input type="text" class="form text-center" name="email" placeholder="Email"></div>
 						<div class="col-4 py-2"><input type="text" class="form text-center" name="numrue" placeholder="Numéro de rue"></div> 
 						<div class="col-4 py-2"><input type="text" class="form text-center" name="rue" placeholder="Nom de la rue"></div> 
 						<div class="col-4 py-2"><input type="text" class="form text-center" name="ville"  placeholder="Ville"></div> 
@@ -61,9 +61,7 @@ transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 								<option value="5">Ville de rencontre de vos parents ?</option>
 								<option value="6">Nom de votre roman préféré ?</option>
 							</select>
-						</div>			
-						<div class="col-4 py-2"><input type="text" class="form text-center" name="reponse_secrete_1"  placeholder="Reponse 1"></div> 
-						<div class="col-4 py-2"><input type="text" class="form text-center" name="reponse_secrete_2"  placeholder="Reponse 2"></div>
+						</div>
 						<div class="col-4">
 							<select name="id_medecin" class="form-select w-100 text-center" style="border-radius:15px; border:3px solid #86B9BB;">
 								<option 
@@ -85,7 +83,10 @@ transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 									}			    
 								?>
 							</select>
-						</div>
+						</div>			
+						<div class="col-4 py-2"><input type="text" class="form text-center" name="reponse_secrete_1"  placeholder="Reponse 1"></div> 
+						<div class="col-4 py-2"><input type="text" class="form text-center" name="reponse_secrete_2"  placeholder="Reponse 2"></div>
+						
 						<div class="col-4">
 							<select name="id_cat_secu" class="form-select w-100 text-center" style="border-radius:15px;border:3px solid #86B9BB">
 								<option selected>Catégorie sécurité social </option>

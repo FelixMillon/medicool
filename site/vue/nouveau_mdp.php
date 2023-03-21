@@ -32,17 +32,15 @@ color : black;
 	{
 
         $where = array(
-            'id_patient'=>$_SESSION['id_recup']
+            'id'=>$_SESSION['id_recup']
         );
 
         $tab = array(
             'mdp'=>$_POST['mdp']
         );
            
-		$unControleur->setTable("patient");
+		$unControleur->setTable("utilisateur");
         $unControleur->update ($tab, $where);
-
-        
     }
 
 ?>

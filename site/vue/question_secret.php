@@ -30,9 +30,14 @@ color : black;
 
 
 <?php 
-	if(isset($_POST['Suivants2']))
-	{
 
+    $where = array('email'=>$_SESSION['email_recup']);
+    $unControleur->setTable("utilisateur");
+    $unUserBefore = $unControleur->selectWhere($where);
+
+
+	if(isset($_POST['Suivants2']))
+	{   
         $tab= array($_SESSION['email_recup']);
         $remedles = $unControleur->selectfunction('remedless',$tab);
 		$remedles =$remedles["result"].$_POST['reponse_secrete_1'];
@@ -46,9 +51,7 @@ color : black;
         var_dump($reponse_secrete_1);
 
         $where = array('email'=>$_SESSION['email_recup'], 
-                       'question_1'=>$_POST['question_1'],
                        'reponse_secrete_1'=>$_SESSION['reponse_secrete_1_recup'],
-                       'question_2'=>$_POST['question_2'],
                        'reponse_secrete_2'=>$_SESSION['reponse_secrete_2_recup'],
                     );
                     
@@ -70,37 +73,21 @@ color : black;
 ?>
 
 <form method="post" action="">
-    <div style="height: 88vh;padding-top: 10%;"> 
+    <div style="height: 88vh;padding-top: 8%;"> 
         <div class="container d-flex  flex-wrap text-light" style="height:75%;width:50%;background:#86B9BB;  border-radius: 11px;"> 
             <div class="col-12">
             <div class="p-3 fs-4"><u>Récupération du compte via question secrete </u></div> </a>
             </div>
-            <div class="col-6">
-            <select name="question_1"  class="form-select w-50 text-center" style="border-radius:15px;border:3px solid #86B9BB">
-                <option selected>Question 1</option>
-                <option value="Nom de votre ecole primaire">Nom de votre école primaire ?</option>
-                <option value="Nom de jeune fille de votre m?re">Nom de jeune fille de votre mère ?</option>
-                <option value="Nom de votre premier amour">Nom de votre premier amour ?</option>
-                <option value="Nom de votre professeur prefere">Nom de votre professeur préféré ?</option>
-                <option value="Ville de rencontre de vos parents">Ville de rencontre de vos parents ?</option>
-                <option value="Nom de votre roman prefere">Nom de votre roman préféré ?</option>
-            </select>
+            <div class="col-6 d-flex justify-content-center align-items-center border">
+            <?php echo $unUserBefore['question_1']." ?"; ?>
             </div>
-            <div class="col-6 fs-5 text-start" style="padding: 1% 0 0 2%;">
+            <div class="col-6 d-flex  justify-content-center align-items-center fs-5 text-start border" style="padding: 1% 0 0 2%;">
                 <input type="text" name="reponse_secrete_1" placeholder="Réponse à la question 1" class="form-control w-75" value="">
             </div>
-            <div class="col-6">
-            <select name="question_2" class="form-select w-50 text-center" style="border-radius:15px;border:3px solid #86B9BB">
-                <option selected>Question 2</option>
-                <option value="Nom de votre ecole primaire">Nom de votre école primaire ?</option>
-                <option value="Nom de jeune fille de votre m?re">Nom de jeune fille de votre mère ?</option>
-                <option value="Nom de votre premier amour">Nom de votre premier amour ?</option>
-                <option value="Nom de votre professeur prefere">Nom de votre professeur préféré ?</option>
-                <option value="Ville de rencontre de vos parents">Ville de rencontre de vos parents ?</option>
-                <option value="Nom de votre roman prefere">Nom de votre roman préféré ?</option>
-            </select>
+            <div class="col-6 d-flex  justify-content-center align-items-center border">
+            <?php echo $unUserBefore['question_2']." ?"; ?>
             </div>
-            <div class="col-6 fs-5 text-start" style="padding: 1% 0 0 2%;">
+            <div class="col-6 fs-5 d-flex  justify-content-center align-items-center text-start border" style="padding: 1% 0 0 2%;">
                 <input type="text" name="reponse_secrete_2" placeholder="Réponse à la question 2" class="form-control w-75" value="">
             </div>
 
