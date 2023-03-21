@@ -7,10 +7,6 @@
 
 <?php
 
-
-
-
-
 $LHospitalisation=NULL;
 
 
@@ -44,19 +40,9 @@ if(isset($_GET['action']) && isset($_GET['id_hospitalisation']))
     }
 }
 
-
-
 if($_SESSION['estMedecin'] == True){
     require_once("vue/insert_hospitalisation.php");
 }
-
-
-
-
-
-
-
-
 
 if(isset($_POST['Valider']) || isset($_POST['Modifier']))
 {
@@ -67,8 +53,6 @@ if(isset($_POST['Valider']) || isset($_POST['Modifier']))
     $tab3=array($lePatient["email"]);
     $key=$unControleur->callproc('getkey',$tab3);
 }
-
-
 
 if (isset($_POST['Valider']))
 {
@@ -85,9 +69,6 @@ if (isset($_POST['Valider']))
     $unControleur->insert($tab); 
     
 }
-
-
-
 
 
 if(isset($_POST['Modifier']))

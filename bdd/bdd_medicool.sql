@@ -196,7 +196,6 @@ create table medecin
 create table patient
 (
     id_patient int(5) not null auto_increment,
-
 	email varchar(255) not null UNIQUE,
 	mdp varchar(255) not null,
     nom varchar(255) not null,

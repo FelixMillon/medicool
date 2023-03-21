@@ -1,4 +1,5 @@
         <!-- Début insert -->
+    <div class="col-4" style="padding-right:3%;"> 
         <form method="post" action="">
             <div class="container" >
                     <div class="col p-4 d-flex flex-column position-static">
@@ -72,4 +73,3 @@
         </form>
         <!-- Fin insert -->
     </div>
-	<div class="col-4" style="padding-left:3%"> 
