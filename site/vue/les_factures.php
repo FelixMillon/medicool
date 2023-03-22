@@ -18,7 +18,7 @@
         <?php 
         foreach ($LesFactures as $uneFacture) {
 
-            $tab2=array($uneFacture['email']);
+            $tab2=array(hash('sha256',$uneFacture['email']));
             $cle=$unControleur->callproc('getkey',$tab2);
             $cle = $cle['cle'];
 

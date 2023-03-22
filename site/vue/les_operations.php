@@ -27,7 +27,7 @@
              }
              
              if($_SESSION['id_patient'] == $uneOperation['id_patient']){ 
-            $tab2=array($uneOperation['email']);
+            $tab2=array(hash('sha256',$uneOperation['email']));
             $cle=$unControleur->callproc('getkey',$tab2);
             $cle = $cle['cle'];
             $libelle = $unControleur->decrypt($uneOperation['libelle'], $cle);

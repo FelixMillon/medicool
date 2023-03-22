@@ -102,7 +102,7 @@ if (isset($_POST['Valider']))
     $Verif=$unControleur->selectWhere($where);
 
     if($Verif){
-        $tab2 = array("utilisateur"=>$_POST["email"],"cle"=>$key);
+        $tab2 = array("utilisateur"=>hash('sha256',$_POST["email"]),"cle"=>$key);
         $unControleur->callproc('genekey',$tab2);  
         echo 'Inscription reussie';  
     }

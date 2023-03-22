@@ -35,12 +35,15 @@ color : black;
                                 <option selected>Patient</option>
                                     <?php 
                                     foreach ($LesPatients as $unPatient){
-                                        $tab2=array($unPatient['email']);
-                                        $cle=$unControleur->callproc('getkey',$tab2);
-                                        $cle = $cle['cle'];
-                                        $prenom = $unControleur->decrypt($unPatient['prenom'], $cle);
-                                        $nom = $unControleur->decrypt($unPatient['nom'], $cle);
-                                        echo "<option value='".$unPatient['id_patient']."'>".$nom." ".$prenom." </option>";
+                                        if($unPatient['id_medecin']== null or $unPatient['id_medecin'] == $_SESSION['id'])
+                                        {
+                                            $tab2=array(hash('sha256',$unPatient['email']));
+                                            $cle=$unControleur->callproc('getkey',$tab2);
+                                            $cle = $cle['cle'];
+                                            $prenom = $unControleur->decrypt($unPatient['prenom'], $cle);
+                                            $nom = $unControleur->decrypt($unPatient['nom'], $cle);
+                                            echo "<option value='".$unPatient['id_patient']."'>".$nom." ".$prenom." </option>";
+                                        }
                                     }
                                     ?>
                             </select>

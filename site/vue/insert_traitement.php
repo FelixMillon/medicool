@@ -6,7 +6,7 @@
                     <div class="col p-4 d-flex flex-column position-static">
 
                     <?php if($Letraitement!=NULL){
-                    $tab2=array($Letraitement['email']);
+                    $tab2=array(hash('sha256',$Letraitement['email']));
                     $cle=$unControleur->callproc('getkey',$tab2);
                     $cle = $cle['cle'];
                     }   
@@ -58,7 +58,7 @@
                                         <option selected>Patient</option>
                                         <?php 
                                         foreach ($lesPatients as $unPatient){
-                                            $tab2=array($unPatient['email']);
+                                            $tab2=array(hash('sha256',$unPatient['email']));
                                             $cle=$unControleur->callproc('getkey',$tab2);
                                             $cle = $cle['cle'];
                                             $prenom = $unControleur->decrypt($unPatient['prenom'], $cle);

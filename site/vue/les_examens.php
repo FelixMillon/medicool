@@ -24,7 +24,7 @@
         foreach ($LesExamens as $unExamen) { 
 
             
-            $tab2=array($unExamen['email']);
+            $tab2=array(hash('sha256',$unExamen['email']));
             $cle=$unControleur->callproc('getkey',$tab2);
             $cle = $cle['cle'];
             $libelle = $unControleur->decrypt($unExamen['libelle'], $cle);
