@@ -46,7 +46,7 @@ if(isset($_POST['Valider']) || isset($_POST['Modifier']))
     $where = array('id_patient'=>$_POST['id_patient']);
     $lePatient = $unControleur->selectWhere($where);
 
-    $tab3=array($lePatient["email"]);
+    $tab3=array(hash('sha256',$lePatient["email"]));
 
     $key=$unControleur->callproc('getkey',$tab3);
 

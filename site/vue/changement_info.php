@@ -3,22 +3,22 @@
 
 .form{
 	display: block;
-width: 100%;
-padding: .375rem .75rem;
-font-size: 1rem;
-font-weight: 400;
-line-height: 1.5;
-color: #212529;
-background-color: #fff;
-background-clip: padding-box;
-border: 1px solid #ced4da;
--webkit-appearance: none;
--moz-appearance: none;
-appearance: none;
-border-radius: 10px;
-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-background : white;
-color : black;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 10px;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    background : white;
+    color : black;
 }
 
 body{
@@ -65,7 +65,6 @@ if(isset($_FILES['file']) and isset($_POST['ModifierInfo']) and $_FILES['file'][
                 var_dump("coucou");
             }
         }
-        
         $id = $_SESSION['id'];
         $where = array("id"=>$id);
         $unControleur->update ($tab, $where);
@@ -75,15 +74,13 @@ if(isset($_FILES['file']) and isset($_POST['ModifierInfo']) and $_FILES['file'][
     move_uploaded_file($tmpName, './image_user/'.$name);
 }
 
-
 if (isset($_POST['ModifierInfo']))
 {
 
     // Recherche de la clé de cryptage 
 
-    $tab3=array($_SESSION["email"]);
+    $tab3=array(hash('sha256',$_SESSION["email"]));
     $key=$unControleur->callproc('getkey',$tab3);
-
 
     $id = $_SESSION['id'];
 

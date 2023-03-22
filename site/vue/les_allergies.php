@@ -27,7 +27,7 @@
              if($_SESSION['id_patient'] == $uneAllergie['id_patient']){ 
 
 
-            $tab2=array($uneAllergie['email']);
+            $tab2=array(hash('sha256',$uneAllergie['email']));
             $cle=$unControleur->callproc('getkey',$tab2);
             $cle = $cle['cle'];
             $libelle = $unControleur->decrypt($uneAllergie['libelle'], $cle);

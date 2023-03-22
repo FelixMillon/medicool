@@ -43,7 +43,7 @@ transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 						<div class="col-4 py-2"><input type="text" class="form text-center" name="ville"  placeholder="Ville"></div> 
 						<div class="col-4 py-2"><input type="text" class="form text-center" name="cp"  placeholder="Code postal"></div> 
 						<div class="col-4 py-2"> 
-							<select name="question_1"  class="form-select w-100 text-center" style="border-radius:15px; border:3px solid #86B9BB;">
+							<select name="question_1" onchange="updateSelect(this.value,2)" id="question_1" class="form-select w-100 text-center" style="border-radius:15px; border:3px solid #86B9BB;">
 								<option value="1">Nom de votre école primaire ?</option>
 								<option value="2">Nom de jeune fille de votre mère ?</option>
 								<option value="3">Nom de votre premier amour ?</option>
@@ -53,7 +53,7 @@ transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 							</select>
 						</div>
 						<div class="col-4 py-2"> 
-							<select name="question_2"  class="form-select w-100 text-center" style="border-radius:15px; border:3px solid #86B9BB;">
+							<select name="question_2" onchange="updateSelect(this.value,1)" id="question_2" class="form-select w-100 text-center" style="border-radius:15px; border:3px solid #86B9BB;">
 								<option value="1">Nom de votre école primaire ?</option>
 								<option value="2">Nom de jeune fille de votre mère ?</option>
 								<option value="3">Nom de votre premier amour ?</option>
@@ -114,3 +114,18 @@ transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 		</div>
 	<div class="col-2"></div>
 </div>
+
+<script>
+function updateSelect(selectedValue,id) {
+	var select = document.getElementById("question_"+id);
+	console.log("question_"+id);
+	for (var i = 0; i < select.options.length; i++) {
+		if (select.options[i].value == selectedValue) {
+			select.options[i].disabled = true;
+			select.options[i].selected = false;
+		}else{
+			select.options[i].disabled = false;
+		}
+	}
+}
+</script>

@@ -7,7 +7,7 @@
                     <div class="col-12">
 
                     <?php if($LExamen!=NULL){
-                        $tab2=array($LExamen['email']);
+                        $tab2=array(hash('sha256',$LExamen['email']));
                         $cle=$unControleur->callproc('getkey',$tab2);
                         $cle = $cle['cle'];
                     }   

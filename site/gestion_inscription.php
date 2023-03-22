@@ -86,7 +86,7 @@ if (isset($_POST['sInscrire']))
             $Verif=$unControleur->selectWhere($where);
 
             if($Verif){
-                $tab2 = array("utilisateur"=>$_POST["email"],"cle"=>$key);
+                $tab2 = array("utilisateur"=>hash('sha256',$_POST["email"]),"cle"=>$key);
                 $unControleur->callproc('genekey',$tab2);  
                 echo 'Inscription reussie';  
                 $where = array("email"=>$_POST["email"]);
@@ -108,7 +108,7 @@ if (isset($_POST['sInscrire']))
                     $_SESSION['estSecretaire']=True;
                 }
                 if($_SESSION['estPatient']){
-                    $tab2=array($unUser['email']);
+                    $tab2=array(hash('sha256',$unUser['email']));
                     $cle=$unControleur->callproc('getkey',$tab2);
                     $_SESSION['cle'] = $cle['cle'];
 

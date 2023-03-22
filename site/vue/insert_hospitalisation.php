@@ -6,7 +6,7 @@
                 <div class="row g-3">
                     <div class="col-12">
                     <?php if($LHospitalisation!=NULL){
-                        $tab2=array($LHospitalisation['email']);
+                        $tab2=array(hash('sha256',$LHospitalisation['email']));
                         $cle=$unControleur->callproc('getkey',$tab2);
                         $cle = $cle['cle'];
                     } 

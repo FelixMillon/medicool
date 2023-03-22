@@ -31,7 +31,7 @@
              if($_SESSION['id_patient'] == $unePathologie['id_patient']){ 
 
 
-            $tab2=array($unePathologie['email']);
+            $tab2=array(hash('sha256',$unePathologie['email']));
             $cle=$unControleur->callproc('getkey',$tab2);
             $cle = $cle['cle'];
 

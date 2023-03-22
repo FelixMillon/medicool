@@ -7,7 +7,7 @@
                     <div class="col-12">
 
                     <?php if($LAllergie!=NULL){
-                        $tab2=array($LAllergie['email']);
+                        $tab2=array(hash('sha256',$LAllergie['email']));
                         $cle=$unControleur->callproc('getkey',$tab2);
                         $cle = $cle['cle'];
                     }   
@@ -44,7 +44,7 @@
                         <option selected>Patient</option>
                         <?php 
                         foreach ($lesPatients as $unPatient){
-                            $tab2=array($unPatient['email']);
+                            $tab2=array(hash('sha256',$unPatient['email']));
                             $cle=$unControleur->callproc('getkey',$tab2);
                             $cle = $cle['cle'];
                             $prenom = $unControleur->decrypt($unPatient['prenom'], $cle);

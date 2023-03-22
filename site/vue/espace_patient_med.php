@@ -28,7 +28,7 @@ color : black;
         		$where = array('id'=>$id);
                 $unControleur->setTable("utilisateur");
                 $unUser = $unControleur->selectWhere($where);
-                $tab2=array($unUser['email']);
+                $tab2=array(hash('sha256',$unUser['email']));
                 $cles=$unControleur->callproc('getkey',$tab2);
                 $cle = $cles['cle'];
 

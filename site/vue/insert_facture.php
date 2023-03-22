@@ -4,7 +4,7 @@
         <div class="col p-4 d-flex flex-column position-static">
         <div class="row g-3">  
         <?php if($LaFacture!=NULL){
-                    $tab2=array($LaFacture['email']);
+                    $tab2=array(hash('sha256',$LaFacture['email']));
                     $cle=$unControleur->callproc('getkey',$tab2);
                     $cle = $cle['cle'];
                 }   
