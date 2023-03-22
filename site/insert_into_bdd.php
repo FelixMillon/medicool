@@ -52,10 +52,10 @@ if (isset($_POST['Valider']))
             "ville"=>$unControleur->encrypt($uneentree[10],$key),
             "question_1"=>$uneentree[11],
             "question_2"=>$uneentree[12],
-            "droits"=>$uneentree[13],
-            "blocage"=>$uneentree[14],
-            "reponse_secrete_1"=>$uneentree[15],
-            "reponse_secrete_2"=>$uneentree[16],
+            "reponse_secrete_1"=>$uneentree[13],
+            "reponse_secrete_2"=>$uneentree[14],
+            "blocage"=>$uneentree[15],
+            "droits"=>$uneentree[16],
             "numero_dossier"=>$uneentree[17],
             "id_cat_secu"=>$uneentree[18],
             "id_medecin"=>$uneentree[19],
@@ -63,7 +63,7 @@ if (isset($_POST['Valider']))
         $Verif = NULL; 
         $unControleur->insertValue($tab);
         echo 'PATIENT INSERÉR';
-        $tab2 = array("utilisateur"=>$uneentree[0],"cle"=>$key);
+        $tab2 = array("utilisateur"=>hash('sha256',$uneentree[0]),"cle"=>$key);
         $unControleur->callproc('genekey',$tab2);
     }
 }

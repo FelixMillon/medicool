@@ -25,7 +25,7 @@
 
 
             
-            $tab2=array($unPatient['email']);
+            $tab2=array(hash('sha256',$unPatient['email']));
             $cle=$unControleur->callproc('getkey',$tab2);
             $cle = $cle['cle'];
 

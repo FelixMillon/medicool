@@ -43,7 +43,7 @@
 				}
 
 				if($_SESSION['estPatient']){
-					$tab2=array($unUser['email']);
+					$tab2=array(hash('sha256',$unUser["email"]));
 					$cle=$unControleur->callproc('getkey',$tab2);
 					$_SESSION['cle'] = $cle['cle'];
 
