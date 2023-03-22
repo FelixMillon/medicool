@@ -40,7 +40,7 @@ if(isset($_GET['action']) && isset($_GET['id_hospitalisation']))
     }
 }
 
-if($_SESSION['estMedecin'] == True){
+if($_SESSION['estMedecin'] == True or $_SESSION['estPatient'] == True){
     require_once("vue/insert_hospitalisation.php");
 }
 
