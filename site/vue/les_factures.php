@@ -5,6 +5,7 @@
         echo "<div class='col-6'>";
     }
 ?>
+
  
  <div class="table-responsive w-100" style="height:40vh;border : 4px solid #86B9BB;  border-radius: 10px;">
     <table class="table table-striped table-sm" >
