@@ -17,7 +17,7 @@
 
 	<link rel="icon" type="image/png" sizes="16x16" href="img/icon.png">
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" http-equiv="X-UA-Compatible" content="IE=edge" name="viewport" content="width=device-width, initial-scale=1.0">
-	<title> FireCrest - IHM</title>
+	<title>Médicool</title>
 </head>
 <body class="">
 <?php
