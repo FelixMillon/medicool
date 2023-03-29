@@ -11,17 +11,17 @@
     <table class="table table-striped table-sm" >
         <tr class="text-center fw-bold text-light" style="background:#86B9BB;opacity : 0.57; border-bottom: 4px solid  #86B9BB; ">
             <td>ID</td>
-            <td>Libelle</td>
+            <td>Libellé</td>
             <td>Date</td>
             <td>Montant total</td>
-            <td>Montant sécurite social</td>
+            <td>Montant sécurité sociale</td>
             <td>Montant mutuelle</td>
             <td>Prix à payer</td>
             <td>Montant à payer</td>
             <td>État</td>
-            <td>Medecin</td>
+            <td>Médecin</td>
             <td>Patient</td>
-            <td>Opération</td>
+            <td>Opérations</td>
         </tr>
         
         <?php 

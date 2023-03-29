@@ -15,7 +15,7 @@
 
                                 
                                 <div class="col-12">
-                                    <input type="text" name="libelle" placeholder="Libelle" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" value="">
+                                    <input type="text" name="libelle" placeholder="Libellé" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" value="">
                                 </div>
 
                                 <div class="col-6 fw-bolder" style="margin-top :3%;"> Date d'opération : </div>
@@ -30,11 +30,11 @@
                                 </div>
 
                                 <div class="col-6">
-                                    <input type="number" name="prix" placeholder="prix" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" value="">
+                                    <input type="number" name="prix" placeholder="Prix" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" value="">
                                 </div>
 
                                 <div class="col-6">
-                                    <input type="text" name="resultat" placeholder="Resultat" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" value="">
+                                    <input type="text" name="resultat" placeholder="Résultats" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" value="">
                                 </div>
 
                                 <div class="col-12">

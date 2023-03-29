@@ -4,10 +4,10 @@
             <td>ID</td>
             <td>Titre</td>
             <td>Contenu</td>
-            <td>Medecin source</td>
-            <td>Medecin cible </td>
+            <td>Médecin source</td>
+            <td>Médecin cible </td>
             <td>Patient </td>
-            <td>Opération</td>
+            <td>Opérations</td>
         </tr>
         
         <?php 

@@ -39,11 +39,11 @@ color : black;
         <div class="col-6 fs-5 text-start" style="padding: 1% 0 0 2%;">{{numuser}}</div>
 
         <div class="col-12 fs-5" style="text-align: justify; padding-left:5%;">
-        Raison :<br> Votre compte a été bloqué suite à 3 tentatives de connexion échouée. <br>
-        Pour récupèrer votre compte il vous faudera choisir l'une des deux options ci-dessous</div>
+        Raison :<br> Votre compte a été bloqué suite à 3 tentatives de connexion échouées. <br>
+        Pour récupèrer votre compte il vous faudra choisir l'une des deux options ci-dessous</div>
 
         <div class="col-6" style="padding-top:1%; ">
-            <a class="btn form w-75 text-center "> Via question secrete  </a>
+            <a class="btn form w-75 text-center "> Via question secrète  </a>
         </div>
         <div class="col-6" style="padding-top:1%;">
             <a class="btn form w-75 text-center "> Via e-mail  </a>
