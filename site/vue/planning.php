@@ -26,7 +26,6 @@
 </style>
 
 <div style="display: flex; flex-direction: column; height: 87vh;"> 
-    <div style="margin: 6% 6% 3% 6%;" >
     <div class="table-responsive" style="height:60vh;">
             <table class="table " style="height:60vh;">
                 <tr class="text-center"  style="border-bottom: 4px solid  #3B7476;">
@@ -199,6 +198,5 @@
 
             </table>
         </div>
-    </div>
 </div>
 

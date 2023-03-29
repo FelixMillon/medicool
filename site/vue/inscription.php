@@ -22,8 +22,8 @@ appearance: none;
 border-radius: .25rem;
 transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
-
 </style>
+
 
 <div class="row" style="margin : 0; padding-bottom : 3%;" >
 	<div class="col-2"></div>
@@ -32,12 +32,12 @@ transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 				<div style="padding: 2% 5% 5% 5%; background:#86B9BB; border-radius:25px;"> 
 					<img src="img/logo_login.png" class="bi me-2 img border" style="width: 10vw;" role="img" alt=""> 
 					<div class="row justify-content-center">
-						<div class="col-4 py-2"><input type="text" class="form text-center" name="nom" placeholder="Nom"></div> 		
+						<div class="col-4 py-2"><input type="text" class="form text-center" name="nom" placeholder="Nom" id="nom" onblur="traiterNom()"></div> 		
 						<div class="col-4 py-3">Date de naissance</div>
-						<div class="col-4 py-2"><input type="text" class="form text-center" name="prenom" placeholder="Prénom"></div>
+						<div class="col-4 py-2"><input type="text" class="form text-center lib" #lib name="prenom" placeholder="Prénom" onblur="traiterLib()" ></div>
 						<div class="col-4 py-2"><input type="text" class="form text-center" name="tel" placeholder="Tel"></div> 
 						<div class="col-4 py-2"><input type="date" class="form text-center" name="date_naissance"></div>
-						<div class="col-4 py-2"><input type="text" class="form text-center" name="email" placeholder="Email"></div>
+						<div class="col-4 py-2"><input type="text" class="form text-center" name="email" placeholder="Email" id="email" onblur="traiterEmail()"></div>
 						<div class="col-4 py-2"><input type="text" class="form text-center" name="numrue" placeholder="Numéro de rue"></div> 
 						<div class="col-4 py-2"><input type="text" class="form text-center" name="rue" placeholder="Nom de la rue"></div> 
 						<div class="col-4 py-2"><input type="text" class="form text-center" name="ville"  placeholder="Ville"></div> 
