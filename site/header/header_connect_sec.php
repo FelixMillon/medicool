@@ -8,6 +8,7 @@
     <li><a href="index.php?page=19" class="nav-link px-2 link-light">Gérer les patients</a></li>
     <li><a href="index.php?page=23" class="nav-link px-2 link-light">Gérer les medecins</a></li>
     <li><a href="index.php?page=24" class="nav-link px-2 link-light">Gérer les secretaires</a></li>
+    <li><a href="index.php?page=17" class="nav-link px-2 link-light">Gérer les factures</a></li>
     <li><a href="index.php?page=3" class="nav-link px-2 link-light">Planning</a></li>
 
   </ul>

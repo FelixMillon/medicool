@@ -45,11 +45,11 @@
             <input class="btn btn-lg text-light fw-bold" style="background:#3B7476;" type="submit" value="> >" name="nextWeek">
     </div>
 </form>
-<div style="display: flex; flex-direction: column; height: 84vh;"> 
-    <div style="margin: 6% 6% 3% 6%;" >
-    <div class="table-responsive" style="height:72vh;">
+<div style="display: flex; flex-direction: column;"> 
+    <div style="margin: 1% 6% 2% 6%;" >
+    <div class="table-responsive" style="height:80vh;">
 
-            <table class="table " style="height:72vh; table-layout: fixed ;width: 100%" id="mytable">
+            <table class="table " style="height:80vh; table-layout: fixed ;width: 100%" id="mytable">
                 <tr class="text-center"  style="border-bottom: 4px solid  #3B7476;">
                     <?php
                     echo '<th style="width: 5%;">Horaire</th>

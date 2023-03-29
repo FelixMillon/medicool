@@ -1,3 +1,12 @@
+<?php
+    if($_SESSION['estMedecin'] == False){
+        echo "<div class='col-10'>";
+    }else{
+        echo "<div class='col-6'>";
+    }
+?>
+
+ 
  <div class="table-responsive w-100" style="height:40vh;border : 4px solid #86B9BB;  border-radius: 10px;">
     <table class="table table-striped table-sm" >
         <tr class="text-center fw-bold text-light" style="background:#86B9BB;opacity : 0.57; border-bottom: 4px solid  #86B9BB; ">

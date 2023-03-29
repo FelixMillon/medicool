@@ -14,10 +14,11 @@
     <link rel="stylesheet" href="js/style.css">
     <link rel="stylesheet" href="js/style_ambrine.css">
 	<link rel="stylesheet" href="js/felix.css">
+	<script src="js/front.js"></script>
 
 	<link rel="icon" type="image/png" sizes="16x16" href="img/icon.png">
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" http-equiv="X-UA-Compatible" content="IE=edge" name="viewport" content="width=device-width, initial-scale=1.0">
-	<title> FireCrest - IHM</title>
+	<title>Medicool</title>
 </head>
 <body class="">
 <?php
@@ -123,7 +124,7 @@
 	<li class="nav-item"><a href="#" class="nav-link px-2 text-light">Conditions générle d'uilisation</a></li>
 	</ul>
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-  <script src="js/gestion_cookie.js"></script>
+
 </footer>
 </body>
 </html>
