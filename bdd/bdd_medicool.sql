@@ -1950,21 +1950,6 @@ insert into posseder_mutuelle values(2,1);
 */
 insert into medecin values(0,'toto@gmail.com','123','toto','toto','toto','1980-01-01',sysdate(),'toto','toto','toto','toto',4,6,"toto","toto",null,'super_administrateur','toto',null);
 
-
-insert into patient values(null,'emailpat@gmail.com','123','balloch','patoch','01857467879','2000-01-01','2012-12-12','666','rue_patoch','66666','enfer',4,6,"Chouaki","Moby-Dick",null,'utilisateur','6666666666',2,null);
-insert into sterces.keycrypte values(sha2('emailpat@gmail.com',256),'def00000a48c045d3ccc208616615b3041da3511a94573631502e70f71650b7847e7a6efe05edd0435530eb5154c9a20b9dd');
-update patient set nom= 'caMtO5OMdQC30BXyoUQHps2yxv6zO1RCeLG3poEI5pw=',
-             prenom= 'oeH49QguamikNNaWt93PDTUTIhp5qicA/pSVWcz/fmk=',
-                tel= 'yOk9zo0YFms2p3Tcfoy+nPNsz7gTnIR/IGtm356mHeQ=',
-     date_naissance= '2YJkujYpD1Ezz7V4fZ3mT9EtlNQdENP6SCeqe36njZI=',
-date_enregistrement= 'an+wMNKJXqeK3sB59hzcVulEKhh9UCXIQABZCXYmx8I=',
-             numrue= 'lF8QGZLJwbL/HBDoZ4DfVK9UT5vrirejOkr1DNhOdQs=',
-                rue= '+MzKhhrfa1hgxDI8KI8guVp++jltTsbisJR52XUtQSM=',
-                 cp= 'KWgFaP1AKuoxonql9V59e0lwGkOZLmczbyuqy6oGhaE=',
-              ville= 'c4ru2QTzI0CT/IIF96WQjjeN68LBc5mb+2bPI7TWPyc='  where email='emailpat@gmail.com';
-insert into operation values(|1,'02gQ4C2n1i1ujBmCHf/ocsXPCLc0boyN8wi6Jhr+NzHyOQ64PFzRzRI0hNuLTXui','2023-03-30','12:00:00','01:00:00',5000.00,'CP2RznJuRAIi8Aye3+3o+1NpAWzJZtSEd601eInHCKQ=','O8BT/ulSJz5BqaZ3Q4ppOo39HJtKwfqSTM79tIiS3Zw=',5);
-insert into allergie values(1,'LDUkdjn5XT+QeG2j2hAocnbE8QAjRl8T21CwSJ4dVRE=','2023-03-22',NULL,1,5);
-
 /**************************************INSERTS TEST SURVEY ACTIONS NE PAS SUPPRIMER (TESTS UNITAIRES)**************************************/
 /*
 insert into mutuelle values(5,'testmutuelle',10);
