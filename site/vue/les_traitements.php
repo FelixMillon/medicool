@@ -54,9 +54,9 @@
             <td><center>".$unTraitement['date_debut']."</center></td>
             <td><center>".$unTraitement['date_fin']."</center></td>
             <td><center>".$unTraitement['prix_par_unite']."</center></td>
-            <td><center>".$unTraitement['id_medecin']."</center></td>";
+            <td><center>".$lemedecin."</center></td>";
             if($_SESSION['estMedecin'] == True){ 
-            echo "<td><center>".$unTraitement['id_patient']." : ".$unTraitement['email']."</center></td>
+            echo "<td><center>".$lepatient."</center></td>
             
             <td> 
                 <a href='index.php?page=10&action=sup&id_traitement=".$unTraitement['id_traitement']."'><img src='img/sup.png' height='30' width='30'></a>                            
