@@ -30,12 +30,12 @@
             <table class="table " style="height:60vh;">
                 <tr class="text-center"  style="border-bottom: 4px solid  #3B7476;">
                     <th style="width: 5%;">Horaire</th>
-                    <th>Lundi 9 janviers</th>
-                    <th>Mardi 10 janviers</th>
-                    <th>Mecredi 11 janviers</th>
-                    <th>Jeudi 12 janviers</th>
-                    <th>Vendredi 13 janviers</th>
-                    <th>Samedi 14 janviers</th>	
+                    <th>Lundi 9 janvier</th>
+                    <th>Mardi 10 janvier</th>
+                    <th>Mecredi 11 janvier</th>
+                    <th>Jeudi 12 janvier</th>
+                    <th>Vendredi 13 janvier</th>
+                    <th>Samedi 14 janvier</th>	
                 </tr>
                 
             <tr>

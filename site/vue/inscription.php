@@ -76,7 +76,7 @@ transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 									if ($LePatient!=NULL) echo "value='".$leid_medecin."'";
 								?>
 								selected>Médecin référent</option>
-								<option value='0'>Aucun medecin référent</option>
+								<option value='0'>Aucun médecin référent</option>
 								<?php
 									foreach ($lesMedecins as $unMedecin){
 										echo "<option value='".$unMedecin['id_medecin']."'>".$unMedecin['nom']." ".$unMedecin['prenom']."</option>";

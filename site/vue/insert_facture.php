@@ -34,7 +34,7 @@
                     </div>
 
                     <div class="col-12">
-                        <input type="text" name="libelle" placeholder="Libelle" class="inscricase form-control text-center fw-bold" 
+                        <input type="text" name="libelle" placeholder="Libellé" class="inscricase form-control text-center fw-bold" 
                         style="border:3px solid #86B9BB" value="<?php if($LaFacture!=NULL) echo $unControleur->decrypt($LaFacture['libelle'], $cle); ?>">
                     </div>
             

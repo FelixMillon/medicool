@@ -12,7 +12,7 @@
             <td>Numéro dossier</td>
             <td>Catégorie sécu</td>
             <td>Médecin référent</td>
-            <td>Opération</td>
+            <td>Opérations</td>
         </tr>
         
         <?php 

@@ -54,8 +54,8 @@ color : black;
             <div class="p-3 fs-4"><u>Récuperation de mot de passe via e-mail </u></div> </a>
             </div>
             <div class="col-12 fs-4 p-1 ">
-            Veuillez saisir le code obtenu via e-mail <small> <br>(Si vous ne l'avez pas reçu, veuillez patienter 
-            ou regarde dans vos spams )</small>
+            Veuillez saisir le code obtenu via e-mail. <small> <br>(Si vous ne l'avez pas reçu, veuillez patienter 
+            ou regarder dans vos spams.)</small>
             </div>
             <div class="col-12 fs-5 " style="padding: 1% 0 0 2%;">
                 <input type="text" name="email" placeholder="email" class="form-control text-center w-75" value="">

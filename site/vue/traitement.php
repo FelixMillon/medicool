@@ -12,7 +12,7 @@
 
                             <div class="row g-3">         
                                 <div class="col-6">
-                                    <input type="text" name="raison" placeholder="Libelle" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" value="">
+                                    <input type="text" name="raison" placeholder="Libellé" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" value="">
                                 </div>
 
                                 <div class="col-6">
@@ -31,7 +31,7 @@
                                 </div>
 
                                 <div class="col-12">
-                                    <input type="number" name="prix_par_unite" placeholder="Prix par unite" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" value="">
+                                    <input type="number" name="prix_par_unite" placeholder="Prix par unité" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" value="">
                                 </div>
                                           
                                 <div class="col-6" style="padding-top: 6%"> 

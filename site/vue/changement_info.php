@@ -217,7 +217,7 @@ if (isset($_POST['ModifierInfo']))
                         <span> <input name="nom" id="nomp" type="text" placeholder="<?php echo $_SESSION['nom'] ?>" class="text-center fw-bold" style="height : 23px; width : 130%; "></span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center">
-                        <label for="prenomp" class="fw-bold"> Prenom</label>
+                        <label for="prenomp" class="fw-bold"> Prénom</label>
                         <span> <input  name="prenom"  id="prenomp" type="text" placeholder="<?php echo $_SESSION['prenom'] ?>" class="text-center fw-bold" style="height : 23px; width : 130%;"></span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center">
@@ -247,10 +247,10 @@ if (isset($_POST['ModifierInfo']))
                     
                     <?php if($_SESSION['estPatient']){ ?>
                     <div class="d-flex justify-content-between align-items-center">
-                        <label for="cat" class="fw-bold py-3"> Catégorie sécruite social </label>
+                        <label for="cat" class="fw-bold py-3"> Catégorie de sécurité sociale </label>
                         <select for="cat" name="id_cat_secu" class="text-center" style="border-radius:15px;border:3px solid #86B9BB">
                             
-                            <option  value="">Catégorie sécurité social</option>
+                            <option  value="">Catégorie de sécurité social</option>
                             <?php 
                             foreach ($LesSecus as $UneCategorie_secu){
                                 echo "<option value='".$UneCategorie_secu['id_cat_secu']."'>".$UneCategorie_secu['libelle']." | ".$UneCategorie_secu['pourcent_rembourse']." </option>";

@@ -14,7 +14,7 @@
 
                             <div class="row g-3">         
                                 <div class="col-6">
-                                    <input type="text" name="libelle" placeholder="Libelle" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" 
+                                    <input type="text" name="libelle" placeholder="Libellé" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" 
                                     value="<?php if($Letraitement!=NULL) echo $unControleur->decrypt($Letraitement['libelle'], $cle); ?>">
                                 </div>
 
@@ -37,7 +37,7 @@
                                 </div>
 
                                 <div class="col-12">
-                                    <input type="number" name="prix_par_unite" placeholder="Prix par unite" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" 
+                                    <input type="number" name="prix_par_unite" placeholder="Prix par unité" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" 
                                     value="<?php if ($Letraitement!=NULL) echo $Letraitement['prix_par_unite']; ?>"> 
                                 </div>
                                        

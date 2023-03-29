@@ -13,7 +13,7 @@
                 <td>Date début</td>
                 <td>Durée estimée</td>
                 <td>Date fin </td>
-                <td>Hopital</td>
+                <td>Hôpital</td>
                 <?php if($_SESSION['estMedecin'] == True){ echo"<td>Patient</td>";}?>
                 <td>Medecin</td>
                 <?php if($_SESSION['estMedecin'] == True){ echo"<td>Opération</td>";}?>

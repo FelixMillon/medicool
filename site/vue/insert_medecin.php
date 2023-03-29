@@ -10,7 +10,7 @@
             </div>
 
             <div class="col-6">
-                <input type="text" name="prenom" placeholder="Prenom" class="inscricase form-control text-center fw-bold" 
+                <input type="text" name="prenom" placeholder="Prénom" class="inscricase form-control text-center fw-bold" 
                 style="border:3px solid #86B9BB" value="<?php if ($LeMedecin!=NULL) echo $LeMedecin['prenom']; ?>">
             </div>
 
@@ -21,7 +21,7 @@
 
 
             <div class="col-4">
-                <input type="text" name="tel" placeholder="Tél" class="inscricase form-control text-center fw-bold" 
+                <input type="text" name="tel" placeholder="Téléphone" class="inscricase form-control text-center fw-bold" 
                 style="border:3px solid #86B9BB" value="<?php if ($LeMedecin!=NULL) echo $LeMedecin['tel']; ?>">
             </div>
 
@@ -51,7 +51,7 @@
             </div>
             
             <div class="col-4">
-                <input type="text" name="specialisation" placeholder="spécialisation" class="inscricase form-control text-center fw-bold" 
+                <input type="text" name="specialisation" placeholder="Spécialisation" class="inscricase form-control text-center fw-bold" 
                 style="border:3px solid #86B9BB" value="<?php if ($LeMedecin!=NULL) echo $LeMedecin['specialisation']; ?>">
             </div>
             

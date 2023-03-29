@@ -76,7 +76,7 @@ color : black;
     <div style="height: 88vh;padding-top: 8%;"> 
         <div class="container d-flex  flex-wrap text-light" style="height:75%;width:50%;background:#86B9BB;  border-radius: 11px;"> 
             <div class="col-12">
-            <div class="p-3 fs-4"><u>Récupération du compte via question secrete </u></div> </a>
+            <div class="p-3 fs-4"><u>Récupération du compte via question secrète </u></div> </a>
             </div>
             <div class="col-6 d-flex justify-content-center align-items-center border">
             <?php echo $unUserBefore['question_1']." ?"; ?>

@@ -17,7 +17,7 @@
                     </div>
                 
                     <div class="col-12">
-                            <label for="peas" class="fw-bold">Date du diagnostique :</label>
+                            <label for="peas" class="fw-bold">Date du diagnostic :</label>
                         <input type="date" id="peas" name="date_diagnostique" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" 
                         value="<?php if ($LAllergie!=NULL) echo $LAllergie['date_diagnostique']; ?>"> 
                     </div>

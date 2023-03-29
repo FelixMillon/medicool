@@ -10,12 +10,12 @@
     <table class="table table-striped table-sm" >
         <tr class="text-center fw-bold text-light" style="background:#86B9BB;opacity : 0.57; border-bottom: 4px solid  #86B9BB; ">
             <td>ID</td>
-            <td>Libelle</td>
+            <td>Libellé</td>
             <td>Date</td>
             <td>Prix</td>
-            <td>Résultat </td>
+            <td>Résultats </td>
             <td>Commentaire</td>
-            <td>Medecin</td>
+            <td>Médecin</td>
             <?php if($_SESSION['estMedecin'] == True){ echo"<td>Patient</td>";}?>
             <?php if($_SESSION['estMedecin'] == True){ echo"<td>Opération</td>";}?>
         </tr>

@@ -6,7 +6,7 @@
 
   <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
     <li><a href="index.php?page=11" class="nav-link px-2 link-light">Gérer mes patients</a></li>
-    <li><a href="index.php?page=3" class="nav-link px-2 link-light">Mon Planning</a></li>
+    <li><a href="index.php?page=3" class="nav-link px-2 link-light">Mon planning</a></li>
 
   </ul>
 

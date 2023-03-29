@@ -15,13 +15,13 @@
                                 }   
                                 ?>
 
-                                    <input type="text" name="libelle" placeholder="libelle" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB"
+                                    <input type="text" name="libelle" placeholder="Libellé" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB"
                                     value="<?php if($Lapathologie!=NULL) echo $unControleur->decrypt($Lapathologie['libelle'], $cle); ?>">
                                 </div>
 
-                                <div class="col-6 fw-bold">Date diagnositque</div>
+                                <div class="col-6 fw-bold">Date de diagnostic</div>
                                     
-                                <div class="col-6 fw-bold">Date guérison</div>
+                                <div class="col-6 fw-bold">Date de guérison</div>
                             
                                 <div class="col-6">
                                     <input type="date" name="date_diagnostique" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" 

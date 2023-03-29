@@ -16,7 +16,7 @@
 
                                 
                                 <div class="col-12">
-                                    <input type="text" name="libelle" placeholder="Libelle" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" 
+                                    <input type="text" name="libelle" placeholder="Libellé" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" 
                                     value="<?php  if($Loperation!=NULL) echo $unControleur->decrypt($Loperation['libelle'], $cle); ?>">
                                 </div>
 
@@ -28,7 +28,7 @@
                                     value="<?php if ($Loperation!=NULL) echo $Loperation['date_heure_time']; ?>">  
                                 </div>
 
-                                <div class="col-6 fw-bolder" style="margin-top :3%;"> durée de l'opération : </div>
+                                <div class="col-6 fw-bolder" style="margin-top :3%;"> Durée de l'opération : </div>
 
                                 <div class="col-6">
                                     <input type="time" name="duree" placeholder="Durée" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB"
@@ -36,12 +36,12 @@
                                 </div>
 
                                 <div class="col-6">
-                                    <input type="number" name="prix" placeholder="prix" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" 
+                                    <input type="number" name="prix" placeholder="Prix" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" 
                                     value="<?php if ($Loperation!=NULL) echo $Loperation['prix']; ?>">
                                 </div>
 
                                 <div class="col-6">
-                                    <input type="text" name="resultat" placeholder="Resultat" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" 
+                                    <input type="text" name="resultat" placeholder="Résultats" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" 
                                     value="<?php  if($Loperation!=NULL) echo $unControleur->decrypt($Loperation['resultat'], $cle); ?>">
                                 </div>
 
