@@ -52,7 +52,7 @@
             <td><center>".$unePathologie['date_guerison']."</center></td>
             <td><center>".$unePathologie['id_medecin']."</center></td>";
             if($_SESSION['estMedecin'] == True){ 
-                echo "<td><center>".$unTraitement['id_patient']." : ".$unTraitement['email']."</center></td>
+                echo "<td><center>".$lepatient."</center></td>
                 
                 <td> 
                 <a href='index.php?page=9&action=sup&id_path=".$unePathologie['id_path']."'><img src='img/sup.png' height='30' width='30'></a>                            

@@ -41,7 +41,7 @@ if(isset($_POST['Valider']) || isset($_POST['Modifier']))
 {
     // Recherche de la clé de cryptage 
     $unControleur->setTable("patient");
-    $where = array('id_patient'=>$_POST['id_patient']);
+    $where = array('id_patient'=>$_SESSION['id_patient']);
     $lePatient = $unControleur->selectWhere($where);
     $tab3=array(hash('sha256',$lePatient["email"]));
     $key=$unControleur->callproc('getkey',$tab3);
@@ -54,8 +54,8 @@ if (isset($_POST['Valider']))
         "libelle"=>$unControleur->encrypt($_POST["libelle"],$key['cle']),
         "date_diagnostique"=>$_POST["date_diagnostique"],
         "date_guerison"=>$_POST["date_guerison"],
-        "id_medecin"=>$_POST["id_medecin"],
-        "id_patient"=>$_POST["id_patient"]
+        "id_medecin"=>$_SESSION["id"],
+        "id_patient"=>$_SESSION["id_patient"]
         );
     $unControleur->setTable("pathologie");
     $unControleur->insert($tab);    
@@ -70,8 +70,8 @@ if(isset($_POST['Modifier']))
         "libelle"=>$unControleur->encrypt($_POST["libelle"],$key['cle']),
         "date_diagnostique"=>$_POST["date_diagnostique"],
         "date_guerison"=>$_POST["date_guerison"],
-        "id_medecin"=>$_POST["id_medecin"],
-        "id_patient"=>$_POST["id_patient"]
+        "id_medecin"=>$_SESSION["id"],
+        "id_patient"=>$_SESSION["id_patient"]
         );
 
     $unControleur->setTable("pathologie");
