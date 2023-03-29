@@ -28,7 +28,9 @@
                                     value="<?php if ($Loperation!=NULL) echo $Loperation['date_heure_time']; ?>">  
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-6 fw-bolder" style="margin-top :3%;"> durée de l'opération : </div>
+
+                                <div class="col-6">
                                     <input type="time" name="duree" placeholder="Durée" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB"
                                     value="<?php if ($Loperation!=NULL) echo $Loperation['duree']; ?>">
                                 </div>
@@ -48,21 +50,6 @@
                                     value="<?php  if($Loperation!=NULL) echo $unControleur->decrypt($Loperation['commentaire'], $cle); ?>">
                                 </div>
 
-                                <div class="col-12">
-                                <select name="id_patient" class="form-select w-100 text-center" style="border-radius:15px;border:3px solid #86B9BB">
-                                    <option selected>Patient</option>
-                                    <?php 
-                                    foreach ($lesPatients as $unPatient){
-                                        $tab2=array(hash('sha256',$unPatient['email']));
-                                        $cle=$unControleur->callproc('getkey',$tab2);
-                                        $cle = $cle['cle'];
-                                        $prenom = $unControleur->decrypt($unPatient['prenom'], $cle);
-                            
-                                        echo "<option value='".$unPatient['id_patient']."'>".$unPatient['nom']." ".$prenom." </option>";
-                                    }
-                                    ?>
-                                </select>
-                                </div>
 
                     
                           
