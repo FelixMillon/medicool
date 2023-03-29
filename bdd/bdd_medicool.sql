@@ -754,6 +754,7 @@ begin
         set new.droits = (select droits from utilisateur where email = new.email);
     end if;
     set new.id_patient = (select id from utilisateur where email = new.email);
+    set new.numero_dossier = concat(year(sysdate()),month(sysdate()),day(sysdate()),(new.id_patient+15));
     set new.mdp = (select mdp from utilisateur where email = new.email);
     set new.reponse_secrete_1 = (select reponse_secrete_1 from utilisateur where email = new.email);
     set new.reponse_secrete_2 = (select reponse_secrete_2 from utilisateur where email = new.email);
@@ -766,7 +767,7 @@ create trigger patient_after_insert
 after insert on patient
 for each row
 begin
-   insert into action_surveillance values(null,"insert",sysdate(),'patient',new.id_patient,current_user());
+    insert into action_surveillance values(null,"insert",sysdate(),'patient',new.id_patient,current_user());
 end //
 delimiter ;
 
