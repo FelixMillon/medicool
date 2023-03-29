@@ -14,7 +14,7 @@
                     ?>
 
 
-                        <input type="text" name="libelle" placeholder="Libelle" class="inscricase form-control text-center fw-bold" 
+                        <input type="text" name="libelle" placeholder="Libellé" class="inscricase form-control text-center fw-bold" 
                         style="border:3px solid #86B9BB" value="<?php if ($LExamen!=NULL) echo $unControleur->decrypt($LExamen['libelle'], $cle); ?>">
                     </div>
                 
@@ -25,12 +25,12 @@
                     </div>
 
                     <div class="col-6">
-                        <input type="number" name="prix_examen" placeholder="prix" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB"
+                        <input type="number" name="prix_examen" placeholder="Prix" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB"
                         value="<?php if ($LExamen!=NULL) echo $LExamen['prix_examen']; ?>"> 
                     </div>
 
                     <div class="col-6">
-                        <input type="text" name="resultat" placeholder="Resultat" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" 
+                        <input type="text" name="resultat" placeholder="Résultats" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" 
                         value="<?php if ($LExamen!=NULL) echo $unControleur->decrypt($LExamen['resultat'], $cle); ?>"> 
                         
                     </div>

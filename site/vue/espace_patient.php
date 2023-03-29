@@ -42,7 +42,7 @@ color : black;
             <a href="index.php?page=5" class="btn nav-link form w-50 text-center"> Opération </a>
         </div>
         <div class="col-4" style="padding-top:1%;">
-            <a href="index.php?page=6" class="btn nav-link form w-50 text-center"> Allérgie </a>
+            <a href="index.php?page=6" class="btn nav-link form w-50 text-center"> Allergie </a>
         </div>
         <div class="col-4" style="padding-top:1%;">
             <a href="index.php?page=9" class="btn nav-link form w-50 text-center"> Pathologie </a>

@@ -121,7 +121,7 @@
 
 	<ul class="nav col-md-4 justify-content-end" style="padding-right: 6%; white-space: nowrap;">
 	<li class="nav-item"><a href="#" class="nav-link px-2 text-light">Mentions légales</a></li>
-	<li class="nav-item"><a href="#" class="nav-link px-2 text-light">Conditions générle d'uilisation</a></li>
+	<li class="nav-item"><a href="#" class="nav-link px-2 text-light">Conditions générales d'utilisation</a></li>
 	</ul>
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 

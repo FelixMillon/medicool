@@ -53,7 +53,7 @@ color : black;
             <div class="p-3 fs-4"><u>Nouveau mot de passe </u></div> </a>
             </div>
             <div class="col-6 w-50 p-1 ">
-            Mot de passe (12 caractères dont une majuscule, une minuscule, 1 chiffres et 1 caractères spécial)
+            Mot de passe (12 caractères dont une majuscule, une minuscule, 1 chiffres et 1 caractère spécial)
             </div>
             <div class="col-6 fs-5 " style="padding: 1% 0 0 2%;">
                 <input type="text" name="mdp" placeholder="Nouveau mot de passe" class="form-control w-75 text-center" value="">

@@ -1,50 +1,57 @@
 <!-- Début insert -->
 <form method="post" action="">
+<?php if($LePatient!=NULL){
+        $tab2=array(hash('sha256',$LePatient['email']));
+        $cle=$unControleur->callproc('getkey',$tab2);
+        $cle = $cle['cle'];
+    }   
+    ?>
+
     <div class="container" >
         <div class="col p-4 d-flex flex-column position-static">
         <div class="row g-3">  
             <div class="col-6">
                 <input type="text" name="nom" placeholder="Nom" class="inscricase form-control text-center fw-bold" 
-                style="border:3px solid #86B9BB" value="<?php if ($LePatient!=NULL) echo $LePatient['nom']; ?>">
+                style="border:3px solid #86B9BB" value="<?php if ($LePatient!=NULL) echo $unControleur->decrypt($LePatient['nom'], $cle); ?>">
             </div>
             <div class="col-6">
-                <input type="text" name="prenom" placeholder="Prenom" class="inscricase form-control text-center fw-bold" 
-                style="border:3px solid #86B9BB" value="<?php if ($LePatient!=NULL) echo $LePatient['prenom']; ?>">
+                <input type="text" name="prenom" placeholder="Prénom" class="inscricase form-control text-center fw-bold" 
+                style="border:3px solid #86B9BB" value="<?php if ($LePatient!=NULL) echo $unControleur->decrypt($LePatient['prenom'], $cle); ?>">
             </div>
             <div class="col-12">
                 <input type="text" name="email" placeholder="E-mail" class="inscricase form-control text-center fw-bold" 
-                style="border:3px solid #86B9BB" value="<?php if ($LePatient!=NULL) echo $LePatient['email']; ?>">
+                style="border:3px solid #86B9BB" value="<?php if ($LePatient!=NULL) echo $LePatient['email'] ?>">
             </div>
 
 
             <div class="col-4">
-                <input type="text" name="tel" placeholder="Tél" class="inscricase form-control text-center fw-bold" 
-                style="border:3px solid #86B9BB" value="<?php if ($LePatient!=NULL) echo $LePatient['tel']; ?>">
+                <input type="text" name="tel" placeholder="Téléphone" class="inscricase form-control text-center fw-bold" 
+                style="border:3px solid #86B9BB" value="<?php if ($LePatient!=NULL) echo $unControleur->decrypt($LePatient['tel'], $cle); ?>">
             </div>
 
             <div class="col-4">
                 <input type="date" name="date_naissance" placeholder="Date de naissance" class="inscricase form-control text-center fw-bold" 
-                style="border:3px solid #86B9BB" value="<?php if ($LePatient!=NULL) echo $LePatient['date_naissance']; ?>">
+                style="border:3px solid #86B9BB" value="<?php if ($LePatient!=NULL) echo $unControleur->decrypt($LePatient['date_naissance'], $cle); ?>">
             </div>
 
             <div class="col-4">
                 <input type="text" name="numrue" placeholder="Numéro de rue" class="inscricase form-control text-center fw-bold" 
-                style="border:3px solid #86B9BB" value="<?php if ($LePatient!=NULL) echo $LePatient['numrue']; ?>">
+                style="border:3px solid #86B9BB" value="<?php if ($LePatient!=NULL) echo $unControleur->decrypt($LePatient['numrue'], $cle); ?>">
             </div>
 
             <div class="col-4">
                 <input type="text" name="rue" placeholder="Rue" class="inscricase form-control text-center fw-bold" 
-                style="border:3px solid #86B9BB" value="<?php if ($LePatient!=NULL) echo $LePatient['rue']; ?>">
+                style="border:3px solid #86B9BB" value="<?php if ($LePatient!=NULL) echo $unControleur->decrypt($LePatient['rue'], $cle); ?>">
             </div>
 
             <div class="col-4">
                 <input type="text" name="cp" placeholder="Code postal" class="inscricase form-control text-center fw-bold" 
-                style="border:3px solid #86B9BB" value="<?php if ($LePatient!=NULL) echo $LePatient['cp']; ?>">
+                style="border:3px solid #86B9BB" value="<?php if ($LePatient!=NULL) echo $unControleur->decrypt($LePatient['cp'], $cle); ?>">
             </div>
 
             <div class="col-4">
                 <input type="text" name="ville" placeholder="Ville" class="inscricase form-control text-center fw-bold" 
-                style="border:3px solid #86B9BB" value="<?php if ($LePatient!=NULL) echo $LePatient['ville']; ?>">
+                style="border:3px solid #86B9BB" value="<?php if ($LePatient!=NULL) echo $unControleur->decrypt($LePatient['ville'], $cle); ?>">
             </div>
 
             <div class="col-6">
@@ -73,7 +80,7 @@
 
             <div class="col-6">
                 <select name="id_cat_secu" class="form-select w-100 text-center" style="border-radius:15px;border:3px solid #86B9BB">
-                    <option selected>Catégorie sécurité social </option>
+                    <option selected>Catégorie de sécurité sociale </option>
                     <?php 
                     foreach ($lesCategories_secu as $UneCategorie_secu){
                         echo "<option value='".$UneCategorie_secu['id_cat_secu']."'>".$UneCategorie_secu['libelle']." | ".$UneCategorie_secu['pourcent_rembourse']." </option>";

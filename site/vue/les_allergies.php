@@ -10,7 +10,7 @@
         <tr class="text-center fw-bold text-light" style="background:#86B9BB;opacity : 0.57; border-bottom: 4px solid  #86B9BB; ">
             <td>ID</td>
             <td>Libellé</td>
-            <td>Date de diagnostique</td>
+            <td>Date de diagnostic</td>
             <td>Date de guérison</td>
             <td>Médecin</td>
             <?php if($_SESSION['estMedecin'] == True){ echo"<td>Patient</td>";}?>

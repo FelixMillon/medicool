@@ -18,9 +18,9 @@
                                     <input type="text" name="libelle" placeholder="libelle" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" value="">
                                 </div>
 
-                                <div class="col-6 fw-bold">Date diagnositque</div>
+                                <div class="col-6 fw-bold">Date de diagnostic</div>
                                     
-                                <div class="col-6 fw-bold">Date guérison</div>
+                                <div class="col-6 fw-bold">Date de guérison</div>
                             
                                 <div class="col-6">
                                     <input type="date" name="date_diagnostique" class="inscricase form-control text-center fw-bold" style="border:3px solid #86B9BB" value="" > 
@@ -67,9 +67,9 @@
         <table class="table table-striped table-sm" >
             <tr class="text-center fw-bold text-light" style="background:#86B9BB;opacity : 0.57; border-bottom: 4px solid  #86B9BB; ">
                 <td>ID</td>
-                <td>Libelle</td>
-                <td>Date diagnositque</td>
-                <td>Date guérison </td>
+                <td>Libellé</td>
+                <td>Date de diagnostic</td>
+                <td>Date de guérison </td>
                 <td>Opération</td>
             </tr>
             

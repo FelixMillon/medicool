@@ -9,12 +9,12 @@
         <table class="table table-striped table-sm" >
             <tr class="text-center fw-bold text-light" style="background:#86B9BB;opacity : 0.57; border-bottom: 4px solid  #86B9BB; ">
                 <td>ID</td>
-                <td>Libelle</td>
+                <td>Libellé</td>
                 <td>Posologie</td>
                 <td>Date début</td>
                 <td>Date fin </td>
                 <td>prix par unité</td>
-                <td>Medecin</td>
+                <td>Médecin</td>
                 <?php if($_SESSION['estMedecin'] == True){ 
                 echo"<td>Patient</td>
                      <td>Opération</td>";

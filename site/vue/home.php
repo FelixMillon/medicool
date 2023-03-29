@@ -50,14 +50,14 @@
     <!-- Second Container -->
     <div class="container-fluid bg-2 text-center">
     <h3 class="margin">C'est quoi Medicool?</h3>
-    <p>Medicool une plateforme de e-santé. Cette solution permet aux patients de prendre des rendez-vous en ligne avec des médecins généralistes ou spécialistes. <br>
-      Elle permet aussi au médecin d'avoir le dossier médical des ses patients
+    <p>Medicool est une plateforme de e-santé. Elle permet aux patients de prendre des rendez-vous en ligne avec des médecins généralistes ou spécialistes. <br>
+      Elle permet aussi aux médecins d'avoir le dossier médical de ses patients.
     </p>
     </div>
 
     <!-- Third Container (Grid) -->
     <div class="container-fluid bg-3 text-center">    
-    <h3 class="margin">Pourquoi utilisée Medicool ?</h3><br>
+    <h3 class="margin">Pourquoi utiliser Medicool ?</h3><br>
     <div class="row">
         <div class="col-sm-4">
         <p>Une communauté de praticiens pour vous accompagner.</p>
